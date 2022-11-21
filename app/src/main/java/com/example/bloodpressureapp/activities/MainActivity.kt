@@ -1,0 +1,25 @@
+package com.example.bloodpressureapp.activities
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.navigation.fragment.NavHostFragment
+import com.example.bloodpressureapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+    private var navHostFragment: NavHostFragment? = null
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+    }
+
+    private fun initNavController() {
+        navHostFragment =
+            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
+    }
+}
