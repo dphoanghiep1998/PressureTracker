@@ -1,10 +1,13 @@
 package com.example.bloodpressureapp.ui.main
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.bloodpressureapp.databinding.FragmentMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
@@ -30,6 +33,7 @@ class FragmentMain : Fragment() {
         initBottomNav()
     }
 
+    @SuppressLint("RestrictedApi")
     private fun initBottomNav(){
         val bottomNavigationMenuView =
             binding.navBottom.getChildAt(0) as BottomNavigationMenuView
@@ -41,6 +45,8 @@ class FragmentMain : Fragment() {
                 resources.displayMetrics
             ).toInt()
         )
+
+        binding.navBottom.setupWithNavController(findNavController())
 
 
     }

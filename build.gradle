@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = '1.7.21'
-
     repositories {
         google()
         mavenCentral()
+
     }
     dependencies {
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.2")
@@ -12,7 +12,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
-
 plugins {
     id 'com.android.application' version '7.2.1' apply false
     id 'com.android.library' version '7.2.1' apply false
@@ -27,6 +26,9 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
+
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
