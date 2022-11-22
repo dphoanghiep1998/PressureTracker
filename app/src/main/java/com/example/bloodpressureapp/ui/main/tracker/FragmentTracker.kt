@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.utils.getColor
+import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentTrackerBinding
 
 class FragmentTracker : Fragment() {
@@ -27,7 +29,16 @@ class FragmentTracker : Fragment() {
 
     private fun initView() {
         setupContainerInfo()
+        initButton()
     }
+
+    private fun initButton() {
+        binding.floatingActionButton.setOnClickListener {
+
+            navigateToPage(R.id.action_fragmentTracker_to_addHistoryFragment)
+        }
+    }
+
     private fun setupContainerInfo(){
         with(binding.containerInfoSystolic){
             this.tvTitle.text = getString(R.string.systolic)

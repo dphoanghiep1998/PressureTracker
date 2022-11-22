@@ -22,19 +22,6 @@
             app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
-        android:id="@+id/fragmentTracker"
-        android:name="com.example.bloodpressureapp.ui.main.tracker.FragmentTracker"
-        android:label="FragmentTracker" />
-    <fragment
-        android:id="@+id/fragmentInformation"
-        android:name="com.example.bloodpressureapp.ui.main.info.FragmentInformation"
-        android:label="FragmentInformation" />
-    <fragment
-        android:id="@+id/fragmentSetting"
-        android:name="com.example.bloodpressureapp.ui.main.setting.FragmentSetting"
-        android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
-    <fragment
         android:id="@+id/fragmentLanguage"
         android:name="com.example.bloodpressureapp.ui.language.FragmentLanguage"
         android:label="fragment_language"

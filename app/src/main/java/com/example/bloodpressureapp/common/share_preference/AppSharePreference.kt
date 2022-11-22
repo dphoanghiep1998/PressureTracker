@@ -28,13 +28,20 @@ class AppSharePreference(private val context: Context) {
     }
 
 
-
     fun saveLanguage(values: String) {
         saveString(Constant.KEY_LANGUAGE, values)
     }
 
     fun getSavedLanguage(defaultValues: String): String {
         return getString(Constant.KEY_LANGUAGE, defaultValues)
+    }
+
+    fun saveListNote(values: List<String>) {
+        saveStringList(Constant.KEY_NOTE_LIST, values)
+    }
+
+    fun getListNote(defaultValues: List<String>): List<String> {
+        return getStringList(Constant.KEY_NOTE_LIST, defaultValues)
     }
 
 
@@ -69,7 +76,6 @@ class AppSharePreference(private val context: Context) {
     }
 
 
-
     private fun saveStringSet(key: String, values: HashSet<String>) {
         sharedPreferences().edit { putStringSet(key, values) }
     }
@@ -82,6 +88,7 @@ class AppSharePreference(private val context: Context) {
             defaultValues
         }
     }
+
     private fun defaultSharedPreferences(context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 

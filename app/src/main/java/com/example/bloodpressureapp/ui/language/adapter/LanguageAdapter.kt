@@ -38,8 +38,10 @@ class LanguageAdapter(val context: Context,private val listener: TouchLanguageLi
     override fun onBindViewHolder(holder: LanguageViewHolder, position: Int) {
        with(holder){
            if (this.adapterPosition == selectedLanguageIndex) {
+               binding.tvCountryName.setTextColor(ContextCompat.getColor(context,R.color.neutral_01))
                binding.containerContentLanguage.setBackgroundColor(ContextCompat.getColor(context,R.color.primary))
            } else {
+               binding.tvCountryName.setTextColor(ContextCompat.getColor(context,R.color.neutral_04))
                binding.containerContentLanguage.setBackgroundColor(ContextCompat.getColor(context,R.color.neutral_01))
            }
            with(mLanguageList[position]) {

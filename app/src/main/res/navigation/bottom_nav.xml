@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/fragmentTracker">
+
+    <fragment
+        android:id="@+id/fragmentTracker"
+        android:name="com.example.bloodpressureapp.ui.main.tracker.FragmentTracker"
+        android:label="FragmentTracker"
+        tools:layout="@layout/fragment_tracker">
+        <action
+            android:id="@+id/action_fragmentTracker_to_addHistoryFragment"
+            app:destination="@id/addHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentInformation"
+        android:name="com.example.bloodpressureapp.ui.main.info.FragmentInformation"
+        android:label="FragmentInformation"
+        tools:layout="@layout/fragment_infomation"/>
+    <fragment
+        android:id="@+id/fragmentSetting"
+        android:name="com.example.bloodpressureapp.ui.main.setting.FragmentSetting"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/addHistoryFragment"
+        android:name="com.example.bloodpressureapp.ui.main.tracker.add_history.AddHistoryFragment"
+        android:label="fragment_add_history"
+        tools:layout="@layout/fragment_add_history" />
+</navigation>
