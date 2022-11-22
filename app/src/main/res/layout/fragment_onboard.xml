@@ -47,7 +47,7 @@
             android:paddingHorizontal="@dimen/_16sdp"
             android:text="@string/back"
             android:textColor="@color/neutral_03"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_14sdp" />
 
         <Space
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             android:paddingVertical="@dimen/_12sdp"
             android:text="@string/next"
             android:textColor="@color/primary"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_14sdp" />
         <TextView
             android:id="@+id/btn_start"
             android:visibility="gone"
@@ -74,7 +74,7 @@
             android:paddingVertical="@dimen/_12sdp"
             android:text="@string/let_start"
             android:textColor="@color/neutral_01"
-            android:textSize="@dimen/_20sdp"/>
+            android:textSize="@dimen/_14sdp"/>
     </LinearLayout>
 
 

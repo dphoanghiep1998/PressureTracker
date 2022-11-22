@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:behavior_hideable="true"
+    tools:background="@color/neutral_03"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     tools:ignore="ContentDescription">
 
@@ -13,90 +14,84 @@
         android:id="@+id/container_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_neu02_corner_10"
-        android:paddingBottom="@dimen/_12sdp"
         android:layout_marginHorizontal="@dimen/_12sdp"
+        android:background="@drawable/bg_neu01_corner_10"
+        android:paddingBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imv_add_note"
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:padding="@dimen/_12sdp"
+            android:src="@drawable/ic_note_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
-            android:text="@string/bp_note"
+            android:text="@string/add_note"
             android:textColor="@color/neutral_04"
             android:textSize="@dimen/_16sdp"
-            app:layout_constraintBottom_toBottomOf="@id/btn_close"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn_close" />
+            app:layout_constraintBottom_toBottomOf="@id/imv_add_note"
+            app:layout_constraintStart_toEndOf="@id/imv_add_note"
+            app:layout_constraintTop_toTopOf="@id/imv_add_note" />
 
-        <ImageView
-            android:id="@+id/btn_close"
-            android:layout_width="@dimen/_44sdp"
-            android:layout_height="@dimen/_44sdp"
-            android:padding="@dimen/_12sdp"
-            android:src="@drawable/ic_exit"
-            android:foreground="@drawable/fg_ripple_effect"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group"
+        <TextView
+            android:id="@+id/tv_instruction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:flow_maxElementsWrap="3"
-            android:paddingHorizontal="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_12sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_close">
-
-        </com.google.android.material.chip.ChipGroup>
+            android:textColor="@color/neutral_04"
+            android:textSize="@dimen/_12sdp"
+            android:text="@string/max_20_character_instruction"
+            app:layout_constraintTop_toBottomOf="@id/imv_add_note">
+        </TextView>
+        <EditText
+            app:layout_constraintTop_toBottomOf="@id/tv_instruction"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:id="@+id/edt_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_neu03_stroke_corner10"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:hint="@string/hint"
+            android:maxLength="20"
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            app:layout_constraintTop_toBottomOf="@id/edt_note">
 
-            app:layout_constraintTop_toBottomOf="@id/chip_group">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_edit_add"
+            <TextView
+                android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
-                android:foreground="@drawable/fg_ripple_effect"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
-                android:background="@drawable/bg_primary_stroke_corner10"
-                android:orientation="horizontal"
                 android:paddingVertical="@dimen/_8sdp"
+                android:gravity="center"
+                android:background="@drawable/bg_neu03_corner_10"
+                android:foreground="@drawable/fg_ripple_effect"
+                android:text="@string/cancel"
+                android:textColor="@color/neutral_01"
+                android:textSize="@dimen/_16sdp"
                 app:layout_constraintEnd_toStartOf="@id/btn_save"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/ic_edit_add" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_add"
-                        android:textColor="@color/primary"
-                        android:textSize="@dimen/_16sdp" />
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/btn_save"
@@ -112,7 +107,7 @@
                 android:textColor="@color/neutral_01"
                 android:textSize="@dimen/_16sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_edit_add"
+                app:layout_constraintStart_toEndOf="@id/btn_cancel"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

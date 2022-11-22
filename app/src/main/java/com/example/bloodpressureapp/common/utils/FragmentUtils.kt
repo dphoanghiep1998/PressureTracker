@@ -11,3 +11,7 @@ fun Fragment.navigateToPage(actionId: Int) {
 fun Fragment.getColor(resId:Int):Int {
     return ContextCompat.getColor(requireContext(),resId)
 }
+ fun Fragment.toDp(sizeInDp: Int): Int {
+    val scale: Float = requireContext().resources.displayMetrics.density
+    return (sizeInDp * scale + 0.5f).toInt()
+}

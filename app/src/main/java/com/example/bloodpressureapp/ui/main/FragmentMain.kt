@@ -63,14 +63,29 @@ class FragmentMain : Fragment() {
     private fun initBottomNav() {
         val bottomNavigationMenuView =
             binding.navBottom.getChildAt(0) as BottomNavigationMenuView
-        val itemView = bottomNavigationMenuView.getChildAt(1) as BottomNavigationItemView
-        itemView.setIconTintList(null)
-        itemView.setIconSize(
-            TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 40f,
-                resources.displayMetrics
-            ).toInt()
-        )
+
+        for (i in 0..2) {
+            (bottomNavigationMenuView.getChildAt(i) as BottomNavigationItemView).setIconTintList(
+                null
+            )
+            if(i == 1){
+                (bottomNavigationMenuView.getChildAt(i) as BottomNavigationItemView).setIconSize(
+                    TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 60f,
+                        resources.displayMetrics
+                    ).toInt()
+                )
+            }else{
+                (bottomNavigationMenuView.getChildAt(i) as BottomNavigationItemView).setIconSize(
+                    TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 30f,
+                        resources.displayMetrics
+                    ).toInt()
+                )
+            }
+
+        }
+
     }
 
 }

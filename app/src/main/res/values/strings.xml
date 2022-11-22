@@ -85,4 +85,12 @@
     <string name="save">Save</string>
     <string name="bp_note">BP Notes</string>
     <string name="edit_add">Edit/add</string>
+    <string name="history">History</string>
+    <string name="edit_instruction">Long press and drag to reorder</string>
+    <string name="add_new">Add new</string>
+    <string name="add_note">Add Note</string>
+    <string name="cancel">Cancel</string>
+    <string name="max_20_character_instruction">Maximum 20 characters.</string>
+    <string name="hint">Please enter something</string>
+    <string name="ok">OK</string>
 </resources>
