@@ -29,6 +29,7 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
     private lateinit var binding: FragmentAddHistoryBinding
     private val viewModel: AppViewModel by activityViewModels()
     private var historyModel = HistoryModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +42,7 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        observeLiveStack()
+        observeSelectedNoteList()
     }
 
     private fun getDataFromBundle() {
@@ -49,10 +50,15 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
         if (bundle != null) {
             val model: Parcelable? = bundle.getParcelable(Constant.KEY_HISTORY_MODEL)
             if (model != null) {
+                Log.d("TAG", "nhay vao day nay: ")
                 historyModel = model as HistoryModel
                 binding.tvTitle.text = getText(R.string.edit)
                 binding.btnDelete.visibility = View.VISIBLE
+                if (model.notes.isNotEmpty()) {
+                    viewModel.setLiveSelectedNoteList(model.notes)
+                }
             } else {
+                Log.d("TAG", "nhay vao kia kia: ")
                 binding.tvTitle.text = getText(R.string.new_record)
                 binding.btnDelete.visibility = View.GONE
             }
@@ -111,6 +117,7 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
         }
 
         binding.btnSave.setOnClickListener {
+            Log.d("TAG", "initButton: "+viewModel.liveSelectedNoteList.value?.size)
             viewModel.insertHistory(historyModel)
             findNavController().popBackStack()
         }
@@ -136,11 +143,11 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
             status = getString(R.string.dangerous_high_blood_pressure)
             condition = getString(R.string.condition_dangerously)
             color = getColor(R.color.cbp_05)
-        } else if (systolic >= 140 || diastolic >= 90) {
+        } else if (systolic in 140..179 || diastolic in 90..119) {
             status = getString(R.string.high_blood_pressure_stage_2)
             condition = getString(R.string.condition_high_2)
             color = getColor(R.color.cbp_04)
-        } else if (systolic >= 130 || diastolic >= 80) {
+        } else if (systolic in 130..139 || diastolic in 80..89) {
             status = getString(R.string.high_blood_pressure_stage_1)
             condition = getString(R.string.condition_high_1)
             color = getColor(R.color.cbp_03)
@@ -157,7 +164,7 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
             this.minValue = 20
             this.value = historyModel.systolic
             this.wrapSelectorWheel = false
-            this.setOnValueChangedListener { picker, old, new ->
+            this.setOnValueChangedListener { _, _, new ->
                 historyModel.systolic = new
                 setStatus(historyModel.systolic, historyModel.diastolic)
 
@@ -168,7 +175,7 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
             this.minValue = 20
             this.value = historyModel.diastolic
             this.wrapSelectorWheel = false
-            this.setOnValueChangedListener { picker, old, new ->
+            this.setOnValueChangedListener { _, _, new ->
                 historyModel.diastolic = new
                 setStatus(historyModel.systolic, historyModel.diastolic)
             }
@@ -178,29 +185,17 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
             this.minValue = 20
             this.value = historyModel.pulse
             this.wrapSelectorWheel = false
-            this.setOnValueChangedListener { picker, old, new ->
+            this.setOnValueChangedListener { _, _, new ->
                 historyModel.pulse = new
             }
         }
     }
 
-    private fun observeLiveStack() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<List<String>>(
-            Constant.KEY_SELECTED_NOTE_LIST
-        )
-            ?.observe(viewLifecycleOwner) {
-                Log.d("TAG", "observeLiveStack: "+it)
-                it?.forEachIndexed { index, item ->
-                    kotlin.run {
-                        if (index < it.size - 1) {
-                            historyModel.notes += "#${item} "
-                        } else {
-                            historyModel.notes += "#${item}"
-                        }
-                    }
-
-                }
-            }
+    private fun observeSelectedNoteList() {
+        viewModel.liveSelectedNoteList.observe(viewLifecycleOwner) {
+            historyModel.notes.clear()
+            historyModel.notes.addAll(it)
+        }
     }
 
 

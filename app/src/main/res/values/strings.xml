@@ -99,4 +99,10 @@
     <string name="delete">Delete</string>
     <string name="new_record">New Record</string>
     <string name="dupplicate_note">This note is existed</string>
+    <string name="setting_title">Setting</string>
+    <string name="export_file_setting">Export as file</string>
+    <string name="feed_back_setting">Feed back</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="rate_us">Rate us</string>
+    <string name="share">Share</string>
 </resources>

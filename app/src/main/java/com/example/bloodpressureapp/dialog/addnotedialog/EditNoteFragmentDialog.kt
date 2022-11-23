@@ -12,6 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.share_preference.AppSharePreference
 import com.example.bloodpressureapp.common.utils.getColor
@@ -20,6 +22,8 @@ import com.example.bloodpressureapp.dialog.addnotedialog.adapter.ItemTouchListen
 import com.example.bloodpressureapp.dialog.addnotedialog.adapter.NoteAdapter
 import com.example.bloodpressureapp.viewmodel.AppViewModel
 import com.google.android.flexbox.*
+import java.util.*
+
 
 class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListener {
     private lateinit var binding: DialogEditNoteBinding
@@ -66,6 +70,31 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
     }
 
     private fun initRecycleView() {
+        val simpleCallBack = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,
+            0
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+                val list = viewModel.liveNoteList.value
+                list?.let {
+                    Collections.swap(it, fromPosition, toPosition)
+                    viewModel.setLiveNoteList(it)
+                }
+
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            }
+        }
+
+
         adapter = NoteAdapter(this, true)
         binding.rcvNotes.adapter = adapter
         val layoutManager = FlexboxLayoutManager(context)
@@ -74,6 +103,10 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.flexWrap = FlexWrap.WRAP
         binding.rcvNotes.layoutManager = layoutManager
+
+        val itemTouchHelper = ItemTouchHelper(simpleCallBack)
+        itemTouchHelper.attachToRecyclerView(binding.rcvNotes)
+
     }
 
     private fun initButton() {
@@ -95,19 +128,22 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
 
 
     override fun onAddNote(note: String) {
-        if(viewModel.liveNoteList.value!!.contains(note)){
-            Toast.makeText(requireContext(),getString(R.string.dupplicate_note),Toast.LENGTH_SHORT).show()
+        if (viewModel.liveNoteList.value!!.contains(note)) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.dupplicate_note),
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
         viewModel.addNote(note)
     }
 
-    override fun onTouchItem(listNote: List<String>) {
+    override fun onTouchItem(listNote: MutableList<String>) {
         //Do nothing in this fragment
     }
 
     override fun onDeleteItem(note: String) {
         viewModel.deleteNote(note)
     }
-
 }

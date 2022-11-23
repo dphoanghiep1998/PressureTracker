@@ -37,6 +37,15 @@ class AppViewModel @Inject constructor(
         notesList.notifyObserver()
     }
 
+
+    private val selectedNoteList = MutableLiveData<MutableList<String>>()
+    val liveSelectedNoteList: LiveData<MutableList<String>>
+        get() = selectedNoteList
+
+    fun setLiveSelectedNoteList(list: MutableList<String>) {
+        selectedNoteList.value = list
+    }
+
     fun getAllHistory(): LiveData<List<HistoryModel>> {
         return appRepo.getAllHistory()
     }

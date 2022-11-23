@@ -17,7 +17,7 @@ class HistoryModel(
     var date: String = "",
     var time: String = "",
     var status: String = "",
-    var notes: String = ""
+    var notes: MutableList<String> = mutableListOf()
 
 ) : Parcelable {
     init {
@@ -51,7 +51,7 @@ class HistoryModel(
             date = date,
             time = time,
             status = status,
-            notes = notes
+            notes = notes.toMutableList()
 
         )
     }

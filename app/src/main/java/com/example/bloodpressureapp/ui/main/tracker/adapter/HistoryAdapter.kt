@@ -1,6 +1,7 @@
 package com.example.bloodpressureapp.ui.main.tracker.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.databinding.ItemHistoryBinding
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
+import kotlin.math.log
 
 interface ItemHelper {
     fun onClickEdit(item: HistoryModel)
@@ -46,12 +48,25 @@ class HistoryAdapter(private val context: Context, private val listener: ItemHel
                 binding.btnEdit.setOnClickListener {
                     listener.onClickEdit(this)
                 }
-                if (this.notes != "") {
+                Log.d("onBindViewHolder", "onBindViewHolder: "+this.notes.size)
+                if (this.notes.isNotEmpty()) {
+                    var notesString =""
+                    this.notes.forEachIndexed { index, item ->
+                        kotlin.run {
+                            notesString += if (index < this.notes.size - 1) {
+                                "#${item} "
+                            } else {
+                                "#${item}"
+                            }
+                        }
+
+                    }
+                    binding.tvNoteValue.text = notesString
                     binding.tvNoteValue.visibility = View.VISIBLE
                 } else {
                     binding.tvNoteValue.visibility = View.GONE
                 }
-                binding.tvNoteValue.text = this.notes
+
             }
         }
     }

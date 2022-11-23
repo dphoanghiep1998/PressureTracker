@@ -1,5 +1,6 @@
 package com.example.bloodpressureapp.common.utils
 
+import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,9 @@ fun Fragment.navigateToPage(actionId: Int) {
 }
 fun Fragment.getColor(resId:Int):Int {
     return ContextCompat.getColor(requireContext(),resId)
+}
+fun Fragment.getDrawable(resId:Int):Drawable {
+    return ContextCompat.getDrawable(requireContext(),resId)!!
 }
  fun Fragment.toDp(sizeInDp: Int): Int {
     val scale: Float = requireContext().resources.displayMetrics.density

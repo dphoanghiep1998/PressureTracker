@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
+import com.example.bloodpressureapp.common.share_preference.AppSharePreference
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.DialogAddNoteBinding
@@ -25,7 +26,7 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
     private lateinit var binding: DialogAddNoteBinding
     private lateinit var adapter: NoteAdapter
     private val viewModel: AppViewModel by activityViewModels()
-    private var selectedNotes: List<String> = listOf()
+    private var selectedNotes: MutableList<String> = mutableListOf()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val root = ConstraintLayout(requireContext())
@@ -57,16 +58,16 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
         super.onViewCreated(view, savedInstanceState)
         initValue()
         initView()
+        observeNoteList()
+        observeSelectedList()
 
     }
 
     private fun initValue() {
-        selectedNotes = listOf()
+        selectedNotes = mutableListOf()
     }
 
     private fun initView() {
-
-//        initChipGroup()
         initButton()
         initRecycleView()
     }
@@ -82,10 +83,7 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
             dismiss()
         }
         binding.btnSave.setOnClickListener {
-            findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                Constant.KEY_SELECTED_NOTE_LIST,
-                selectedNotes
-            )
+            viewModel.setLiveSelectedNoteList(selectedNotes)
             findNavController().popBackStack()
         }
     }
@@ -99,18 +97,32 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.flexWrap = FlexWrap.WRAP
         binding.rcvNotes.layoutManager = layoutManager
-        val noteList = requireActivity().resources.getStringArray(R.array.noteList)
-        adapter.setData(noteList.toList())
+    }
+    private fun observeNoteList() {
+        viewModel.liveNoteList.observe(viewLifecycleOwner) {
+            adapter.setData(it)
+            AppSharePreference.INSTANCE.saveListNote(it)
+        }
+    }
 
+    private fun observeSelectedList(){
+        viewModel.liveSelectedNoteList.observe(viewLifecycleOwner){
+            selectedNotes.clear()
+            selectedNotes.addAll(it)
+            adapter.setSelectedNoteList(it)
+        }
     }
 
 
-    override fun onTouchItem(listNote: List<String>) {
-        selectedNotes = listNote
+    override fun onTouchItem(listNote: MutableList<String>) {
+        selectedNotes.clear()
+        selectedNotes.addAll(listNote)
     }
 
     override fun onDeleteItem(note: String) {
         //Do nothing in this fragment
     }
+
+
 
 }

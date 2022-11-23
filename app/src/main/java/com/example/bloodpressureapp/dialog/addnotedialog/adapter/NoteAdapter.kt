@@ -1,28 +1,44 @@
 package com.example.bloodpressureapp.dialog.addnotedialog.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.databinding.ItemNoteBinding
+import java.util.*
+import kotlin.collections.HashSet
 
 
 interface ItemTouchListener {
-    fun onTouchItem(listNote: List<String>)
+    fun onTouchItem(listNote: MutableList<String>)
     fun onDeleteItem(note:String)
 }
 
-class NoteAdapter(private val listener: ItemTouchListener, val showDelete: Boolean = false) :
+class NoteAdapter(private val listener: ItemTouchListener, private val showDelete: Boolean = false) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
 
-    private var noteList: List<String> = mutableListOf()
-    private var selectedNotes: HashSet<String> = hashSetOf()
+    private var noteList: MutableList<String> = mutableListOf()
+    private var selectedNotes: MutableList<String> = mutableListOf()
+    private val diffCallback = DiffCallback(noteList, mutableListOf())
+    private val diffCallBackSelected = DiffCallback(selectedNotes, mutableListOf())
+    fun setData(newList: MutableList<String>) {
+        diffCallback.newList = newList
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        noteList.clear()
+        noteList.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
+    }
 
-    fun setData(list: List<String>) {
-        this.noteList = list
-        notifyDataSetChanged()
+    fun setSelectedNoteList(newList:MutableList<String>){
+        diffCallBackSelected.newList = newList
+        val diffResult = DiffUtil.calculateDiff(diffCallBackSelected)
+        selectedNotes.clear()
+        selectedNotes.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     inner class NoteViewHolder(val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root)
@@ -36,6 +52,7 @@ class NoteAdapter(private val listener: ItemTouchListener, val showDelete: Boole
         with(holder) {
             with(noteList[position]) {
                 if (this in selectedNotes) {
+                    Log.d("TAG", "onBindViewHolder: "+selectedNotes.size)
                     binding.root.setBackgroundResource(R.drawable.bg_secondary02_corner50)
                 } else {
                     binding.root.setBackgroundResource(R.drawable.bg_neutral01_corner50)
@@ -59,7 +76,7 @@ class NoteAdapter(private val listener: ItemTouchListener, val showDelete: Boole
                             selectedNotes.add(this)
                         }
                         notifyItemChanged(position)
-                        listener.onTouchItem(selectedNotes.toList())
+                        listener.onTouchItem(selectedNotes)
                     }
                 }
 
@@ -70,4 +87,5 @@ class NoteAdapter(private val listener: ItemTouchListener, val showDelete: Boole
     override fun getItemCount(): Int {
         return noteList.size
     }
+
 }

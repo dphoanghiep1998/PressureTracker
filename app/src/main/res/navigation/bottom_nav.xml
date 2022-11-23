@@ -26,7 +26,11 @@
         android:id="@+id/fragmentSetting"
         android:name="com.example.bloodpressureapp.ui.main.setting.FragmentSetting"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_fragmentSetting_to_fragmentLanguage2"
+            app:destination="@id/fragmentLanguage2" />
+    </fragment>
     <fragment
         android:id="@+id/addHistoryFragment"
         android:name="com.example.bloodpressureapp.ui.main.tracker.add_history.AddHistoryFragment"
@@ -69,4 +73,9 @@
             android:id="@+id/action_fragmentHistory_to_addHistoryFragment"
             app:destination="@id/addHistoryFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentLanguage2"
+        android:name="com.example.bloodpressureapp.ui.language.FragmentLanguage"
+        android:label="fragment_language"
+        tools:layout="@layout/fragment_language" />
 </navigation>

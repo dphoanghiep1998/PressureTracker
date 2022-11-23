@@ -12,7 +12,7 @@ data class HistoryEntity(
     var time: String,
     var date: String,
     var status: String,
-    var notes: String
+    var notes: List<String>
 ) {
 
 }
