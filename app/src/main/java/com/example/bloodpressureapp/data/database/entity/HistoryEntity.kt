@@ -2,7 +2,6 @@ package com.example.bloodpressureapp.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "history")
 data class HistoryEntity(
@@ -10,9 +9,10 @@ data class HistoryEntity(
     var systolic: Int,
     var diastolic: Int,
     var pulse: Int,
-    var time: Date,
+    var time: String,
+    var date: String,
     var status: String,
-    var notes:String
+    var notes: String
 ) {
 
 }

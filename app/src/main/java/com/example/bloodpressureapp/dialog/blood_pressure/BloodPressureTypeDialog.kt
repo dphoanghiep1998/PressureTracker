@@ -10,7 +10,7 @@ import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.databinding.DialogBloodPressureTypeBinding
 
 
-class PermissionDialog(
+class BloodPressureTypeDialog(
     context: Context
 ) : Dialog(context) {
     private lateinit var binding: DialogBloodPressureTypeBinding
@@ -31,8 +31,14 @@ class PermissionDialog(
         window?.setBackgroundDrawableResource(R.color.transparent)
 
         initContent()
+        initButton()
 
+    }
 
+    private fun initButton() {
+        binding.btnGotIt.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun initContent() {
@@ -43,63 +49,66 @@ class PermissionDialog(
                     R.drawable.ic_face_normal
                 )
             )
-            tvValueHigher.text = getString(R.string.less_120)
-            tvSymbol.text = getString(R.string.and)
-            tvValueLower.text = getString(R.string.less_80)
-            tvStatus.text = getString(R.string.normal_blood_pressure)
+            containerContent.setBackgroundResource(R.drawable.bg_cbp01_corner10)
+            tvValueHigher.text = context.getString(R.string.less_120)
+            tvSymbol.text = context.getString(R.string.and)
+            tvValueLower.text = context.getString(R.string.less_80)
+            tvStatus.text = context.getString(R.string.normal_blood_pressure)
         }
-        with(binding.containerNormal) {
+        with(binding.containerElevated) {
             imvImageStatus.setImageDrawable(
                 ContextCompat.getDrawable(
                     context,
                     R.drawable.ic_face_elevated
                 )
             )
-            tvValueHigher.text = getString(R.string.in_120_to_190)
-            tvSymbol.text = getString(R.string.and)
-            tvValueLower.text = getString(R.string.less_80)
-            tvStatus.text = getString(R.string.elevated_blood_pressure)
+            containerContent.setBackgroundResource(R.drawable.bg_cbp02_corner10)
+            tvValueHigher.text = context.getString(R.string.in_120_to_129)
+            tvSymbol.text = context.getString(R.string.and)
+            tvValueLower.text = context.getString(R.string.less_80)
+            tvStatus.text = context.getString(R.string.elevated_blood_pressure)
         }
-        with(binding.containerNormal) {
+        with(binding.containerHigh1) {
             imvImageStatus.setImageDrawable(
                 ContextCompat.getDrawable(
                     context,
                     R.drawable.ic_face_high
                 )
             )
-            tvValueHigher.text = getString(R.string.more_130)
-            tvSymbol.text = getString(R.string.or)
-            tvValueLower.text = getString(R.string.more_80)
-            tvStatus.text = getString(R.string.high_blood_pressure_stage_1)
+            containerContent.setBackgroundResource(R.drawable.bg_cbp03_corner10)
+            tvValueHigher.text = context.getString(R.string.more_130)
+            tvSymbol.text = context.getString(R.string.or)
+            tvValueLower.text = context.getString(R.string.more_80)
+            tvStatus.text = context.getString(R.string.high_blood_pressure_stage_1)
         }
-        with(binding.containerNormal) {
+        with(binding.containerHigh2) {
             imvImageStatus.setImageDrawable(
                 ContextCompat.getDrawable(
                     context,
                     R.drawable.ic_face_high2
                 )
             )
-            tvValueHigher.text = getString(R.string.more_140)
-            tvSymbol.text = getString(R.string.or)
-            tvValueLower.text = getString(R.string.more_90)
-            tvStatus.text = getString(R.string.high_blood_pressure_stage_2)
+            containerContent.setBackgroundResource(R.drawable.bg_cbp04_corner10)
+            tvValueHigher.text = context.getString(R.string.more_140)
+            tvSymbol.text = context.getString(R.string.or)
+            tvValueLower.text = context.getString(R.string.more_90)
+            tvStatus.text = context.getString(R.string.high_blood_pressure_stage_2)
         }
-        with(binding.containerNormal) {
+        with(binding.containerDanger) {
             imvImageStatus.setImageDrawable(
                 ContextCompat.getDrawable(
                     context,
                     R.drawable.ic_face_dangerously
                 )
             )
-            tvValueHigher.text = getString(R.string.more_180)
-            tvSymbol.text = getString(R.string.and)
-            tvValueLower.text = getString(R.string.more_90)
-            tvStatus.text = getString(R.string.dangerous_high_blood_pressure)
+            containerContent.setBackgroundResource(R.drawable.bg_cbp05_corner10)
+            tvValueHigher.text = context.getString(R.string.more_180)
+            tvSymbol.text = context.getString(R.string.and)
+            tvValueLower.text = context.getString(R.string.more_90)
+            tvStatus.text = context.getString(R.string.dangerous_high_blood_pressure)
         }
 
     }
 
-    private fun getString(id: Int): String {
-        return getString(id)
-    }
+
 }

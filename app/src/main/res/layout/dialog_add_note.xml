@@ -13,9 +13,9 @@
         android:id="@+id/container_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
         android:background="@drawable/bg_neu02_corner_10"
         android:paddingBottom="@dimen/_12sdp"
-        android:layout_marginHorizontal="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -36,39 +36,40 @@
             android:id="@+id/btn_close"
             android:layout_width="@dimen/_44sdp"
             android:layout_height="@dimen/_44sdp"
+            android:foreground="@drawable/fg_ripple_effect"
             android:padding="@dimen/_12sdp"
             android:src="@drawable/ic_exit"
-            android:foreground="@drawable/fg_ripple_effect"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_notes"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:flow_maxElementsWrap="3"
             android:paddingHorizontal="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:flow_maxElementsWrap="3"
+            app:layout_constraintBottom_toTopOf="@id/container_button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_close">
 
-        </com.google.android.material.chip.ChipGroup>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
-
-            app:layout_constraintTop_toBottomOf="@id/chip_group">
+            app:layout_constraintTop_toBottomOf="@id/rcv_notes">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_edit_add"
                 android:layout_width="0dp"
-                android:foreground="@drawable/fg_ripple_effect"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:background="@drawable/bg_primary_stroke_corner10"
+                android:foreground="@drawable/fg_ripple_effect"
                 android:orientation="horizontal"
                 android:paddingVertical="@dimen/_8sdp"
                 app:layout_constraintEnd_toStartOf="@id/btn_save"

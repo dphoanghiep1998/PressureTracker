@@ -29,6 +29,7 @@ import android.view.WindowManager
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import java.util.*
 
 fun Context.createContext(newLocale: Locale): Context =
@@ -82,4 +83,7 @@ fun hasHardwareAcceleration(activity: Activity): Boolean {
         e.printStackTrace()
     }
     return false
+}
+fun <T> MutableLiveData<T>.notifyObserver() {
+    this.value = this.value
 }

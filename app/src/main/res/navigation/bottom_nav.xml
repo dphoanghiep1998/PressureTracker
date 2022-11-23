@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_fragmentTracker_to_addHistoryFragment"
             app:destination="@id/addHistoryFragment" />
+        <action
+            android:id="@+id/action_fragmentTracker_to_fragmentHistory"
+            app:destination="@id/fragmentHistory" />
     </fragment>
     <fragment
         android:id="@+id/fragmentInformation"
@@ -45,5 +48,25 @@
     <dialog
         android:id="@+id/editNoteFragmentDialog"
         android:name="com.example.bloodpressureapp.dialog.addnotedialog.EditNoteFragmentDialog"
-        android:label="EditNoteFragmentDialog" />
+        android:label="EditNoteFragmentDialog"
+        tools:layout="@layout/dialog_edit_note">
+        <action
+            android:id="@+id/action_editNoteFragmentDialog_to_addNoteFinal"
+            app:destination="@id/addNoteFinal" />
+    </dialog>
+    <dialog
+        android:id="@+id/addNoteFinal"
+        android:name="com.example.bloodpressureapp.dialog.addnotedialog.AddNoteFinal"
+        android:label="AddNoteFinal"
+        tools:layout="@layout/dialog_add_note_final"
+    />
+    <fragment
+        android:id="@+id/fragmentHistory"
+        android:name="com.example.bloodpressureapp.ui.main.tracker.add_history.FragmentHistory"
+        android:label="FragmentHistory"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_fragmentHistory_to_addHistoryFragment"
+            app:destination="@id/addHistoryFragment" />
+    </fragment>
 </navigation>

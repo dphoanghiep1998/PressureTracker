@@ -9,23 +9,30 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.getColor
-import com.example.bloodpressureapp.databinding.DialogAddNoteFinalBinding
+import com.example.bloodpressureapp.databinding.DialogDeleteConfirmBinding
+import com.example.bloodpressureapp.dialog.BackPressDialogCallBack
+import com.example.bloodpressureapp.dialog.DialogCallBack
+import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
+import com.example.bloodpressureapp.viewmodel.AppViewModel
 
-interface AddNoteCallBack {
-    fun onAddNote(note: String)
+interface ConfirmDialogCallBack {
+    fun onPositiveClicked()
 }
 
-class AddNoteFinal(private val callback: AddNoteCallBack) : DialogFragment() {
-    private lateinit var binding: DialogAddNoteFinalBinding
+class DeleteConfirmDialog(private val callBack: ConfirmDialogCallBack) : DialogFragment() {
+    private lateinit var binding: DialogDeleteConfirmBinding
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val root = ConstraintLayout(requireContext())
         root.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
-        val dialog = Dialog(requireContext())
+        val dialog = DialogCallBack(requireContext(), callback)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(root)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(getColor(R.color.transparent)))
@@ -42,9 +49,11 @@ class AddNoteFinal(private val callback: AddNoteCallBack) : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DialogAddNoteFinalBinding.inflate(layoutInflater)
+        binding = DialogDeleteConfirmBinding.inflate(layoutInflater)
+
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,10 +65,8 @@ class AddNoteFinal(private val callback: AddNoteCallBack) : DialogFragment() {
     }
 
     private fun initButton() {
-        binding.btnSave.setOnClickListener {
-            if (binding.edtNote.text.toString().isNotBlank()) {
-                callback.onAddNote(binding.edtNote.text.toString())
-            }
+        binding.btnDelete.setOnClickListener {
+            callBack.onPositiveClicked()
             dismiss()
         }
         binding.btnCancel.setOnClickListener {
@@ -70,5 +77,18 @@ class AddNoteFinal(private val callback: AddNoteCallBack) : DialogFragment() {
         }
     }
 
+    private val callback = object : BackPressDialogCallBack {
+        override fun shouldInterceptBackPress(): Boolean {
+//            return viewMoDel.flagChangeBack.value!!
+            return true
+        }
 
+        override fun onBackPressIntercepted() {
+//            binding.containerEdit.visibility = View.GONE
+//            binding.containerShowUrl.visibility = View.VISIBLE
+//            hideKeyboard()
+//            viewMoDel.flagChangeBack.postValue(false)
+        }
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.bloodpressureapp.dialog.addnotedialog.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
@@ -9,9 +10,10 @@ import com.example.bloodpressureapp.databinding.ItemNoteBinding
 
 interface ItemTouchListener {
     fun onTouchItem(listNote: List<String>)
+    fun onDeleteItem(note:String)
 }
 
-class NoteAdapter(private val listener: ItemTouchListener) :
+class NoteAdapter(private val listener: ItemTouchListener, val showDelete: Boolean = false) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
 
@@ -40,17 +42,27 @@ class NoteAdapter(private val listener: ItemTouchListener) :
                 }
                 binding.tvNote.text = this
 
-                binding.root.setOnClickListener {
-                    if (this in selectedNotes) {
-                        selectedNotes.remove(this)
-                    } else {
-                        selectedNotes.add(this)
+                if (showDelete) {
+                    binding.btnClose.visibility = View.VISIBLE
+                    binding.btnClose.setOnClickListener {
+                        listener.onDeleteItem(this)
                     }
-                    notifyItemChanged(position)
-                    listener.onTouchItem(selectedNotes.toList())
+                    binding.root.setOnClickListener {
+                    }
 
-
+                } else {
+                    binding.btnClose.visibility = View.GONE
+                    binding.root.setOnClickListener {
+                        if (this in selectedNotes) {
+                            selectedNotes.remove(this)
+                        } else {
+                            selectedNotes.add(this)
+                        }
+                        notifyItemChanged(position)
+                        listener.onTouchItem(selectedNotes.toList())
+                    }
                 }
+
             }
         }
     }

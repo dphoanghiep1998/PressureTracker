@@ -4,6 +4,7 @@
     <style name="LexendTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/lexend_daca_regular_400</item>
     </style>
+
     <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">@dimen/_14sdp</item>
     </style>
@@ -11,18 +12,56 @@
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">@dimen/_14sdp</item>
     </style>
+
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
+
     <style name="NumberPickerCustomText">
         <item name="android:textSize">@dimen/_16sdp</item>
         <item name="android:fontFamily">@font/lexend_deca_semibold_600</item>
         <item name="android:textColorPrimary">@color/neutral_04</item>
         <item name="colorControlNormal">@color/neutral_02</item>
     </style>
+
     <style name="ChipTextStyle">
         <item name="android:textSize">@dimen/_14sdp</item>
         <item name="android:textColorPrimary">@color/neutral_04</item>
     </style>
+
+    <style name="TimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="colorPrimary">@color/neutral_01</item>
+        <item name="fontFamily">@font/lexend_daca_regular_400</item>
+        <item name="materialClockStyle">@style/TimePicker.Clock</item>
+        <item name="chipStyle">@style/TimePicker.Chip</item>
+        <item name="borderlessButtonStyle">@style/Picker.TextButton</item>
+        <item name="colorOnPrimary">@color/neutral_04</item>
+    </style>
+
+    <style name="TimePicker.Clock" parent="Widget.MaterialComponents.TimePicker.Clock">
+        <item name="clockFaceBackgroundColor">@color/neutral_02</item>
+        <item name="clockHandColor">@color/primary</item>
+        <item name="clockNumberTextColor">@color/text_clock_picker</item>
+    </style>
+
+    <style name="Picker.TextButton" parent="Widget.MaterialComponents.TimePicker.Display">
+        <item name="clockFaceBackgroundColor">@color/neutral_02</item>
+        <item name="clockHandColor">@color/primary</item>
+        <item name="clockNumberTextColor">@color/text_clock_picker</item>
+        <item name="android:textSize">16dp</item>
+
+    </style>
+
+
+    <style name="CustomText" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="TimePicker.Chip" parent="Widget.MaterialComponents.TimePicker.Display">
+        <item name="chipBackgroundColor">@color/neutral_02</item>
+        <item name="android:textColor">@color/text_value_picker</item>
+    </style>
+
+
 </resources>

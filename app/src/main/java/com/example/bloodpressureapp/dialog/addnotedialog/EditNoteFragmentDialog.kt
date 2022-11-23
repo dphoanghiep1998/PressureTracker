@@ -3,26 +3,28 @@ package com.example.bloodpressureapp.dialog.addnotedialog
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.LayoutDirection
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.share_preference.AppSharePreference
 import com.example.bloodpressureapp.common.utils.getColor
-import com.example.bloodpressureapp.common.utils.toDp
 import com.example.bloodpressureapp.databinding.DialogEditNoteBinding
-import com.example.bloodpressureapp.dialog.BackPressDialogCallBack
-import com.example.bloodpressureapp.dialog.DialogCallBack
+import com.example.bloodpressureapp.dialog.addnotedialog.adapter.ItemTouchListener
+import com.example.bloodpressureapp.dialog.addnotedialog.adapter.NoteAdapter
 import com.example.bloodpressureapp.viewmodel.AppViewModel
-import com.google.android.material.chip.Chip
+import com.google.android.flexbox.*
 
-class EditNoteFragmentDialog : DialogFragment() {
+class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListener {
     private lateinit var binding: DialogEditNoteBinding
+    private lateinit var adapter: NoteAdapter
+
     private val viewModel: AppViewModel by activityViewModels()
     private var selectedNotes: HashSet<String> = hashSetOf()
 
@@ -32,11 +34,10 @@ class EditNoteFragmentDialog : DialogFragment() {
         root.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
-        val dialog = DialogCallBack(requireContext(), callback)
+        val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(root)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(getColor(R.color.neutral_02)))
-
         dialog.window!!.setLayout(
             (requireContext().resources.displayMetrics.widthPixels),
             ViewGroup.LayoutParams.MATCH_PARENT
@@ -60,56 +61,53 @@ class EditNoteFragmentDialog : DialogFragment() {
 
     private fun initView() {
         initButton()
-        initChipGroup()
+        initRecycleView()
+        observeNoteList()
+    }
+
+    private fun initRecycleView() {
+        adapter = NoteAdapter(this, true)
+        binding.rcvNotes.adapter = adapter
+        val layoutManager = FlexboxLayoutManager(context)
+        layoutManager.justifyContent = JustifyContent.CENTER
+        layoutManager.alignItems = AlignItems.CENTER
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.flexWrap = FlexWrap.WRAP
+        binding.rcvNotes.layoutManager = layoutManager
     }
 
     private fun initButton() {
         binding.btnAddNew.setOnClickListener {
-
+            val addNoteFinal = AddNoteFinal(this)
+            addNoteFinal.show(childFragmentManager, addNoteFinal.tag)
+        }
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
-    private fun initChipGroup() {
-        val noteList = requireActivity().resources.getStringArray(R.array.noteList)
-        noteList.forEach { note ->
-            kotlin.run {
-                val chip = Chip(requireContext())
-                chip.setChipBackgroundColorResource(R.color.neutral_01)
-                chip.setTextColor(getColor(R.color.neutral_04))
-                chip.chipMinHeight = toDp(40).toFloat()
-                chip.text = note
-                chip.layoutDirection = View.LAYOUT_DIRECTION_RTL
-                chip.chipIcon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_exit_circle_red)
-                chip.setTextAppearance(R.style.ChipTextStyle)
-                chip.setOnClickListener {
-                    if (note in selectedNotes) {
-                        selectedNotes.remove(note)
-                        chip.setChipBackgroundColorResource(R.color.neutral_01)
-                    } else {
-                        selectedNotes.add(note)
-                        chip.setChipBackgroundColorResource(R.color.secondary_02)
-                    }
-                }
-                binding.chipGroup.addView(chip)
-            }
+    private fun observeNoteList() {
+        viewModel.liveNoteList.observe(viewLifecycleOwner) {
+            adapter.setData(it)
+            AppSharePreference.INSTANCE.saveListNote(it)
         }
     }
 
 
-    private val callback = object : BackPressDialogCallBack {
-        override fun shouldInterceptBackPress(): Boolean {
-//            return viewMoDel.flagChangeBack.value!!
-            return true
+    override fun onAddNote(note: String) {
+        if(viewModel.liveNoteList.value!!.contains(note)){
+            Toast.makeText(requireContext(),getString(R.string.dupplicate_note),Toast.LENGTH_SHORT).show()
+            return
         }
+        viewModel.addNote(note)
+    }
 
-        override fun onBackPressIntercepted() {
-//            binding.containerEdit.visibility = View.GONE
-//            binding.containerShowUrl.visibility = View.VISIBLE
-//            hideKeyboard()
-//            viewMoDel.flagChangeBack.postValue(false)
-        }
+    override fun onTouchItem(listNote: List<String>) {
+        //Do nothing in this fragment
+    }
 
+    override fun onDeleteItem(note: String) {
+        viewModel.deleteNote(note)
     }
 
 }

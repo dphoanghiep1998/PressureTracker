@@ -1,16 +1,13 @@
 package com.example.bloodpressureapp.data.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.bloodpressureapp.data.database.entity.HistoryEntity
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
 
 @Dao
 interface HistoryDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHistory(historyEntity: HistoryEntity)
 
     @Delete

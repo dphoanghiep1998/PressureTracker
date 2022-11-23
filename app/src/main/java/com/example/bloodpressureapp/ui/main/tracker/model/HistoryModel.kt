@@ -1,33 +1,29 @@
 package com.example.bloodpressureapp.ui.main.tracker.model
 
 import android.content.res.Resources
+import android.os.Parcelable
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.DateTimeUtils
 import com.example.bloodpressureapp.data.database.entity.HistoryEntity
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Parcelize
 class HistoryModel(
     var id: Int = -1,
-    var systolic: Int,
-    var diastolic: Int,
-    var pulse: Int,
-    var time: Date,
-    var status: String,
-    var notes: String
+    var systolic: Int = 50,
+    var diastolic: Int = 50,
+    var pulse: Int = 20,
+    var date: String = "",
+    var time: String = "",
+    var status: String = "",
+    var notes: String = ""
 
-) {
+) : Parcelable {
     init {
-        if (systolic < 120 && diastolic < 80) {
-            status = Resources.getSystem().getString(R.string.normal_blood_pressure)
-        } else if (systolic in 120..129 && diastolic < 80) {
-            status = Resources.getSystem().getString(R.string.elevated_blood_pressure)
-        } else if (systolic >= 180 || diastolic >= 120) {
-            status = Resources.getSystem().getString(R.string.dangerous_high_blood_pressure)
-        } else if (systolic >= 140 || diastolic >= 90) {
-            status = Resources.getSystem().getString(R.string.high_blood_pressure_stage_2)
-        } else if (systolic >= 130 || diastolic >= 80) {
-            status = Resources.getSystem().getString(R.string.high_blood_pressure_stage_1)
-        }
-
+        val calendar = Calendar.getInstance()
+        time =  "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
+        date =  DateTimeUtils.getDateConverted(Date(System.currentTimeMillis())).toString()
     }
 
     fun toHistoryEntity(): HistoryEntity {
@@ -37,6 +33,7 @@ class HistoryModel(
             systolic = systolic,
             diastolic = diastolic,
             pulse = pulse,
+            date = date,
             time = time,
             status = status,
             notes = notes
@@ -51,6 +48,7 @@ class HistoryModel(
             systolic = systolic,
             diastolic = diastolic,
             pulse = pulse,
+            date = date,
             time = time,
             status = status,
             notes = notes
