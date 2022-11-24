@@ -31,7 +31,7 @@
             android:id="@+id/action_fragmentSetting_to_fragmentLanguage2"
             app:destination="@id/fragmentLanguage2" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/addHistoryFragment"
         android:name="com.example.bloodpressureapp.ui.main.tracker.add_history.AddHistoryFragment"
         android:label="fragment_add_history"
@@ -39,7 +39,7 @@
         <action
             android:id="@+id/action_addHistoryFragment_to_addNoteDialog"
             app:destination="@id/addNoteDialog" />
-    </fragment>
+    </dialog>
     <dialog
         android:id="@+id/addNoteDialog"
         android:name="com.example.bloodpressureapp.dialog.addnotedialog.AddNoteDialog"

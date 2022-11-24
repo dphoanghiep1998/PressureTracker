@@ -15,9 +15,11 @@ import com.example.bloodpressureapp.common.utils.getDrawable
 import com.example.bloodpressureapp.databinding.FragmentSettingBinding
 import com.example.bloodpressureapp.dialog.feed_back.DialogFeedBack
 import com.example.bloodpressureapp.dialog.feed_back.FeedBackCallBack
+import com.example.bloodpressureapp.dialog.rate_us.DialogRateUs
+import com.example.bloodpressureapp.dialog.rate_us.RateCallBack
 
 
-class FragmentSetting : Fragment(), FeedBackCallBack {
+class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
     private lateinit var binding: FragmentSettingBinding
 
     override fun onCreateView(
@@ -81,6 +83,10 @@ class FragmentSetting : Fragment(), FeedBackCallBack {
         binding.containerExportFile.root.setOnClickListener {
 
         }
+        binding.containerRate.root.setOnClickListener {
+            val dialogRate = DialogRateUs(this)
+            dialogRate.show(childFragmentManager,dialogRate.tag)
+        }
     }
 
     private fun shareApp() {
@@ -119,6 +125,10 @@ class FragmentSetting : Fragment(), FeedBackCallBack {
 
     override fun onFeedBack(message: String) {
         feedBack(message)
+    }
+
+    override fun rateOnStore() {
+        openLink(Constant.URL_APP)
     }
 
 

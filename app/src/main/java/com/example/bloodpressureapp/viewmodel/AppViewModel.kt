@@ -20,6 +20,8 @@ class AppViewModel @Inject constructor(
     private val appRepo: AppRepo, @ApplicationContext private val context: Context
 ) : ViewModel() {
     var settingLanguageLocale = ""
+    var userActionRate = false
+
 
     private val notesList = MutableLiveData<MutableList<String>>()
     val liveNoteList: LiveData<MutableList<String>>
@@ -28,17 +30,22 @@ class AppViewModel @Inject constructor(
     fun setLiveNoteList(list: MutableList<String>) {
         notesList.value = list
     }
+
     fun addNote(note: String) {
-        notesList.value?.add(0,note)
+        notesList.value?.add(0, note)
         notesList.notifyObserver()
     }
+
     fun deleteNote(note: String) {
         notesList.value?.remove(note)
         notesList.notifyObserver()
     }
+
     fun getAllHistory(): LiveData<List<HistoryModel>> {
+
         return appRepo.getAllHistory()
     }
+
 
     fun deleteHistory(historyModel: HistoryModel) {
         viewModelScope.launch {

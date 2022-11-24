@@ -19,7 +19,7 @@ class HistoryAdapter(private val context: Context, private val listener: ItemHel
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
     private var mList: List<HistoryModel> = mutableListOf()
     fun setData(list: MutableList<HistoryModel>) {
-        this.mList = list
+        this.mList = list.toMutableList()
         notifyDataSetChanged()
     }
 

@@ -72,7 +72,9 @@ class FragmentInformation : Fragment() {
             ),
         )
         adapter = InfoAdapter(data)
-        val layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = object : GridLayoutManager(requireContext(), 2){
+            override fun canScrollVertically() = false
+        }
         binding.rcvInfo.addItemDecoration(SpacesItemDecoration(18));
 
         binding.rcvInfo.layoutManager = layoutManager

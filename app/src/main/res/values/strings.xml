@@ -116,4 +116,21 @@
     <string name="feed_back_instruction">Please send us some feedback!</string>
     <string name="feed_back_instruction_2">Let us upgrade better functionality and experience for this app. Thanks very much!</string>
     <string name="hint_feedback">Feed back or suggestion</string>
+    <string name="the_best_we_can_get">The best we can get ;)</string>
+    <string name="oh_no">Oh No!</string>
+    <string name="so_amazing">So Amazing!</string>
+    <string name="we_like_you_too">We like you too!</string>
+
+    <string name="ask_for_rate">We are working hard for a better user experience. We’d greatly appreciate if you can rate us.</string>
+    <string name="expressive_bad">We’re sorry you had a bad experience. Please leave us some feedback.</string>
+    <string name="expressive_normal">We would like the opportunity to investigate your feedback further. </string>
+    <string name="expressive_bad_a_little">We understand you are not happy with the service you received. Please leave us some feedback.</string>
+    <string name="expressive_good">Thank you so much for the wonderful review.</string>
+    <string name="expressive_best">Thank you so much for taking the time to leave us your review.</string>
+    <string name="rate_on_google_play">Rate On Google Play</string>
+    <string name="maybe_later">Maybe Later</string>
+    <string name="rate_us_button">Rate Us</string>
+    <string name="please_rate">Please rate!</string>
+    <string name="min">Min</string>
+    <string name="average">Average</string>
 </resources>
