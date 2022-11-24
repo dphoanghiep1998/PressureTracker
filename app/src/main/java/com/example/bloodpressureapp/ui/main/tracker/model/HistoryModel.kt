@@ -20,11 +20,6 @@ class HistoryModel(
     var notes: MutableList<String> = mutableListOf()
 
 ) : Parcelable {
-    init {
-        val calendar = Calendar.getInstance()
-        time =  "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
-        date =  DateTimeUtils.getDateConverted(Date(System.currentTimeMillis())).toString()
-    }
 
     fun toHistoryEntity(): HistoryEntity {
         val historyId = if (id == -1) 0 else id

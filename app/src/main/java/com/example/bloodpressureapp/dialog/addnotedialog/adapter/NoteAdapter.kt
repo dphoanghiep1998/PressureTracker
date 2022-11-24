@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.databinding.ItemNoteBinding
-import java.util.*
-import kotlin.collections.HashSet
 
 
 interface ItemTouchListener {
@@ -26,7 +24,7 @@ class NoteAdapter(private val listener: ItemTouchListener, private val showDelet
     private val diffCallback = DiffCallback(noteList, mutableListOf())
     private val diffCallBackSelected = DiffCallback(selectedNotes, mutableListOf())
     fun setData(newList: MutableList<String>) {
-        diffCallback.newList = newList
+        diffCallback.newList = newList.toMutableList()
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         noteList.clear()
         noteList.addAll(newList)
@@ -34,7 +32,7 @@ class NoteAdapter(private val listener: ItemTouchListener, private val showDelet
     }
 
     fun setSelectedNoteList(newList:MutableList<String>){
-        diffCallBackSelected.newList = newList
+        diffCallBackSelected.newList = newList.toMutableList()
         val diffResult = DiffUtil.calculateDiff(diffCallBackSelected)
         selectedNotes.clear()
         selectedNotes.addAll(newList)
@@ -52,7 +50,6 @@ class NoteAdapter(private val listener: ItemTouchListener, private val showDelet
         with(holder) {
             with(noteList[position]) {
                 if (this in selectedNotes) {
-                    Log.d("TAG", "onBindViewHolder: "+selectedNotes.size)
                     binding.root.setBackgroundResource(R.drawable.bg_secondary02_corner50)
                 } else {
                     binding.root.setBackgroundResource(R.drawable.bg_neutral01_corner50)
@@ -75,8 +72,8 @@ class NoteAdapter(private val listener: ItemTouchListener, private val showDelet
                         } else {
                             selectedNotes.add(this)
                         }
-                        notifyItemChanged(position)
                         listener.onTouchItem(selectedNotes)
+                        notifyItemChanged(adapterPosition)
                     }
                 }
 

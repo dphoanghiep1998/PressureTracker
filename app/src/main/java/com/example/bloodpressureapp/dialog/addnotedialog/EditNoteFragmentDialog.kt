@@ -86,7 +86,6 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
                     Collections.swap(it, fromPosition, toPosition)
                     viewModel.setLiveNoteList(it)
                 }
-
                 return false
             }
 

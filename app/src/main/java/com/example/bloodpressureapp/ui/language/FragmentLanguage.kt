@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.share_preference.AppSharePreference
 import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.common.utils.supportedLanguages
@@ -21,6 +23,7 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
     private lateinit var adapter: LanguageAdapter
     private var selectedLocale: Locale = supportedLanguages()[0]
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,28 +34,44 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getDataFromBundle()
         initView()
+    }
+
+    private fun getDataFromBundle() {
+        initButton()
+        val bundle = this.arguments
+        bundle?.let {
+            val isFromSetting = it.getBoolean(Constant.KEY_FROM_SETTING)
+            if (isFromSetting) {
+                binding.btnCheck.setOnClickListener {
+                    AppSharePreference.INSTANCE.saveLanguage(selectedLocale.language)
+                    findNavController().popBackStack()
+                }
+            }
+        }
     }
 
     private fun initView() {
         initRecycleView()
-        initButton()
     }
 
+
     private fun initButton() {
-        binding.btnCheck.setOnClickListener{
+        binding.btnCheck.setOnClickListener {
             AppSharePreference.INSTANCE.saveLanguage(selectedLocale.language)
             navigateToPage(R.id.action_fragmentLanguage_to_fragmentOnboard)
         }
     }
 
     private fun initRecycleView() {
-        val adapter = LanguageAdapter(requireContext(), this)
+        adapter = LanguageAdapter(requireContext(), this)
         adapter.setCurrentLanguage(getCurrentLanguage())
         binding.rcvLanguage.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rcvLanguage.adapter = adapter
     }
+
     private fun getCurrentLanguage(): String {
         return AppSharePreference.INSTANCE.getSavedLanguage(Locale.getDefault().language)
     }
@@ -60,5 +79,6 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
     override fun onClickLanguage(locale: Locale) {
         selectedLocale = locale
     }
+
 
 }

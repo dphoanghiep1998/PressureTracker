@@ -8,14 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.getDrawable
-import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentSettingBinding
+import com.example.bloodpressureapp.dialog.feed_back.DialogFeedBack
+import com.example.bloodpressureapp.dialog.feed_back.FeedBackCallBack
 
 
-class FragmentSetting : Fragment() {
+class FragmentSetting : Fragment(), FeedBackCallBack {
     private lateinit var binding: FragmentSettingBinding
 
     override fun onCreateView(
@@ -62,13 +64,16 @@ class FragmentSetting : Fragment() {
 
     private fun initAction() {
         binding.containerLanguage.root.setOnClickListener {
-            navigateToPage(R.id.action_fragmentSetting_to_fragmentLanguage2)
+            val bundle = Bundle()
+            bundle.putBoolean(Constant.KEY_FROM_SETTING, true)
+            findNavController().navigate(R.id.action_fragmentSetting_to_fragmentLanguage2, bundle)
         }
         binding.containerShare.root.setOnClickListener {
             shareApp()
         }
         binding.containerFeedBack.root.setOnClickListener {
-            feedBack()
+            val dialogFeedBack = DialogFeedBack(this)
+            dialogFeedBack.show(childFragmentManager, dialogFeedBack.tag)
         }
         binding.containerPrivacy.root.setOnClickListener {
             openLink(Constant.URL_PRIVACY)
@@ -89,18 +94,19 @@ class FragmentSetting : Fragment() {
         }
     }
 
-    private fun feedBack() {
+    private fun feedBack(message:String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             setDataAndType(Uri.parse("mailto:"), "message/rfc822")
             putExtra(Intent.EXTRA_EMAIL, arrayOf("", Constant.MAIL_TO))
             putExtra(
                 Intent.EXTRA_SUBJECT,
-                "${getString(R.string.app_name)} - SDK_CLIENT ${Build.VERSION.SDK_INT}"
+                "${getString(R.string.app_name)} - SDK_CLIENT ${Build.VERSION.SDK_INT} /n${message}"
             )
 
         }
         startActivity(intent)
     }
+
     private fun openLink(strUri: String?) {
         try {
             val uri = Uri.parse(strUri)
@@ -109,6 +115,10 @@ class FragmentSetting : Fragment() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onFeedBack(message: String) {
+        feedBack(message)
     }
 
 

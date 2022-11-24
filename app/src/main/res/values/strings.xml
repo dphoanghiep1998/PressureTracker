@@ -105,4 +105,15 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="rate_us">Rate us</string>
     <string name="share">Share</string>
+    <string name="info_title"><![CDATA[Info & Knowledge]]></string>
+    <string name="info_1">Learn About Blood Pressure</string>
+    <string name="info_2">Is my Blood Pressure normal?</string>
+    <string name="info_3">Who is at risk for high blood pressure?</string>
+    <string name="info_4">How can I prevent high blood pressure?</string>
+    <string name="info_5">Diet plan to prevent hypertension DASH</string>
+    <string name="info_6">High Blood Pressure in Pregnancy?</string>
+    <string name="info_7">Lower BloodPressure by Exercises</string>
+    <string name="feed_back_instruction">Please send us some feedback!</string>
+    <string name="feed_back_instruction_2">Let us upgrade better functionality and experience for this app. Thanks very much!</string>
+    <string name="hint_feedback">Feed back or suggestion</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.bloodpressureapp.dialog.addnotedialog
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +23,13 @@ import com.example.bloodpressureapp.dialog.addnotedialog.adapter.NoteAdapter
 import com.example.bloodpressureapp.viewmodel.AppViewModel
 import com.google.android.flexbox.*
 
-class AddNoteDialog : DialogFragment(), ItemTouchListener {
+
+class AddNoteDialog :
+    DialogFragment(), ItemTouchListener {
     private lateinit var binding: DialogAddNoteBinding
     private lateinit var adapter: NoteAdapter
     private val viewModel: AppViewModel by activityViewModels()
-    private var selectedNotes: MutableList<String> = mutableListOf()
+    private var selectedNotes: ArrayList<String> = arrayListOf()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val root = ConstraintLayout(requireContext())
@@ -56,15 +59,10 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initValue()
         initView()
         observeNoteList()
-        observeSelectedList()
+        getDataFromBundle()
 
-    }
-
-    private fun initValue() {
-        selectedNotes = mutableListOf()
     }
 
     private fun initView() {
@@ -83,8 +81,12 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
             dismiss()
         }
         binding.btnSave.setOnClickListener {
-            viewModel.setLiveSelectedNoteList(selectedNotes)
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                Constant.KEY_SELECTED_NOTE_LIST,
+                selectedNotes
+            )
             findNavController().popBackStack()
+
         }
     }
 
@@ -98,21 +100,27 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
         layoutManager.flexWrap = FlexWrap.WRAP
         binding.rcvNotes.layoutManager = layoutManager
     }
+
     private fun observeNoteList() {
-        viewModel.liveNoteList.observe(viewLifecycleOwner) {
+        viewModel.liveNoteList.observe(requireActivity()) {
             adapter.setData(it)
             AppSharePreference.INSTANCE.saveListNote(it)
         }
     }
 
-    private fun observeSelectedList(){
-        viewModel.liveSelectedNoteList.observe(viewLifecycleOwner){
-            selectedNotes.clear()
-            selectedNotes.addAll(it)
-            adapter.setSelectedNoteList(it)
+    private fun getDataFromBundle() {
+        val bundle: Bundle? = this.arguments
+        if (bundle != null) {
+            Log.d("TAG", "getDataFromBundle: ")
+            val selectedList: ArrayList<String>? =
+                bundle.getStringArrayList(Constant.KEY_SELECTED_NOTE_LIST)
+            selectedList?.let {
+                selectedNotes.clear()
+                selectedNotes.addAll(it)
+                adapter.setSelectedNoteList(it)
+            }
         }
     }
-
 
     override fun onTouchItem(listNote: MutableList<String>) {
         selectedNotes.clear()
@@ -122,7 +130,6 @@ class AddNoteDialog : DialogFragment(), ItemTouchListener {
     override fun onDeleteItem(note: String) {
         //Do nothing in this fragment
     }
-
 
 
 }

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/neutral_01"
-            android:paddingHorizontal="@dimen/_14sdp"
+            android:paddingStart="@dimen/_14sdp"
             android:paddingVertical="@dimen/_10sdp">
 
             <TextView
@@ -63,7 +63,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
                 app:layout_constraintEnd_toStartOf="@id/btn_edit"
                 app:layout_constraintStart_toEndOf="@id/line">
 
@@ -121,8 +120,9 @@
 
             <ImageView
                 android:id="@+id/btn_edit"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_44sdp"
+                android:layout_height="@dimen/_44sdp"
+                android:padding="@dimen/_12sdp"
                 android:src="@drawable/ic_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

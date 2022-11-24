@@ -1,22 +1,82 @@
 package com.example.bloodpressureapp.ui.main.info
 
+import com.example.bloodpressureapp.ui.main.info.adapter.SpacesItemDecoration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.databinding.FragmentInfomationBinding
+import com.example.bloodpressureapp.ui.main.info.adapter.InfoAdapter
 
 
 class FragmentInformation : Fragment() {
-
     private lateinit var binding: FragmentInfomationBinding
+    private lateinit var adapter: InfoAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentInfomationBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    private fun initView() {
+        initRecycleView()
+    }
+
+    private fun initRecycleView() {
+        val data = mutableListOf(
+            DataInfoModel(
+                R.drawable.ic_info_1,
+                getString(R.string.info_1),
+                getColor(R.color.cbp_01)
+            ),
+            DataInfoModel(
+                R.drawable.ic_info_2,
+                getString(R.string.info_2),
+                getColor(R.color.cbp_02)
+            ),
+            DataInfoModel(
+                R.drawable.ic_info_3,
+                getString(R.string.info_3),
+                getColor(R.color.cbp_03)
+            ),
+            DataInfoModel(
+                R.drawable.ic_info_4,
+                getString(R.string.info_4),
+                getColor(R.color.cbp_04)
+            ),
+            DataInfoModel(
+                R.drawable.ic_info_5,
+                getString(R.string.info_5),
+                getColor(R.color.cbp_05)
+            ),
+            DataInfoModel(
+                R.drawable.ic_info_6,
+                getString(R.string.info_6),
+                getColor(R.color.cbp_01)
+            ),
+            DataInfoModel(
+                R.drawable.ic_info_7,
+                getString(R.string.info_7),
+                getColor(R.color.cbp_02)
+            ),
+        )
+        adapter = InfoAdapter(data)
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rcvInfo.addItemDecoration(SpacesItemDecoration(18));
+
+        binding.rcvInfo.layoutManager = layoutManager
+        binding.rcvInfo.adapter = adapter
     }
 
 }

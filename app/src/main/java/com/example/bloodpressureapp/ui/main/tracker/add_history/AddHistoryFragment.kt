@@ -2,7 +2,6 @@ package com.example.bloodpressureapp.ui.main.tracker.add_history
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.DateTimeUtils
 import com.example.bloodpressureapp.common.utils.getColor
-import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentAddHistoryBinding
 import com.example.bloodpressureapp.dialog.addnotedialog.ConfirmDialogCallBack
 import com.example.bloodpressureapp.dialog.addnotedialog.DeleteConfirmDialog
@@ -29,40 +27,49 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
     private lateinit var binding: FragmentAddHistoryBinding
     private val viewModel: AppViewModel by activityViewModels()
     private var historyModel = HistoryModel()
+    private var selectedNoteList = arrayListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddHistoryBinding.inflate(layoutInflater)
-        getDataFromBundle()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getDataFromBundle()
         initView()
-        observeSelectedNoteList()
+        observeBackStack()
+
+
     }
+
 
     private fun getDataFromBundle() {
         val bundle: Bundle? = this.arguments
         if (bundle != null) {
             val model: Parcelable? = bundle.getParcelable(Constant.KEY_HISTORY_MODEL)
             if (model != null) {
-                Log.d("TAG", "nhay vao day nay: ")
                 historyModel = model as HistoryModel
                 binding.tvTitle.text = getText(R.string.edit)
                 binding.btnDelete.visibility = View.VISIBLE
-                if (model.notes.isNotEmpty()) {
-                    viewModel.setLiveSelectedNoteList(model.notes)
-                }
+                selectedNoteList.clear()
+                selectedNoteList.addAll(model.notes)
             } else {
-                Log.d("TAG", "nhay vao kia kia: ")
                 binding.tvTitle.text = getText(R.string.new_record)
                 binding.btnDelete.visibility = View.GONE
             }
+        } else {
+            val calendar = Calendar.getInstance()
+            val time = "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
+            val date = DateTimeUtils.getDateConverted(Date(System.currentTimeMillis())).toString()
+            historyModel.time = time
+            historyModel.date = date
+            selectedNoteList.clear()
         }
+
     }
 
 
@@ -74,11 +81,8 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
     }
 
     private fun initContentView() {
-        val calendar = Calendar.getInstance()
-        binding.tvTimeValue.text =
-            "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
-        binding.tvDateTimeValue.text =
-            DateTimeUtils.getDateConverted(Date(System.currentTimeMillis()))
+        binding.tvTimeValue.text = historyModel.time
+        binding.tvDateTimeValue.text = historyModel.date
     }
 
     private fun initButton() {
@@ -86,7 +90,9 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
             findNavController().popBackStack()
         }
         binding.btnNote.setOnClickListener {
-            navigateToPage(R.id.action_addHistoryFragment_to_addNoteDialog)
+            val bundle = Bundle()
+            bundle.putStringArrayList(Constant.KEY_SELECTED_NOTE_LIST, selectedNoteList)
+            findNavController().navigate(R.id.action_addHistoryFragment_to_addNoteDialog,bundle)
         }
         binding.containerCalendar.setOnClickListener {
             val picker = MaterialDatePicker.Builder.datePicker().build()
@@ -96,6 +102,7 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
                 binding.tvDateTimeValue.text = DateTimeUtils.getDateConverted(Date(it))
             }
         }
+
         binding.containerTimer.setOnClickListener {
             val calendar = Calendar.getInstance()
             val picker = MaterialTimePicker.Builder()
@@ -117,7 +124,6 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
         }
 
         binding.btnSave.setOnClickListener {
-            Log.d("TAG", "initButton: "+viewModel.liveSelectedNoteList.value?.size)
             viewModel.insertHistory(historyModel)
             findNavController().popBackStack()
         }
@@ -126,6 +132,7 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
             deleteConfirmDialog.show(childFragmentManager, deleteConfirmDialog.tag)
         }
     }
+
 
     private fun setStatus(systolic: Int, diastolic: Int) {
         var status = getString(R.string.normal_blood_pressure)
@@ -191,8 +198,12 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
         }
     }
 
-    private fun observeSelectedNoteList() {
-        viewModel.liveSelectedNoteList.observe(viewLifecycleOwner) {
+    private fun observeBackStack() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<MutableList<String>>(
+            Constant.KEY_SELECTED_NOTE_LIST
+        )?.observe(viewLifecycleOwner) { it ->
+            selectedNoteList.clear()
+            selectedNoteList.addAll(it)
             historyModel.notes.clear()
             historyModel.notes.addAll(it)
         }
@@ -203,5 +214,6 @@ class AddHistoryFragment : Fragment(), ConfirmDialogCallBack {
         viewModel.deleteHistory(historyModel)
         findNavController().popBackStack()
     }
+
 
 }
