@@ -91,6 +91,8 @@ class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
         binding.root.setOnClickListener {
             dismiss()
         }
+        binding.containerMain.setOnClickListener(null)
+
         val groupImageStatus = listOf(
             R.drawable.ic_status_1,
             R.drawable.ic_status_2,
@@ -134,9 +136,9 @@ class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
                     val subStar = groupStar.slice(0..index)
                     if (index < groupStar.size - 1) {
                         val subStarInActive = groupStar.slice(index + 1..4)
-                        subStarInActive.forEachIndexed { index, item ->
+                        subStarInActive.forEachIndexed { _, item ->
                             kotlin.run {
-                                if (index != 4) {
+                                if (item.id != R.id.star_5) {
                                     item.setImageDrawable(
                                         getDrawable(
                                             R.drawable.ic_start_inactive

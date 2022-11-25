@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,10 +16,17 @@ import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentTrackerBinding
 import com.example.bloodpressureapp.ui.main.tracker.adapter.HistoryAdapter
 import com.example.bloodpressureapp.ui.main.tracker.adapter.ItemHelper
+import com.example.bloodpressureapp.ui.main.tracker.chart_helper.BarChartCustomRender
+import com.example.bloodpressureapp.ui.main.tracker.chart_helper.ValueBarFormatter
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
 import com.example.bloodpressureapp.viewmodel.AppViewModel
-import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+
 
 enum class FilterType {
     MAX, MIN, AVERAGE
@@ -65,34 +73,116 @@ class FragmentTracker : Fragment(), ItemHelper {
         initRolling()
         initChart()
     }
+
     private fun initChart() {
-        binding.barChart.setTouchEnabled(false)
+
+        val xAxis = binding.barChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(mutableListOf())
+        xAxis.setCenterAxisLabels(true)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.isGranularityEnabled = true
+
+        binding.barChart.isDragEnabled = true
+//        binding.barChart.setTouchEnabled(false)
         binding.barChart.isClickable = false
         binding.barChart.isDoubleTapToZoomEnabled = false
-        binding.barChart.isDoubleTapToZoomEnabled = false
-
-        binding.barChart.setDrawBorders(false)
-        binding.barChart.setDrawGridBackground(false)
-
+        binding.barChart.xAxis.setDrawGridLines(false)
+        binding.barChart.xAxis.setDrawAxisLine(false)
         binding.barChart.description.isEnabled = false
-//        binding.barChart.legend.isEnabled = false
+        binding.barChart.axisRight.isEnabled = false
+        binding.barChart.renderer = BarChartCustomRender(
+            binding.barChart,
+            binding.barChart.animator,
+            binding.barChart.viewPortHandler,
+        )
 
-//        binding.barChart.axisLeft.setDrawGridLines(false)
-//        binding.barChart.axisLeft.setDrawLabels(false)
-//        binding.barChart.axisLeft.setDrawAxisLine(false)
 
-//        binding.barChart.xAxis.setDrawGridLines(false)
-//        binding.barChart.xAxis.setDrawLabels(false)
-//        binding.barChart.xAxis.setDrawAxisLine(false)
+        val barData = BarData()
 
-        binding.barChart.axisRight.setDrawGridLines(false)
-        binding.barChart.axisRight.setDrawLabels(false)
-        binding.barChart.axisRight.setDrawAxisLine(false)
+        binding.barChart.data = barData
+        binding.barChart.invalidate()
+
+
+    }
+
+
+    private fun getDataValue(list: List<HistoryModel>) {
+
+        var barSpace = 0.05f
+        var groupSpace = 0.4f
+        val xLabel = ArrayList<String>()
+        val dataSystolic = ArrayList<BarEntry>()
+        val dataDiastolic = ArrayList<BarEntry>()
+        if (list.isNotEmpty()) {
+
+
+            list.forEachIndexed { index, item ->
+                dataSystolic.add(BarEntry(index.toFloat(), item.systolic.toFloat()))
+                dataDiastolic.add(BarEntry(index.toFloat(), item.diastolic.toFloat()))
+                xLabel.add(item.date)
+            }
+        }
+        val barDataSet1 = BarDataSet(dataSystolic, getString(R.string.systolic))
+        val barDataSet2 = BarDataSet(dataDiastolic, getString(R.string.diastolic))
+
+        barDataSet1.setGradientColor(
+            getColor(R.color.gradient_systolic_end),
+            getColor(R.color.gradient_systolic_start)
+        )
+        barDataSet2.setGradientColor(
+            getColor(R.color.gradient_diastolic_end),
+            getColor(R.color.gradient_diastolic_start)
+        )
+        barDataSet1.valueFormatter = ValueBarFormatter()
+        barDataSet2.valueFormatter = ValueBarFormatter()
+
+        barDataSet1.color = getColor(R.color.gradient_systolic_start)
+        barDataSet2.color = getColor(R.color.gradient_diastolic_start)
+
+
+        val xAxis = binding.barChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(xLabel)
+        xAxis.textColor = getColor(R.color.neutral_03)
+        xAxis.labelCount = list.size
+        xAxis.setCenterAxisLabels(true)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.isGranularityEnabled = true
+        val typeface = ResourcesCompat.getFont(requireContext(), R.font.lexend_daca_regular_400)
+
+        binding.barChart.axisLeft.textSize = 12f
+        binding.barChart.axisLeft.textColor = getColor(R.color.neutral_04)
+        binding.barChart.axisLeft.typeface = typeface
+        binding.barChart.legend.textSize = 12f;
+        binding.barChart.legend.textColor = getColor(R.color.neutral_04)
+        binding.barChart.legend.form = Legend.LegendForm.CIRCLE;
+
+        binding.barChart.renderer = BarChartCustomRender(
+            binding.barChart,
+            binding.barChart.animator,
+            binding.barChart.viewPortHandler,
+        )
+        val barData = BarData()
+
+        barData.barWidth = .25f
+        barData.addDataSet(barDataSet1)
+        barData.addDataSet(barDataSet2)
+        binding.barChart.data = barData
+        binding.barChart.setScaleMinima(1f, 1f)
+
         binding.barChart.axisLeft.axisMinimum = 0f
-        binding.barChart.animateY(1000, Easing.EaseOutBack);
-        binding.barChart.setNoDataText("")
+        binding.barChart.axisLeft.axisMaximum = 300f
 
-        var barChart = ArrayList<BarEntry>()
+        binding.barChart.xAxis.axisMinimum = 0f
+        binding.barChart.xAxis.axisMaximum =
+            0f + binding.barChart.barData.getGroupWidth(groupSpace, barSpace) * list.size
+        binding.barChart.groupBars(0f, groupSpace, barSpace)
+        binding.barChart.notifyDataSetChanged()
+        binding.barChart.invalidate()
+
+        binding.barChart.setVisibleXRangeMaximum(3f)
+
 
     }
 
@@ -168,7 +258,14 @@ class FragmentTracker : Fragment(), ItemHelper {
 
     private fun observeListHistory() {
         viewModel.getAllHistory().observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.containerAllHistory.visibility = View.GONE
+            } else {
+                binding.containerAllHistory.visibility = View.VISIBLE
+
+            }
             calculateValue(it)
+            getDataValue(it)
             adapter.setData(it.toMutableList())
         }
     }
@@ -178,6 +275,9 @@ class FragmentTracker : Fragment(), ItemHelper {
             navigateToPage(R.id.action_fragmentTracker_to_addHistoryFragment)
         }
         binding.btnHistory.setOnClickListener {
+            navigateToPage(R.id.action_fragmentTracker_to_fragmentHistory)
+        }
+        binding.containerAllHistory.setOnClickListener {
             navigateToPage(R.id.action_fragmentTracker_to_fragmentHistory)
         }
     }
@@ -268,14 +368,14 @@ class FragmentTracker : Fragment(), ItemHelper {
             tmpAveragePulse /= list.size
             tmpAverageSystolic /= list.size
 
-            if (tmpMaxSystolic > 300) {
-                tmpMaxSystolic = 0
+            if (tmpMinSystolic > 300) {
+                tmpMinSystolic = 0
             }
-            if (tmpMaxDiastolic > 300) {
-                tmpMaxDiastolic = 0
+            if (tmpMinDiastolic > 300) {
+                tmpMinDiastolic = 0
             }
-            if (tmpMaxPulse > 300) {
-                tmpMaxPulse = 0
+            if (tmpMinPulse > 300) {
+                tmpMinPulse = 0
             }
             observeFilterType(filterType)
 

@@ -21,7 +21,11 @@
         android:id="@+id/fragmentInformation"
         android:name="com.example.bloodpressureapp.ui.main.info.FragmentInformation"
         android:label="FragmentInformation"
-        tools:layout="@layout/fragment_infomation"/>
+        tools:layout="@layout/fragment_infomation">
+        <action
+            android:id="@+id/action_fragmentInformation_to_fragmentInfoContent"
+            app:destination="@id/fragmentInfoContent" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentSetting"
         android:name="com.example.bloodpressureapp.ui.main.setting.FragmentSetting"
@@ -78,4 +82,8 @@
         android:name="com.example.bloodpressureapp.ui.language.FragmentLanguage"
         android:label="fragment_language"
         tools:layout="@layout/fragment_language" />
+    <fragment
+        android:id="@+id/fragmentInfoContent"
+        android:name="com.example.bloodpressureapp.ui.main.info.content.FragmentInfoContent"
+        android:label="FragmentInfoContent" />
 </navigation>

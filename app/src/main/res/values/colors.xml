@@ -25,4 +25,10 @@
     <color name="cbp_03">#E1A60E</color>
     <color name="cbp_04">#FF6A00</color>
     <color name="cbp_05">#D62626</color>
+
+    <color name="gradient_systolic_start">#E1A60E</color>
+    <color name="gradient_systolic_end">#22E1A60E</color>
+
+    <color name="gradient_diastolic_start">#00C57E</color>
+    <color name="gradient_diastolic_end">#0D00C57E</color>
 </resources>

@@ -71,6 +71,7 @@ class AddNoteDialog :
     }
 
     private fun initButton() {
+        binding.containerMain.setOnClickListener {  }
         binding.root.setOnClickListener {
             dismiss()
         }

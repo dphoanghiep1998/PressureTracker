@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.fixBlinking
 import com.example.bloodpressureapp.databinding.FragmentMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
@@ -49,6 +50,7 @@ class FragmentMain : Fragment() {
                 else -> hideBottomNav()
             }
         }
+//        binding.navBottom.fixBlinking()
     }
 
     private fun showBottomNav() {

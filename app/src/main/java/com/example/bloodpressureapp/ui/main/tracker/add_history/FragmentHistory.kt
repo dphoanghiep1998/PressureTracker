@@ -41,6 +41,13 @@ class FragmentHistory : Fragment(), ItemHelper {
 
     private fun observeListHistory() {
         viewModel.getAllHistory().observe(viewLifecycleOwner) {
+            if(it.isEmpty()){
+                binding.containerEmpty.visibility = View.VISIBLE
+                binding.rcvHistory.visibility = View.GONE
+            }else{
+                binding.containerEmpty.visibility = View.GONE
+                binding.rcvHistory.visibility = View.VISIBLE
+            }
             adapter.setData(it.toMutableList())
         }
     }

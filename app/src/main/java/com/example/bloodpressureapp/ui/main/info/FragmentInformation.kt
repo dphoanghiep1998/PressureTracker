@@ -1,19 +1,22 @@
 package com.example.bloodpressureapp.ui.main.info
 
-import com.example.bloodpressureapp.ui.main.info.adapter.SpacesItemDecoration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.databinding.FragmentInfomationBinding
 import com.example.bloodpressureapp.ui.main.info.adapter.InfoAdapter
+import com.example.bloodpressureapp.ui.main.info.adapter.ItemTouchListener
+import com.example.bloodpressureapp.ui.main.info.adapter.SpacesItemDecoration
 
 
-class FragmentInformation : Fragment() {
+class FragmentInformation : Fragment(), ItemTouchListener {
     private lateinit var binding: FragmentInfomationBinding
     private lateinit var adapter: InfoAdapter
     override fun onCreateView(
@@ -71,14 +74,23 @@ class FragmentInformation : Fragment() {
                 getColor(R.color.cbp_02)
             ),
         )
-        adapter = InfoAdapter(data)
-        val layoutManager = object : GridLayoutManager(requireContext(), 2){
+        adapter = InfoAdapter(data, this)
+        val layoutManager = object : GridLayoutManager(requireContext(), 2) {
             override fun canScrollVertically() = false
         }
         binding.rcvInfo.addItemDecoration(SpacesItemDecoration(18));
 
         binding.rcvInfo.layoutManager = layoutManager
         binding.rcvInfo.adapter = adapter
+    }
+
+    override fun onClickItem(position: Int) {
+
+        val bundle = Bundle()
+        bundle.putInt(Constant.KEY_INFORMATION, position)
+        findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfoContent,bundle)
+
+
     }
 
 }
