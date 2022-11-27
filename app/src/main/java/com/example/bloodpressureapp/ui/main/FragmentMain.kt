@@ -1,24 +1,33 @@
 package com.example.bloodpressureapp.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.bloodpressureapp.R
-import com.example.bloodpressureapp.common.utils.fixBlinking
+import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.databinding.FragmentMainBinding
+import com.example.bloodpressureapp.dialog.rate_us.DialogRateUs
+import com.example.bloodpressureapp.dialog.rate_us.RateCallBack
+import com.example.bloodpressureapp.viewmodel.AppViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 
 
-class FragmentMain : Fragment() {
+class FragmentMain : Fragment(), RateCallBack {
     private lateinit var binding: FragmentMainBinding
-
+    private val viewModel: AppViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,11 +39,22 @@ class FragmentMain : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        setStatusColor()
+        changeBackPressCallBack()
     }
 
     private fun initView() {
         initBottomNav()
         initControllerNav()
+    }
+    private fun setStatusColor(){
+        val window = requireActivity().window
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+        window.statusBarColor = ContextCompat.getColor(requireActivity(),R.color.primary)
     }
 
     private fun initControllerNav() {
@@ -50,7 +70,6 @@ class FragmentMain : Fragment() {
                 else -> hideBottomNav()
             }
         }
-//        binding.navBottom.fixBlinking()
     }
 
     private fun showBottomNav() {
@@ -70,14 +89,14 @@ class FragmentMain : Fragment() {
             (bottomNavigationMenuView.getChildAt(i) as BottomNavigationItemView).setIconTintList(
                 null
             )
-            if(i == 1){
+            if (i == 1) {
                 (bottomNavigationMenuView.getChildAt(i) as BottomNavigationItemView).setIconSize(
                     TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP, 60f,
                         resources.displayMetrics
                     ).toInt()
                 )
-            }else{
+            } else {
                 (bottomNavigationMenuView.getChildAt(i) as BottomNavigationItemView).setIconSize(
                     TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP, 30f,
@@ -89,5 +108,44 @@ class FragmentMain : Fragment() {
         }
 
     }
+
+    private fun changeBackPressCallBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (viewModel.userActionRate) {
+                        requireActivity().finishAffinity()
+                    } else {
+                        val dialogRateUs = DialogRateUs(this@FragmentMain)
+                        dialogRateUs.show(childFragmentManager, dialogRateUs.tag)
+                    }
+
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+
+    private fun openLink(strUri: String?) {
+        try {
+            val uri = Uri.parse(strUri)
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onNegativePressed() {
+        requireActivity().finishAffinity()
+    }
+
+    override fun onPositivePressed(star: Int) {
+        if (star == 5) {
+            openLink(Constant.URL_APP)
+        }
+        requireActivity().finishAffinity()
+    }
+
 
 }

@@ -8,8 +8,8 @@
         android:id="@+id/imv_onboard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/ic_onboard"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintDimensionRatio="360:338"
+        android:src="@drawable/ic_onboard_1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

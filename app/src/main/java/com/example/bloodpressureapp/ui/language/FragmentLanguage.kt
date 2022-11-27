@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,10 +33,19 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getDataFromBundle()
         initView()
+        changeBackPressCallBack()
+    }
+
+    private fun deliveryFlow() {
+        val initFirstDone = AppSharePreference.INSTANCE.getInitDone(false)
+        if (initFirstDone) {
+            findNavController().navigate(R.id.action_fragmentLanguage_to_fragmentMain)
+        }
     }
 
     private fun getDataFromBundle() {
@@ -49,6 +59,9 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
                     findNavController().popBackStack()
                 }
             }
+        }
+        if(bundle == null){
+            deliveryFlow()
         }
     }
 
@@ -78,6 +91,16 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
 
     override fun onClickLanguage(locale: Locale) {
         selectedLocale = locale
+    }
+
+    private fun changeBackPressCallBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 

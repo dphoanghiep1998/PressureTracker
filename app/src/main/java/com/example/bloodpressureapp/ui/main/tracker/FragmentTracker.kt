@@ -108,9 +108,8 @@ class FragmentTracker : Fragment(), ItemHelper {
 
 
     private fun getDataValue(list: List<HistoryModel>) {
-
-        var barSpace = 0.05f
-        var groupSpace = 0.4f
+        val barSpace = 0.05f
+        val groupSpace = 0.4f
         val xLabel = ArrayList<String>()
         val dataSystolic = ArrayList<BarEntry>()
         val dataDiastolic = ArrayList<BarEntry>()
@@ -154,9 +153,9 @@ class FragmentTracker : Fragment(), ItemHelper {
         binding.barChart.axisLeft.textSize = 12f
         binding.barChart.axisLeft.textColor = getColor(R.color.neutral_04)
         binding.barChart.axisLeft.typeface = typeface
-        binding.barChart.legend.textSize = 12f;
+        binding.barChart.legend.textSize = 12f
         binding.barChart.legend.textColor = getColor(R.color.neutral_04)
-        binding.barChart.legend.form = Legend.LegendForm.CIRCLE;
+        binding.barChart.legend.form = Legend.LegendForm.CIRCLE
 
         binding.barChart.renderer = BarChartCustomRender(
             binding.barChart,
@@ -283,7 +282,7 @@ class FragmentTracker : Fragment(), ItemHelper {
     }
 
     private fun initRcv() {
-        adapter = HistoryAdapter(requireContext(), this)
+        adapter = HistoryAdapter(this)
 
         val linearLayoutManager = object : LinearLayoutManager(requireContext()) {
             override fun canScrollVertically() = false

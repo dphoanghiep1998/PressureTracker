@@ -10,6 +10,7 @@ import com.example.bloodpressureapp.common.share_preference.AppSharePreference
 import com.example.bloodpressureapp.common.utils.notifyObserver
 import com.example.bloodpressureapp.data.repositories.AppRepo
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
+import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -64,6 +65,15 @@ class AppViewModel @Inject constructor(
             appRepo.insertHistoryModel(historyModel)
         }
     }
+//
+//    fun genCSVFile(){
+//        csvWriter().open("data.csv"){
+//            writeRow(listOf("[id]","[systolic]","[diastolic]","[pulse]","[notes]","[date]","[time]","[status]"))
+//            appRepo.getAllHistory().value?.forEachIndexed {index,item ->
+//                writeRow(listOf(index,item.id,item.systolic,item.diastolic,item.pulse,item.notes,item.date,item.time,item.status))
+//            }
+//        }
+//    }
 
     init {
         var listNote = AppSharePreference.INSTANCE.getListNote(mutableListOf())

@@ -1,26 +1,29 @@
 package com.example.bloodpressureapp.ui.main.tracker.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.databinding.ItemHistoryBinding
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
-import kotlin.math.log
 
 interface ItemHelper {
     fun onClickEdit(item: HistoryModel)
 }
 
-class HistoryAdapter(private val context: Context, private val listener: ItemHelper) :
+class HistoryAdapter(private val listener: ItemHelper) :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
-    private var mList: List<HistoryModel> = mutableListOf()
+    private var mList: MutableList<HistoryModel> = mutableListOf()
+    private val diffCallback = DiffCallback(mList, mutableListOf())
+
     fun setData(list: MutableList<HistoryModel>) {
-        this.mList = list.toMutableList()
-        notifyDataSetChanged()
+        diffCallback.newList = list
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        mList.clear()
+        mList.addAll(list)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     inner class HistoryViewHolder(val binding: ItemHistoryBinding) :
@@ -48,7 +51,6 @@ class HistoryAdapter(private val context: Context, private val listener: ItemHel
                 binding.btnEdit.setOnClickListener {
                     listener.onClickEdit(this)
                 }
-                Log.d("onBindViewHolder", "onBindViewHolder: "+this.notes.size)
                 if (this.notes.isNotEmpty()) {
                     var notesString =""
                     this.notes.forEachIndexed { index, item ->

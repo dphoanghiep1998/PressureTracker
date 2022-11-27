@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.share_preference.AppSharePreference
 import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentOnboardBinding
 import com.example.bloodpressureapp.ui.onboard.adapter.ViewPagerAdapter
 import com.example.bloodpressureapp.ui.onboard.child_fragment.FragmentHealth
 import com.example.bloodpressureapp.ui.onboard.child_fragment.FragmentPressure
 import com.example.bloodpressureapp.ui.onboard.child_fragment.FragmentTool
+
 
 class FragmentOnboard : Fragment() {
     private lateinit var binding: FragmentOnboardBinding
@@ -29,6 +33,7 @@ class FragmentOnboard : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        setStatusColor()
     }
 
     private fun initView() {
@@ -36,6 +41,15 @@ class FragmentOnboard : Fragment() {
         initViewPager()
         firstInit()
 
+    }
+    private fun setStatusColor(){
+        val window = requireActivity().window
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+        window.statusBarColor = ContextCompat.getColor(requireActivity(),R.color.neutral_01)
     }
 
     private fun initButton() {
@@ -48,9 +62,11 @@ class FragmentOnboard : Fragment() {
             binding.vpOnboard.currentItem = currentItem + 1
         }
         binding.btnStart.setOnClickListener{
+            AppSharePreference.INSTANCE.saveInitFirstDone(true)
             navigateToPage(R.id.action_fragmentOnboard_to_fragmentMain)
         }
         binding.btnSkip.setOnClickListener{
+            AppSharePreference.INSTANCE.saveInitFirstDone(true)
             navigateToPage(R.id.action_fragmentOnboard_to_fragmentMain)
         }
     }

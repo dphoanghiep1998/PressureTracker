@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -24,6 +23,7 @@
                 android:layout_height="@dimen/_36sdp"
                 android:padding="@dimen/_8sdp"
                 android:src="@drawable/ic_back"
+                android:foreground="@drawable/fg_ripple_effect"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -133,10 +133,13 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@color/primary"
             android:layout_marginBottom="@dimen/_16sdp"
-            android:src="@drawable/ic_float_add"
+            android:src="@drawable/ic_add_floating"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@color/white" />
+            android:backgroundTint="@color/white"
+            app:tint="@color/primary"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

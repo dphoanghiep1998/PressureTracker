@@ -65,7 +65,7 @@ class FragmentHistory : Fragment(), ItemHelper {
     }
 
     private fun initRecycleView() {
-        adapter = HistoryAdapter(requireContext(), this)
+        adapter = HistoryAdapter(this)
         val linearLayoutManager = LinearLayoutManager(requireContext())
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rcvHistory.adapter = adapter

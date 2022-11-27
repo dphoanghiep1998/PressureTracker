@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@id/fragmentInformation"
+        android:id="@+id/fragmentInformation"
         android:icon="@drawable/bottom_nav_info_selector"
         android:title="@string/info" />
     <item
-        android:id="@id/fragmentTracker"
+        android:id="@+id/fragmentTracker"
         android:icon="@drawable/bottom_nav_home_selector"
         android:title=""
          />
     <item
-        android:id="@id/fragmentSetting"
+        android:id="@+id/fragmentSetting"
         android:icon="@drawable/bottom_nav_setting_selector"
         android:title="@string/setting" />
 </menu>

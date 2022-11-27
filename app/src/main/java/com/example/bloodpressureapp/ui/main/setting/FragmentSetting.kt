@@ -1,5 +1,6 @@
 package com.example.bloodpressureapp.ui.main.setting
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -7,7 +8,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
@@ -17,11 +20,13 @@ import com.example.bloodpressureapp.dialog.feed_back.DialogFeedBack
 import com.example.bloodpressureapp.dialog.feed_back.FeedBackCallBack
 import com.example.bloodpressureapp.dialog.rate_us.DialogRateUs
 import com.example.bloodpressureapp.dialog.rate_us.RateCallBack
+import com.example.bloodpressureapp.viewmodel.AppViewModel
+import java.io.File
 
 
 class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
     private lateinit var binding: FragmentSettingBinding
-
+    private val viewModel :AppViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,7 +86,6 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
             openLink(Constant.URL_PRIVACY)
         }
         binding.containerExportFile.root.setOnClickListener {
-
         }
         binding.containerRate.root.setOnClickListener {
             val dialogRate = DialogRateUs(this)
@@ -123,12 +127,39 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
         }
     }
 
+    private fun shareFile(attachment: Uri?) {
+        try {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "application/csv"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, attachment);
+            startActivity(Intent.createChooser(shareIntent, "Choose one"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    fun goToFileIntent(context: Context, file: File): Intent {
+        val intent = Intent(Intent.ACTION_VIEW)
+        val contentUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+        val mimeType = context.contentResolver.getType(contentUri)
+        intent.setDataAndType(contentUri, mimeType)
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+
+        return intent
+    }
+
     override fun onFeedBack(message: String) {
         feedBack(message)
     }
 
-    override fun rateOnStore() {
-        openLink(Constant.URL_APP)
+    override fun onNegativePressed() {
+        viewModel.userActionRate = true
+    }
+
+    override fun onPositivePressed(star: Int) {
+        viewModel.userActionRate = true
+        if(star == 5){
+            openLink(Constant.URL_APP)
+        }
     }
 
 

@@ -27,6 +27,12 @@ class AppSharePreference(private val context: Context) {
         }
     }
 
+    fun saveInitFirstDone(values: Boolean){
+        saveBoolean(Constant.KEY_FIRST_INIT,values)
+    }
+    fun getInitDone(defaultValues: Boolean):Boolean{
+        return getBoolean(Constant.KEY_FIRST_INIT,defaultValues)
+    }
 
     fun saveLanguage(values: String) {
         saveString(Constant.KEY_LANGUAGE, values)
@@ -44,6 +50,18 @@ class AppSharePreference(private val context: Context) {
         return getStringList(Constant.KEY_NOTE_LIST, defaultValues)
     }
 
+
+    private fun saveLong(key: String, values: Long) = sharedPreferences().edit {
+        putLong(key, values)
+    }
+    private fun getLong(key:String,defaultValues: Long):Long {
+        return try {
+            sharedPreferences().getLong(key, defaultValues)!!
+        } catch (e: Exception) {
+            sharedPreferences().edit { putLong(key, defaultValues) }
+            defaultValues
+        }
+    }
 
     private fun saveString(key: String, values: String): Unit =
         sharedPreferences().edit { putString(key, values) }
@@ -75,7 +93,18 @@ class AppSharePreference(private val context: Context) {
         }
     }
 
+    private fun saveBoolean(key: String, values: Boolean) {
+        sharedPreferences().edit { putBoolean(key, values) }
+    }
 
+    private fun getBoolean(key: String, defaultValues: Boolean): Boolean {
+        return try {
+            sharedPreferences().getBoolean(key, defaultValues)
+        } catch (e: Exception) {
+            sharedPreferences().edit { putBoolean(key, defaultValues) }
+            defaultValues
+        }
+    }
     private fun saveStringSet(key: String, values: HashSet<String>) {
         sharedPreferences().edit { putStringSet(key, values) }
     }

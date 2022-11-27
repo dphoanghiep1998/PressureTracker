@@ -115,6 +115,9 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:4.3")
     //flex lau lam roi toi moi dung
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.6.0")
+
+    //Ads
 
 }
 repositories {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BloodPressureApp</string>
+    <string name="app_name">BloodPressure</string>
     <array name="stringLang" translatable="false">
         <item>English</item>
         <item>Français</item>
@@ -212,4 +212,24 @@
     <string name="info_title_6">High blood pressure in pregnancy causes and ways to prevent it</string>
     <string name="info_title_5">DASH diet for people with hypertension</string>
     <string name="info_title_4">Symptoms and complications of high blood pressu</string>
+    <string name="title_notification_1">8 dangerous complications of high blood pressure</string>
+    <string name="content_notification_1">Know more about your health</string>
+    <string name="title_notification_2">5 efective ways to lower your blood pressure</string>
+    <string name="content_notification_2"><![CDATA[Click & Read more]]></string>
+    <string name="title_notification_3">5 warning signs of gestational hypertension</string>
+    <string name="learn_more">Learn more</string>
+    <string name="title_notification_4">7 Effective diets to prevent High blood pressure</string>
+    <string name="content_notification_4">Read and apply now!</string>
+    <string name="title_notification_5">5 levels of blood pressure and danger warnings</string>
+    <string name="content_notification_5">Click and read now</string>
+    <string name="title_notification_6">Do you understand blood pressure correctly?</string>
+    <string name="title_notification_7">6 factors that increase the risk of High blood pressure</string>
+    <string name="content_notification_7">Click and read now</string>
+    <string name="title_notification_8">Effective prevention of gestational hypertension</string>
+    <string name="content_notification_8">Note and Apply</string>
+    <string name="title_notification_9">Doctor\'s advice to improve High blood pressure</string>
+    <string name="title_notification_10">Prevent stroke by measuring blood pressure every day</string>
+    <string name="title_notification_12">How to Maintain Normal Blood Pressure?</string>
+    <string name="content_notification_12">Record blood pressure status daily to track your BP</string>
+    <string name="contain_ads">This action can contain ads</string>
 </resources>

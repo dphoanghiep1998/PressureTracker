@@ -18,12 +18,13 @@ import com.example.bloodpressureapp.databinding.DialogRateUsBinding
 import com.example.bloodpressureapp.viewmodel.AppViewModel
 
 interface RateCallBack {
-    fun rateOnStore()
+//    fun rateOnStore()
+    fun onNegativePressed()
+    fun onPositivePressed(star:Int)
 }
 
 class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
     private lateinit var binding: DialogRateUsBinding
-    private val viewModel: AppViewModel by activityViewModels()
     private var star = 0
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val root = ConstraintLayout(requireContext())
@@ -65,24 +66,34 @@ class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
 
     private fun initButton() {
         binding.btnRate.setOnClickListener {
-            if (star == 0) {
+//            if (star == 0) {
+//                Toast.makeText(
+//                    requireContext(),
+//                    getString(R.string.please_rate),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            } else if (star < 5) {
+//                viewModel.userActionRate = true
+//                dismiss()
+//            } else if (star == 5) {
+//                callBack.rateOnStore()
+//                dismiss()
+//            }
+            if(star == 0){
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.please_rate),
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (star < 5) {
-                viewModel.userActionRate = true
-                dismiss()
-            } else if (star == 5) {
-                callBack.rateOnStore()
-                dismiss()
+            }else{
+                callBack.onPositivePressed(star)
             }
         }
 
         binding.btnLater.setOnClickListener {
-            viewModel.userActionRate = true
+//            viewModel.userActionRate = true
             dismiss()
+            callBack.onNegativePressed()
         }
 
     }

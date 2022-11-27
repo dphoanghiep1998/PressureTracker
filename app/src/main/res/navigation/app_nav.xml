@@ -5,29 +5,37 @@
     android:id="@+id/app_nav"
     app:startDestination="@id/fragmentLanguage">
 
-    <fragment
-        android:id="@+id/fragmentMain"
-        android:name="com.example.bloodpressureapp.ui.main.FragmentMain"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
-    <fragment
-        android:id="@+id/fragmentOnboard"
-        android:name="com.example.bloodpressureapp.ui.onboard.FragmentOnboard"
-        android:label="fragment_onboard"
-        tools:layout="@layout/fragment_onboard" >
-        <action
-            android:id="@+id/action_fragmentOnboard_to_fragmentMain"
-            app:destination="@id/fragmentMain"
-            app:enterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentLanguage"
-        android:name="com.example.bloodpressureapp.ui.language.FragmentLanguage"
-        android:label="fragment_language"
-        tools:layout="@layout/fragment_language" >
-        <action
-            android:id="@+id/action_fragmentLanguage_to_fragmentOnboard"
-            app:destination="@id/fragmentOnboard" />
-    </fragment>
+
+        <fragment
+            android:id="@+id/fragmentLanguage"
+            android:name="com.example.bloodpressureapp.ui.language.FragmentLanguage"
+            android:label="fragment_language"
+            tools:layout="@layout/fragment_language">
+            <action
+                android:id="@+id/action_fragmentLanguage_to_fragmentOnboard"
+                app:destination="@id/fragmentOnboard"
+                app:enterAnim="@anim/slide_up"
+                app:popExitAnim="@anim/slide_down" />
+            <action
+                android:id="@+id/action_fragmentLanguage_to_fragmentMain"
+                app:destination="@id/fragmentMain" />
+        </fragment>
+        <fragment
+            android:id="@+id/fragmentMain"
+            android:name="com.example.bloodpressureapp.ui.main.FragmentMain"
+            android:label="fragment_main"
+            tools:layout="@layout/fragment_main" />
+        <fragment
+            android:id="@+id/fragmentOnboard"
+            android:name="com.example.bloodpressureapp.ui.onboard.FragmentOnboard"
+            android:label="fragment_onboard"
+            tools:layout="@layout/fragment_onboard">
+            <action
+
+                android:id="@+id/action_fragmentOnboard_to_fragmentMain"
+                app:destination="@id/fragmentMain"
+                app:enterAnim="@anim/slide_up"
+                app:popExitAnim="@anim/slide_down" />
+        </fragment>
+
 </navigation>

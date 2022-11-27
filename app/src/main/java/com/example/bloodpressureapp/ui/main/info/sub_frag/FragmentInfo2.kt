@@ -1,73 +1,34 @@
-package com.example.bloodpressureapp.ui.main.info.content
+package com.example.bloodpressureapp.ui.main.info.sub_frag
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
-import com.example.bloodpressureapp.common.Constant
-import com.example.bloodpressureapp.databinding.FragmentInfoContentBinding
+import com.example.bloodpressureapp.databinding.LayoutInfo2Binding
 
-
-class FragmentInfoContent : Fragment() {
-    private lateinit var binding: FragmentInfoContentBinding
+class FragmentInfo2: Fragment() {
+    private lateinit var binding: LayoutInfo2Binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentInfoContentBinding.inflate(layoutInflater)
+        binding = LayoutInfo2Binding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getDataFromBundle()
         initView()
+        changeBackPressCallBack()
     }
 
     private fun initView() {
-        initContent()
-        initButton()
-    }
-
-    private fun initButton() {
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
-
-    private fun getDataFromBundle() {
-        val bundle = this.arguments
-        bundle?.let {
-            val index = bundle.getInt(Constant.KEY_INFORMATION)
-            showLayout(index)
-        }
-    }
-
-    private fun showLayout(index: Int) {
-        val groupLayout = listOf(
-            binding.layout1,
-            binding.layout2,
-            binding.layout3,
-            binding.layout4,
-            binding.layout5,
-            binding.layout6,
-            binding.layout7
-        )
-        groupLayout.forEachIndexed { vIndex, item ->
-            if (index == vIndex) {
-                item.root.visibility = View.VISIBLE
-            } else {
-                item.root.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun initContent() {
-        with(binding.layout2) {
+        with(binding) {
             with(containerNormal) {
                 imvImageStatus.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -135,8 +96,22 @@ class FragmentInfoContent : Fragment() {
             }
         }
 
-
+        initButton()
     }
 
+    private fun initButton() {
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+    private fun changeBackPressCallBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
 
 }

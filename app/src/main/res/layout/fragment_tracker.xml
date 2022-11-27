@@ -7,17 +7,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:background="@color/neutral_01"
-        tools:context=".ui.main.tracker.FragmentTracker"
-        android:paddingBottom="@dimen/_16sdp">
+        tools:context=".ui.main.tracker.FragmentTracker">
 
         <ScrollView
-            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_24sdp"
+                >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/toolbar"
@@ -89,8 +90,8 @@
                         android:id="@+id/btn_next"
                         android:layout_width="@dimen/_44sdp"
                         android:layout_height="@dimen/_44sdp"
-                        android:padding="@dimen/_12sdp"
                         android:foreground="@drawable/fg_ripple_effect"
+                        android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_arrow_next_tracker" />
                 </LinearLayout>
 
@@ -142,29 +143,32 @@
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:paddingVertical="@dimen/_6sdp"
                     app:layout_constraintTop_toBottomOf="@id/barChart" />
+
                 <LinearLayout
                     android:id="@+id/container_all_history"
-                    android:foreground="@drawable/fg_ripple_effect"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    app:layout_constraintTop_toBottomOf="@id/rcv_history"
-                    android:paddingVertical="@dimen/_8sdp"
-                    android:background="@drawable/bg_neu01_corner_10"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:background="@drawable/bg_neu01_corner_10"
+                    android:foreground="@drawable/fg_ripple_effect"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@id/rcv_history">
+
                     <ImageView
-                        app:tint="@color/neutral_04"
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
-                        android:src="@drawable/ic_history"/>
+                        android:src="@drawable/ic_history"
+                        app:tint="@color/neutral_04" />
+
                     <TextView
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/neutral_04"
-                        android:gravity="center"
-                        android:layout_marginStart="@dimen/_4sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/all_history"/>
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:gravity="center"
+                        android:text="@string/all_history"
+                        android:textColor="@color/neutral_04"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
 
@@ -204,14 +208,14 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_16sdp"
-                android:src="@drawable/ic_float_add"
+                android:background="@color/primary"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_add_floating"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="@color/white"
+                app:tint="@color/primary"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
 </layout>

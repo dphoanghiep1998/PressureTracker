@@ -39,37 +39,37 @@ class FragmentInformation : Fragment(), ItemTouchListener {
     private fun initRecycleView() {
         val data = mutableListOf(
             DataInfoModel(
-                R.drawable.ic_info_1,
+                R.drawable.ic_info_icon_1,
                 getString(R.string.info_1),
                 getColor(R.color.cbp_01)
             ),
             DataInfoModel(
-                R.drawable.ic_info_2,
+                R.drawable.ic_info_icon_2,
                 getString(R.string.info_2),
                 getColor(R.color.cbp_02)
             ),
             DataInfoModel(
-                R.drawable.ic_info_3,
+                R.drawable.ic_info_icon_3,
                 getString(R.string.info_3),
                 getColor(R.color.cbp_03)
             ),
             DataInfoModel(
-                R.drawable.ic_info_4,
+                R.drawable.ic_info_icon_4,
                 getString(R.string.info_4),
                 getColor(R.color.cbp_04)
             ),
             DataInfoModel(
-                R.drawable.ic_info_5,
+                R.drawable.ic_info_icon_5,
                 getString(R.string.info_5),
                 getColor(R.color.cbp_05)
             ),
             DataInfoModel(
-                R.drawable.ic_info_6,
+                R.drawable.ic_info_icon_6,
                 getString(R.string.info_6),
                 getColor(R.color.cbp_01)
             ),
             DataInfoModel(
-                R.drawable.ic_info_7,
+                R.drawable.ic_info_icon_7,
                 getString(R.string.info_7),
                 getColor(R.color.cbp_02)
             ),
@@ -85,10 +85,16 @@ class FragmentInformation : Fragment(), ItemTouchListener {
     }
 
     override fun onClickItem(position: Int) {
+        when(position){
+            0->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo1)
+            1->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo2)
+            2->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo3)
+            3->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo4)
+            4->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo5)
+            5->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo6)
+            6->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo7)
+        }
 
-        val bundle = Bundle()
-        bundle.putInt(Constant.KEY_INFORMATION, position)
-        findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfoContent,bundle)
 
 
     }
