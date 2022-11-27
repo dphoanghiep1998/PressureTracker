@@ -3,32 +3,42 @@
     <array name="stringLang" translatable="false">
         <item>English</item>
         <item>Français</item>
+        <item>भारत</item>
+        <item>Indonesia</item>
         <item>日本</item>
-        <item>Việt Nam</item>
-        <item>대한민국</item>
+        <item>Brazil</item>
+        <item>Tiếng Việt</item>
+        <item>한국인</item>
+        <item>Türkiye</item>
+        <item>España</item>
         <item>Italia</item>
-        <item>Tugend</item>
+        <item>Deutsch</item>
     </array>
     <array name="valueLang" translatable="false">
         <item>en</item>
         <item>fr</item>
+        <item>hi</item>
+        <item>in</item>
         <item>ja</item>
+        <item>pt</item>
         <item>vi</item>
         <item>ko</item>
+        <item>tr</item>
+        <item>es</item>
         <item>it</item>
         <item>de</item>
     </array>
 
 
     <string name="signature">Signature</string>
-    <string name="crazy">Signature</string>
-    <string name="melt">Signature</string>
-    <string name="run">Signature</string>
-    <string name="lazy">Signature</string>
-    <string name="diet">Signature</string>
-    <string name="nightmare">Signature</string>
-    <string name="right">Signature</string>
-    <string name="left">Signature</string>
+    <string name="crazy">Crazy</string>
+    <string name="melt">Melt</string>
+    <string name="run">Run</string>
+    <string name="lazy">Lazy</string>
+    <string name="diet">Diet</string>
+    <string name="nightmare">Nightmare</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
 
 
     <string name="ENGLISH" translatable="false">English</string>
@@ -38,6 +48,11 @@
     <string name="ITALIA" translatable="false">Italia</string>
     <string name="GERMAN" translatable="false">Deutsch</string>
     <string name="VIETNAM" translatable="false">Tiếng Việt</string>
+    <string name="INDONESIA" translatable="false">Indonesia</string>
+    <string name="BRAZIL" translatable="false">Brazil</string>
+    <string name="TURKEY" translatable="false">Türkiye</string>
+    <string name="SPAIN" translatable="false">España</string>
+    <string name="INDIA" translatable="false">भारत</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="info">Info</string>

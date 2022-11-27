@@ -18,8 +18,6 @@
 package com.example.bloodpressureapp.common.utils
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.res.Configuration
 import com.example.bloodpressureapp.R
 import java.util.*
 
@@ -38,24 +36,34 @@ private object LocaleUtils {
             .toSortedMap()
     val supportedLocales: List<Locale> = setOf(
         ENGLISH,
-        JAPANESE,
-        KOREAN,
         FRENCH,
+        INDIA,
+        INDONESIA,
+        JAPANESE,
+        BRAZIL,
+        VIETNAM,
+        KOREAN,
+        TURKEY,
+        SPAIN,
         ITALIA,
         GERMAN,
-        VIETNAM
     )
         .toList()
 
 
     val supportLanguages: List<Pair<Int, Int>> = setOf(
         Pair(R.string.ENGLISH, R.drawable.ic_flag_english),
-        Pair(R.string.JAPANESE, R.drawable.ic_flag_japan),
-        Pair(R.string.KOREAN, R.drawable.ic_flag_south_korea),
         Pair(R.string.FRENCH, R.drawable.ic_flag_france),
+        Pair(R.string.INDIA, R.drawable.ic_flag_india),
+        Pair(R.string.INDONESIA, R.drawable.ic_flag_indonesia),
+        Pair(R.string.JAPANESE, R.drawable.ic_flag_japan),
+        Pair(R.string.BRAZIL, R.drawable.ic_flag_brazil),
+        Pair(R.string.VIETNAM, R.drawable.ic_flag_vietnam),
+        Pair(R.string.KOREAN, R.drawable.ic_flag_south_korea),
+        Pair(R.string.TURKEY, R.drawable.ic_flag_turkey),
+        Pair(R.string.SPAIN, R.drawable.ic_flag_spain),
         Pair(R.string.ITALIA, R.drawable.ic_flag_italy),
-        Pair(R.string.GERMAN, R.drawable.ic_flag_germany),
-        Pair(R.string.VIETNAM, R.drawable.ic_flag_vietnam)
+        Pair(R.string.GERMAN, R.drawable.ic_flag_germany)
     ).toList()
 }
 
@@ -66,6 +74,11 @@ val JAPANESE = Locale("ja")
 val KOREAN = Locale("ko")
 val FRENCH = Locale("fr")
 val GERMAN = Locale("de")
+val BRAZIL = Locale("pt")
+val SPAIN = Locale("es")
+val INDIA = Locale("hi")
+val TURKEY = Locale("tr")
+val INDONESIA = Locale("in")
 
 
 private const val SEPARATOR: String = "_"

@@ -14,7 +14,7 @@ object Alarm {
         val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY,14)
+        calendar.set(Calendar.HOUR_OF_DAY,7)
         calendar.set(Calendar.MINUTE,0)
         calendar.set(Calendar.SECOND,0)
         calendar.set(Calendar.MILLISECOND,0)

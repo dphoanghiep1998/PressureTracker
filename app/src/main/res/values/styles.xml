@@ -31,12 +31,32 @@
     </style>
 
     <style name="TimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
-        <item name="colorPrimary">@color/neutral_01</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="fontFamily">@font/lexend_daca_regular_400</item>
         <item name="materialClockStyle">@style/TimePicker.Clock</item>
         <item name="chipStyle">@style/TimePicker.Chip</item>
         <item name="borderlessButtonStyle">@style/Picker.TextButton</item>
+        <item name="colorSecondary">@color/primary</item>
         <item name="colorOnPrimary">@color/neutral_04</item>
+        <item name="materialButtonOutlinedStyle">@style/TimePicker.Button</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
+    
+
+    <style name="TimePicker.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">
+            @color/background_clock
+        </item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">?attr/textAppearanceSubtitle2</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="strokeWidth">@dimen/mtrl_btn_stroke_size</item>
+        <item name="shapeAppearanceOverlay">?attr/shapeAppearanceMediumComponent</item>
     </style>
 
     <style name="TimePicker.Clock" parent="Widget.MaterialComponents.TimePicker.Clock">
@@ -45,10 +65,11 @@
         <item name="clockNumberTextColor">@color/text_clock_picker</item>
     </style>
 
+
     <style name="Picker.TextButton" parent="Widget.MaterialComponents.TimePicker.Display">
         <item name="clockFaceBackgroundColor">@color/neutral_02</item>
         <item name="clockHandColor">@color/primary</item>
-        <item name="clockNumberTextColor">@color/text_clock_picker</item>
+        <item name="clockNumberTextColor">@color/text_clock_picker_input</item>
         <item name="android:textSize">16dp</item>
 
     </style>
@@ -60,8 +81,9 @@
 
     <style name="TimePicker.Chip" parent="Widget.MaterialComponents.TimePicker.Display">
         <item name="chipBackgroundColor">@color/neutral_02</item>
-        <item name="android:textColor">@color/text_value_picker</item>
+        <item name="android:textColor">@color/text_clock_picker_input</item>
     </style>
+
 
 
 </resources>
