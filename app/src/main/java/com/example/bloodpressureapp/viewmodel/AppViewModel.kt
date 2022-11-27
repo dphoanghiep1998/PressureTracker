@@ -76,11 +76,7 @@ class AppViewModel @Inject constructor(
 //    }
 
     init {
-        var listNote = AppSharePreference.INSTANCE.getListNote(mutableListOf())
-        if (listNote.isEmpty()) {
-            val arrayString = context.resources.getStringArray(R.array.noteList)
-            listNote = arrayString.toList()
-        }
+        val listNote = AppSharePreference.INSTANCE.getListNote(mutableListOf())
         setLiveNoteList(listNote.toMutableList())
     }
 

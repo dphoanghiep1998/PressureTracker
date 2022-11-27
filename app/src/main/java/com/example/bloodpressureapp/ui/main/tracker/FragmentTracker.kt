@@ -1,6 +1,7 @@
 package com.example.bloodpressureapp.ui.main.tracker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,15 +42,15 @@ class FragmentTracker : Fragment(), ItemHelper {
 
     //calculator
     private var tmpMaxSystolic = 0
-    private var tmpMinSystolic = Int.MAX_VALUE
+    private var tmpMinSystolic = 301
     private var tmpAverageSystolic = 0
 
     private var tmpMaxDiastolic = 0
-    private var tmpMinDiastolic = Int.MAX_VALUE
+    private var tmpMinDiastolic = 301
     private var tmpAverageDiastolic = 0
 
     private var tmpMaxPulse = 0
-    private var tmpMinPulse = Int.MAX_VALUE
+    private var tmpMinPulse = 301
     private var tmpAveragePulse = 0
 
     override fun onCreateView(
@@ -338,47 +339,49 @@ class FragmentTracker : Fragment(), ItemHelper {
     }
 
     private fun calculateValue(list: List<HistoryModel>) {
-        if (list.isNotEmpty()) {
-            resetValue()
-            list.forEach {
-                if (it.systolic > tmpMaxSystolic) {
-                    tmpMaxSystolic = it.systolic
-                }
-                if (it.systolic < tmpMinSystolic) {
-                    tmpMinSystolic = it.systolic
-                }
-                if (it.diastolic > tmpMaxDiastolic) {
-                    tmpMaxDiastolic = it.diastolic
-                }
-                if (it.diastolic < tmpMinDiastolic) {
-                    tmpMinDiastolic = it.diastolic
-                }
-                if (it.pulse > tmpMaxPulse) {
-                    tmpMaxPulse = it.pulse
-                }
-                if (it.pulse < tmpMinPulse) {
-                    tmpMinPulse = it.pulse
-                }
-                tmpAverageDiastolic += it.diastolic
-                tmpAveragePulse += it.pulse
-                tmpAverageSystolic += it.systolic
+        resetValue()
+        list.forEach {
+            if (it.systolic > tmpMaxSystolic) {
+                tmpMaxSystolic = it.systolic
             }
+            if (it.systolic < tmpMinSystolic) {
+                tmpMinSystolic = it.systolic
+            }
+            if (it.diastolic > tmpMaxDiastolic) {
+                tmpMaxDiastolic = it.diastolic
+            }
+            if (it.diastolic < tmpMinDiastolic) {
+                tmpMinDiastolic = it.diastolic
+            }
+            if (it.pulse > tmpMaxPulse) {
+                tmpMaxPulse = it.pulse
+            }
+            if (it.pulse < tmpMinPulse) {
+                tmpMinPulse = it.pulse
+            }
+            tmpAverageDiastolic += it.diastolic
+            tmpAveragePulse += it.pulse
+            tmpAverageSystolic += it.systolic
+        }
+        if (list.isNotEmpty()) {
+
             tmpAverageDiastolic /= list.size
             tmpAveragePulse /= list.size
             tmpAverageSystolic /= list.size
-
-            if (tmpMinSystolic > 300) {
-                tmpMinSystolic = 0
-            }
-            if (tmpMinDiastolic > 300) {
-                tmpMinDiastolic = 0
-            }
-            if (tmpMinPulse > 300) {
-                tmpMinPulse = 0
-            }
-            observeFilterType(filterType)
-
         }
+
+        if (tmpMinSystolic > 300) {
+            tmpMinSystolic = 0
+        }
+        if (tmpMinDiastolic > 300) {
+            tmpMinDiastolic = 0
+        }
+        if (tmpMinPulse > 300) {
+            tmpMinPulse = 0
+        }
+        observeFilterType(filterType)
+
+
     }
 
 

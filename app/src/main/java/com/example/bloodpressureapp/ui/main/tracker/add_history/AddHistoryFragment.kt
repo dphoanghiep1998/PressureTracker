@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
@@ -19,13 +18,11 @@ import com.example.bloodpressureapp.common.utils.DateTimeUtils
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.common.utils.getDrawable
 import com.example.bloodpressureapp.databinding.FragmentAddHistoryBinding
-import com.example.bloodpressureapp.dialog.DialogCallBack
 import com.example.bloodpressureapp.dialog.addnotedialog.ConfirmDialogCallBack
 import com.example.bloodpressureapp.dialog.addnotedialog.DeleteConfirmDialog
 import com.example.bloodpressureapp.dialog.blood_pressure.BloodPressureTypeDialog
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
 import com.example.bloodpressureapp.viewmodel.AppViewModel
-import com.github.mikephil.charting.animation.Easing
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -54,6 +51,7 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
         )
         return dialog
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -118,10 +116,11 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
         binding.btnNote.setOnClickListener {
             val bundle = Bundle()
             bundle.putStringArrayList(Constant.KEY_SELECTED_NOTE_LIST, selectedNoteList)
-            findNavController().navigate(R.id.action_addHistoryFragment_to_addNoteDialog,bundle)
+            findNavController().navigate(R.id.action_addHistoryFragment_to_addNoteDialog, bundle)
         }
         binding.containerCalendar.setOnClickListener {
             val picker = MaterialDatePicker.Builder.datePicker().build()
+
             picker.show(requireActivity().supportFragmentManager, picker.toString())
             picker.addOnPositiveButtonClickListener {
                 historyModel.date = DateTimeUtils.getDateConverted(Date(it)).toString()
@@ -130,7 +129,10 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
         }
 
         binding.containerTimer.setOnClickListener {
+            val date = DateTimeUtils.convertTimeStringToCalendar(historyModel.time)
             val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, date.hours)
+            calendar.set(Calendar.MINUTE, date.minutes)
             val picker = MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .setHour(calendar.get(Calendar.HOUR_OF_DAY))
@@ -142,8 +144,8 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
                 historyModel.time = "${picker.hour}:${picker.minute}"
                 binding.tvTimeValue.text = "${picker.hour}:${picker.minute}"
             }
-
         }
+
         binding.btnInfo.setOnClickListener {
             val bloodPressureDialog = BloodPressureTypeDialog(requireContext())
             bloodPressureDialog.show()

@@ -1,6 +1,6 @@
 package com.example.bloodpressureapp.ui.main.setting
 
-import android.content.Context
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -8,25 +8,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.getDrawable
+import com.example.bloodpressureapp.data.database.file_provider.DatabaseHelper
 import com.example.bloodpressureapp.databinding.FragmentSettingBinding
 import com.example.bloodpressureapp.dialog.feed_back.DialogFeedBack
 import com.example.bloodpressureapp.dialog.feed_back.FeedBackCallBack
 import com.example.bloodpressureapp.dialog.rate_us.DialogRateUs
 import com.example.bloodpressureapp.dialog.rate_us.RateCallBack
+import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
 import com.example.bloodpressureapp.viewmodel.AppViewModel
-import java.io.File
 
 
 class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
     private lateinit var binding: FragmentSettingBinding
-    private val viewModel :AppViewModel by activityViewModels()
+    private val viewModel: AppViewModel by activityViewModels()
+    private val listHistory = mutableListOf<HistoryModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +41,14 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initAction()
+        observeListHistory()
+    }
+
+    private fun observeListHistory() {
+        viewModel.getAllHistory().observe(viewLifecycleOwner) {
+            listHistory.clear()
+            listHistory.addAll(it)
+        }
     }
 
 
@@ -86,10 +96,12 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
             openLink(Constant.URL_PRIVACY)
         }
         binding.containerExportFile.root.setOnClickListener {
+            val databaseHelper = DatabaseHelper(requireContext())
+            databaseHelper.exportDatabaseToCSVFile(listHistory)
         }
         binding.containerRate.root.setOnClickListener {
             val dialogRate = DialogRateUs(this)
-            dialogRate.show(childFragmentManager,dialogRate.tag)
+            dialogRate.show(childFragmentManager, dialogRate.tag)
         }
     }
 
@@ -103,18 +115,37 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
             e.printStackTrace()
         }
     }
+//
+//    private fun feedBack(message: String) {
+//        val intent = Intent(Intent.ACTION_SENDTO).apply {
+//            setDataAndType(Uri.parse("mailto:"), "message/rfc822")
+//            putExtra(Intent.EXTRA_EMAIL, arrayOf("", Constant.MAIL_TO))
+//            putExtra(
+//                Intent.EXTRA_SUBJECT,
+//                "${getString(R.string.app_name)} - SDK_CLIENT ${Build.VERSION.SDK_INT} /n${message}"
+//            )
+//
+//        }
+//        startActivity(intent)
+//    }
 
-    private fun feedBack(message:String) {
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            setDataAndType(Uri.parse("mailto:"), "message/rfc822")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("", Constant.MAIL_TO))
-            putExtra(
-                Intent.EXTRA_SUBJECT,
-                "${getString(R.string.app_name)} - SDK_CLIENT ${Build.VERSION.SDK_INT} /n${message}"
-            )
-
+    private fun sendEmail(content: String) {
+        val to = arrayOf("", Constant.MAIL_TO)
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.data = Uri.parse("mailto:")
+        emailIntent.type = "message/rfc822"
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to)
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+        emailIntent.putExtra(
+            Intent.EXTRA_SUBJECT,
+            "${getString(R.string.app_name)} - SDK_CLIENT ${Build.VERSION.SDK_INT}"
+        )
+        emailIntent.putExtra(Intent.EXTRA_TEXT, content);
+        try {
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.app_name)))
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), getString(R.string.no_sender_found), Toast.LENGTH_SHORT).show()
         }
-        startActivity(intent)
     }
 
     private fun openLink(strUri: String?) {
@@ -127,28 +158,9 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
         }
     }
 
-    private fun shareFile(attachment: Uri?) {
-        try {
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "application/csv"
-            shareIntent.putExtra(Intent.EXTRA_STREAM, attachment);
-            startActivity(Intent.createChooser(shareIntent, "Choose one"))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-    fun goToFileIntent(context: Context, file: File): Intent {
-        val intent = Intent(Intent.ACTION_VIEW)
-        val contentUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-        val mimeType = context.contentResolver.getType(contentUri)
-        intent.setDataAndType(contentUri, mimeType)
-        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-
-        return intent
-    }
 
     override fun onFeedBack(message: String) {
-        feedBack(message)
+        sendEmail(message)
     }
 
     override fun onNegativePressed() {
@@ -157,7 +169,7 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
 
     override fun onPositivePressed(star: Int) {
         viewModel.userActionRate = true
-        if(star == 5){
+        if (star == 5) {
             openLink(Constant.URL_APP)
         }
     }

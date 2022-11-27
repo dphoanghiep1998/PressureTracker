@@ -3,6 +3,7 @@ package com.example.bloodpressureapp.common.share_preference
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -25,13 +26,33 @@ class AppSharePreference(private val context: Context) {
             }
             return INSTANCE
         }
+
     }
 
-    fun saveInitFirstDone(values: Boolean){
-        saveBoolean(Constant.KEY_FIRST_INIT,values)
+    init {
+        val initFirstDone = getInitDone(false)
+        if (!initFirstDone) {
+            val listNotes = mutableListOf(
+                context.getString(R.string.signature),
+                context.getString(R.string.crazy),
+                context.getString(R.string.melt),
+                context.getString(R.string.run),
+                context.getString(R.string.lazy),
+                context.getString(R.string.diet),
+                context.getString(R.string.nightmare),
+                context.getString(R.string.right),
+                context.getString(R.string.left),
+            )
+            saveListNote(listNotes)
+        }
     }
-    fun getInitDone(defaultValues: Boolean):Boolean{
-        return getBoolean(Constant.KEY_FIRST_INIT,defaultValues)
+
+    fun saveInitFirstDone(values: Boolean) {
+        saveBoolean(Constant.KEY_FIRST_INIT, values)
+    }
+
+    fun getInitDone(defaultValues: Boolean): Boolean {
+        return getBoolean(Constant.KEY_FIRST_INIT, defaultValues)
     }
 
     fun saveLanguage(values: String) {
@@ -54,7 +75,8 @@ class AppSharePreference(private val context: Context) {
     private fun saveLong(key: String, values: Long) = sharedPreferences().edit {
         putLong(key, values)
     }
-    private fun getLong(key:String,defaultValues: Long):Long {
+
+    private fun getLong(key: String, defaultValues: Long): Long {
         return try {
             sharedPreferences().getLong(key, defaultValues)!!
         } catch (e: Exception) {
@@ -105,6 +127,7 @@ class AppSharePreference(private val context: Context) {
             defaultValues
         }
     }
+
     private fun saveStringSet(key: String, values: HashSet<String>) {
         sharedPreferences().edit { putStringSet(key, values) }
     }

@@ -24,4 +24,13 @@ object DateTimeUtils {
         val formatter = SimpleDateFormat("MM-dd", Locale.ENGLISH)
         return formatter.format(date).toString()
     }
+    fun convertTimeStringToCalendar(time:String):Date{
+        try {
+            val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            return simpleDateFormat.parse(time)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return Date()
+    }
 }

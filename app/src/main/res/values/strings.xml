@@ -19,17 +19,17 @@
         <item>de</item>
     </array>
 
-    <string-array name="noteList">
-        <item>Signature</item>
-        <item>Crazy</item>
-        <item>Melt</item>
-        <item>Run</item>
-        <item>Lazy</item>
-        <item>Diet</item>
-        <item>Nightmare</item>
-        <item>Right</item>
-        <item>Left</item>
-    </string-array>
+
+    <string name="signature">Signature</string>
+    <string name="crazy">Signature</string>
+    <string name="melt">Signature</string>
+    <string name="run">Signature</string>
+    <string name="lazy">Signature</string>
+    <string name="diet">Signature</string>
+    <string name="nightmare">Signature</string>
+    <string name="right">Signature</string>
+    <string name="left">Signature</string>
+
 
     <string name="ENGLISH" translatable="false">English</string>
     <string name="JAPANESE" translatable="false">日本</string>
@@ -106,13 +106,13 @@
     <string name="rate_us">Rate us</string>
     <string name="share">Share</string>
     <string name="info_title"><![CDATA[Info & Knowledge]]></string>
-    <string name="info_1">Learn About Blood Pressure</string>
-    <string name="info_2">Is my Blood Pressure normal?</string>
-    <string name="info_3">Who is at risk for high blood pressure?</string>
-    <string name="info_4">How can I prevent high blood pressure?</string>
-    <string name="info_5">Diet plan to prevent hypertension DASH</string>
-    <string name="info_6">High Blood Pressure in Pregnancy?</string>
-    <string name="info_7">Lower BloodPressure by Exercises</string>
+    <string name="info_1">Some basics about blood pressure</string>
+    <string name="info_2">Table to determine the levels of blood pressure</string>
+    <string name="info_3">Factors that increase the risk of high blood pressure</string>
+    <string name="info_4">Factors that increase the risk of high blood pressure</string>
+    <string name="info_5">DASH diet for people with hypertension</string>
+    <string name="info_6">High blood pressure in pregnancy causes and ways to prevent it</string>
+    <string name="info_7">Lower blood pressure through regular exercise every day</string>
     <string name="feed_back_instruction">Please send us some feedback!</string>
     <string name="feed_back_instruction_2">Let us upgrade better functionality and experience for this app. Thanks very much!</string>
     <string name="hint_feedback">Feed back or suggestion</string>
@@ -232,4 +232,8 @@
     <string name="title_notification_12">How to Maintain Normal Blood Pressure?</string>
     <string name="content_notification_12">Record blood pressure status daily to track your BP</string>
     <string name="contain_ads">This action can contain ads</string>
+    <string name="generating_csv">Generating csv file</string>
+    <string name="gen_csv_success">Generate success</string>
+    <string name="gen_csv_failed">Generate failed</string>
+    <string name="no_sender_found">No provider found</string>
 </resources>

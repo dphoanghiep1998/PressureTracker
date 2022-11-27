@@ -17,5 +17,6 @@ class CustomApplication() : Application() {
         AppSharePreference.getInstance(applicationContext)
     }
 
+
 }
 

@@ -55,6 +55,7 @@ class DialogFeedBack(private val callback: FeedBackCallBack) : DialogFragment() 
         binding.btnSend.setOnClickListener {
             if (binding.edtNote.text.isNotBlank()) {
                 callback.onFeedBack(binding.edtNote.text.toString())
+                dismiss()
             }
         }
         binding.root.setOnClickListener {

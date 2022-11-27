@@ -32,11 +32,17 @@
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_36sdp"
+                android:layout_height="@dimen/_44sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:gravity="center|top"
                 android:textSize="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@id/imv_icon" />
+                app:layout_constraintTop_toBottomOf="@id/imv_icon"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
