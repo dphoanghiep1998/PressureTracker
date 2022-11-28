@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.supportDisplayLang
 import com.example.bloodpressureapp.common.utils.supportedLanguages
 import com.example.bloodpressureapp.databinding.ItemLanguageBinding
@@ -72,7 +73,7 @@ class LanguageAdapter(val context: Context, private val listener: TouchLanguageL
             with(mLanguageList[position]) {
                 binding.tvCountryName.text = context.getString(supportDisplayLang()[position].first)
                 binding.imvFlag.setImageDrawable(context.getDrawable(supportDisplayLang()[position].second))
-                binding.root.setOnClickListener {
+                binding.root.clickWithDebounce {
                     notifyItemChanged(selectedLanguageIndex)
                     selectedLanguageIndex = adapterPosition
                     notifyItemChanged(selectedLanguageIndex)

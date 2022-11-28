@@ -32,7 +32,7 @@
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_44sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:gravity="center|top"
                 android:textSize="@dimen/_10sdp"

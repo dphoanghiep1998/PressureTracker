@@ -10,6 +10,7 @@ import android.view.Window
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.databinding.DialogFeedBackBinding
 
@@ -52,13 +53,13 @@ class DialogFeedBack(private val callback: FeedBackCallBack) : DialogFragment() 
     }
 
     private fun initView() {
-        binding.btnSend.setOnClickListener {
+        binding.btnSend.clickWithDebounce {
             if (binding.edtNote.text.isNotBlank()) {
                 callback.onFeedBack(binding.edtNote.text.toString())
                 dismiss()
             }
         }
-        binding.root.setOnClickListener {
+        binding.root.clickWithDebounce {
             dismiss()
         }
     }

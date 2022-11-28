@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
+import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentHistoryBinding
 import com.example.bloodpressureapp.ui.main.tracker.adapter.HistoryAdapter
 import com.example.bloodpressureapp.ui.main.tracker.adapter.ItemHelper
@@ -40,13 +42,16 @@ class FragmentHistory : Fragment(), ItemHelper {
     }
 
     private fun observeListHistory() {
-        viewModel.getAllHistory().observe(viewLifecycleOwner) {
+        viewModel.getAllHistoryDesc().observe(viewLifecycleOwner) {
             if(it.isEmpty()){
                 binding.containerEmpty.visibility = View.VISIBLE
                 binding.rcvHistory.visibility = View.GONE
+                binding.containerFloatButton.visibility = View.VISIBLE
             }else{
                 binding.containerEmpty.visibility = View.GONE
                 binding.rcvHistory.visibility = View.VISIBLE
+                binding.containerFloatButton.visibility = View.GONE
+
             }
             adapter.setData(it.toMutableList())
         }
@@ -59,13 +64,18 @@ class FragmentHistory : Fragment(), ItemHelper {
     }
 
     private fun initButton() {
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.clickWithDebounce {
             findNavController().popBackStack()
+        }
+
+        binding.floatingActionButton.clickWithDebounce{
+            navigateToPage(R.id.action_fragmentHistory_to_addHistoryFragment)
         }
     }
 
     private fun initRecycleView() {
         adapter = HistoryAdapter(this)
+        adapter.setExpand(true)
         val linearLayoutManager = LinearLayoutManager(requireContext())
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rcvHistory.adapter = adapter

@@ -67,7 +67,7 @@ class AppSharePreference(private val context: Context) {
         saveStringList(Constant.KEY_NOTE_LIST, values)
     }
 
-    fun getListNote(defaultValues: List<String>): List<String> {
+    fun getListNote(defaultValues: ArrayList<String>): ArrayList<String> {
         return getStringList(Constant.KEY_NOTE_LIST, defaultValues)
     }
 
@@ -102,9 +102,9 @@ class AppSharePreference(private val context: Context) {
         sharedPreferences().edit { putString(key, gson.toJson(values)) }
     }
 
-    private fun getStringList(key: String, defaultValues: List<String>): List<String> {
+    private fun getStringList(key: String, defaultValues: ArrayList<String>): ArrayList<String> {
         val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
+        val type = object : TypeToken<ArrayList<String>>() {}.type
         return try {
             val returnString = sharedPreferences().getString(key, gson.toJson(defaultValues))
             gson.fromJson(returnString, type)

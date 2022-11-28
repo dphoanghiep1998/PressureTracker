@@ -86,13 +86,13 @@ class FragmentInformation : Fragment(), ItemTouchListener {
 
     override fun onClickItem(position: Int) {
         when(position){
-            0->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo1)
-            1->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo2)
-            2->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo3)
-            3->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo4)
-            4->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo5)
-            5->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo6)
-            6->findNavController().navigate(R.id.action_fragmentInformation_to_fragmentInfo7)
+            0->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo1)
+            1->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo2)
+            2->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo3)
+            3->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo4)
+            4->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo5)
+            5->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo6)
+            6->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo7)
         }
 
 

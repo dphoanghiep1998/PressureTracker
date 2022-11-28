@@ -26,7 +26,12 @@ class AppRepo @Inject constructor(
     }
 
 
+    fun getAllHistoryDesc(): LiveData<List<HistoryModel>> =
+        historyLocalService.historyDao.getListHistoryDesc()
+
+    fun getAllHistoryAsc(): LiveData<List<HistoryModel>> =
+        historyLocalService.historyDao.getListHistoryAsc()
+
     fun getAllHistory(): LiveData<List<HistoryModel>> =
         historyLocalService.historyDao.getListHistory()
-
 }

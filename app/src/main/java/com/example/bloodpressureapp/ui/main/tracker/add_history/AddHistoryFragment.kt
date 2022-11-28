@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
+import com.example.bloodpressureapp.common.share_preference.AppSharePreference
 import com.example.bloodpressureapp.common.utils.DateTimeUtils
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.common.utils.getDrawable
 import com.example.bloodpressureapp.databinding.FragmentAddHistoryBinding
@@ -53,8 +56,7 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddHistoryBinding.inflate(layoutInflater)
         return binding.root
@@ -86,7 +88,15 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
             }
         } else {
             val calendar = Calendar.getInstance()
-            val time = "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
+
+            var minute = ""
+
+            minute = if (calendar.get(Calendar.MINUTE) < 10) {
+                "0${calendar.get(Calendar.MINUTE)}"
+            } else {
+                "${calendar.get(Calendar.MINUTE)}"
+            }
+            val time = "${calendar.get(Calendar.HOUR_OF_DAY)}:${minute}"
             val date = DateTimeUtils.getDateConverted(Date(System.currentTimeMillis())).toString()
             historyModel.time = time
             historyModel.date = date
@@ -110,16 +120,23 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
     }
 
     private fun initButton() {
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.clickWithDebounce {
             findNavController().popBackStack()
         }
-        binding.btnNote.setOnClickListener {
+        binding.btnNote.clickWithDebounce {
+            val list = AppSharePreference.INSTANCE.getListNote(arrayListOf())
+
             val bundle = Bundle()
             bundle.putStringArrayList(Constant.KEY_SELECTED_NOTE_LIST, selectedNoteList)
+            bundle.putStringArrayList(Constant.KEY_NOTE_LIST,list)
             findNavController().navigate(R.id.action_addHistoryFragment_to_addNoteDialog, bundle)
         }
-        binding.containerCalendar.setOnClickListener {
-            val picker = MaterialDatePicker.Builder.datePicker().build()
+        binding.containerCalendar.clickWithDebounce {
+            val timeInMillis = DateTimeUtils.convertDateStringToCalendar(historyModel.date)
+            val picker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setSelection(timeInMillis).build()
+
 
             picker.show(requireActivity().supportFragmentManager, picker.toString())
             picker.addOnPositiveButtonClickListener {
@@ -128,34 +145,38 @@ class AddHistoryFragment : DialogFragment(), ConfirmDialogCallBack {
             }
         }
 
-        binding.containerTimer.setOnClickListener {
-            val date = DateTimeUtils.convertTimeStringToCalendar(historyModel.time)
+        binding.containerTimer.clickWithDebounce {
+            val time = DateTimeUtils.convertTimeStringToCalendar(historyModel.time)
             val calendar = Calendar.getInstance()
-            calendar.set(Calendar.HOUR_OF_DAY, date.hours)
-            calendar.set(Calendar.MINUTE, date.minutes)
-            val picker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
+            calendar.set(Calendar.HOUR_OF_DAY, time.hours)
+            calendar.set(Calendar.MINUTE, time.minutes)
+            val picker = MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H)
                 .setHour(calendar.get(Calendar.HOUR_OF_DAY))
-                .setMinute(calendar.get(Calendar.MINUTE))
-                .setTheme(R.style.TimePicker)
-                .build()
+                .setMinute(calendar.get(Calendar.MINUTE)).setTheme(R.style.TimePicker).build()
             picker.show(requireActivity().supportFragmentManager, picker.toString())
             picker.addOnPositiveButtonClickListener {
-                historyModel.time = "${picker.hour}:${picker.minute}"
-                binding.tvTimeValue.text = "${picker.hour}:${picker.minute}"
+                var minute = ""
+
+                minute = if (picker.minute < 10) {
+                    "0${picker.minute}"
+                } else {
+                    "${picker.minute}"
+                }
+                historyModel.time = "${picker.hour}:${minute}"
+                binding.tvTimeValue.text = "${picker.hour}:${minute}"
             }
         }
 
-        binding.btnInfo.setOnClickListener {
+        binding.btnInfo.clickWithDebounce {
             val bloodPressureDialog = BloodPressureTypeDialog(requireContext())
             bloodPressureDialog.show()
         }
 
-        binding.btnSave.setOnClickListener {
+        binding.btnSave.clickWithDebounce {
             viewModel.insertHistory(historyModel)
             findNavController().popBackStack()
         }
-        binding.btnDelete.setOnClickListener {
+        binding.btnDelete.clickWithDebounce {
             val deleteConfirmDialog = DeleteConfirmDialog(this)
             deleteConfirmDialog.show(childFragmentManager, deleteConfirmDialog.tag)
         }

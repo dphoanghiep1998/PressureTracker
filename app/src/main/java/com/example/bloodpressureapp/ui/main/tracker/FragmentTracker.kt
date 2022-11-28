@@ -1,7 +1,6 @@
 package com.example.bloodpressureapp.ui.main.tracker
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentTrackerBinding
@@ -30,13 +30,13 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
 
 enum class FilterType {
-    MAX, MIN, AVERAGE
+    MAX, MIN, AVERAGE, LASTEST
 }
 
 class FragmentTracker : Fragment(), ItemHelper {
     private lateinit var binding: FragmentTrackerBinding
     private lateinit var adapter: HistoryAdapter
-    private var rollvalue = 1073741823
+    private var rollvalue = 1073741824
     private val viewModel: AppViewModel by activityViewModels()
     private var filterType = FilterType.MAX
 
@@ -53,6 +53,11 @@ class FragmentTracker : Fragment(), ItemHelper {
     private var tmpMinPulse = 301
     private var tmpAveragePulse = 0
 
+    private var lastestSystolic = 0
+    private var lastestDiaStolic = 0
+    private var lastestPulse = 0
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,6 +70,22 @@ class FragmentTracker : Fragment(), ItemHelper {
         super.onViewCreated(view, savedInstanceState)
         initView()
         observeListHistory()
+        observeListHistoryD()
+    }
+
+    private fun observeListHistoryD() {
+        viewModel.getAllHistory().observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()){
+                lastestSystolic = it[0].systolic
+                lastestDiaStolic = it[0].diastolic
+                lastestPulse = it[0].pulse
+            }
+            adapter.setData(it.subList(0, 3).toMutableList())
+        }
+
+        viewModel.getAllHistoryAcs().observe(viewLifecycleOwner) {
+            getDataValue(it)
+        }
     }
 
     private fun initView() {
@@ -110,7 +131,7 @@ class FragmentTracker : Fragment(), ItemHelper {
 
     private fun getDataValue(list: List<HistoryModel>) {
         val barSpace = 0.05f
-        val groupSpace = 0.4f
+        val groupSpace = 0.3f
         val xLabel = ArrayList<String>()
         val dataSystolic = ArrayList<BarEntry>()
         val dataDiastolic = ArrayList<BarEntry>()
@@ -165,7 +186,7 @@ class FragmentTracker : Fragment(), ItemHelper {
         )
         val barData = BarData()
 
-        barData.barWidth = .25f
+        barData.barWidth = .325f
         barData.addDataSet(barDataSet1)
         barData.addDataSet(barDataSet2)
         binding.barChart.data = barData
@@ -181,7 +202,7 @@ class FragmentTracker : Fragment(), ItemHelper {
         binding.barChart.notifyDataSetChanged()
         binding.barChart.invalidate()
 
-        binding.barChart.setVisibleXRangeMaximum(3f)
+        binding.barChart.setVisibleXRangeMaximum(3.5f)
 
 
     }
@@ -205,12 +226,12 @@ class FragmentTracker : Fragment(), ItemHelper {
         filterType = FilterType.MAX
         binding.tvRollValue.text = getString(R.string.max)
         observeFilterType(filterType)
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.clickWithDebounce {
             rollvalue += 1
             if (rollvalue == Int.MAX_VALUE) {
-                rollvalue = 1073741824
+                rollvalue = 1073741823
             }
-            when (rollvalue % 3) {
+            when (rollvalue % 4) {
                 0 -> {
                     binding.tvRollValue.text = getString(R.string.max)
                     filterType = FilterType.MAX
@@ -224,17 +245,21 @@ class FragmentTracker : Fragment(), ItemHelper {
                     binding.tvRollValue.text = getString(R.string.min)
                     filterType = FilterType.MIN
 
+                }
+                3 -> {
+                    binding.tvRollValue.text = getString(R.string.latest)
+                    filterType = FilterType.LASTEST
                 }
             }
             observeFilterType(filterType)
 
         }
-        binding.btnNext.setOnClickListener {
+        binding.btnNext.clickWithDebounce {
             rollvalue -= 1
             if (rollvalue == 0) {
-                rollvalue = 1073741823
+                rollvalue = 1073741824
             }
-            when (rollvalue % 3) {
+            when (rollvalue % 4) {
                 0 -> {
                     binding.tvRollValue.text = getString(R.string.max)
                     filterType = FilterType.MAX
@@ -248,6 +273,10 @@ class FragmentTracker : Fragment(), ItemHelper {
                 2 -> {
                     binding.tvRollValue.text = getString(R.string.min)
                     filterType = FilterType.MIN
+                }
+                3 -> {
+                    binding.tvRollValue.text = getString(R.string.latest)
+                    filterType = FilterType.LASTEST
                 }
             }
             observeFilterType(filterType)
@@ -257,7 +286,7 @@ class FragmentTracker : Fragment(), ItemHelper {
     }
 
     private fun observeListHistory() {
-        viewModel.getAllHistory().observe(viewLifecycleOwner) {
+        viewModel.getAllHistoryDesc().observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.containerAllHistory.visibility = View.GONE
             } else {
@@ -265,20 +294,22 @@ class FragmentTracker : Fragment(), ItemHelper {
 
             }
             calculateValue(it)
+        }
+
+        viewModel.getAllHistoryAcs().observe(viewLifecycleOwner) {
             getDataValue(it)
-            adapter.setData(it.toMutableList())
         }
     }
 
     private fun initButton() {
-        binding.floatingActionButton.setOnClickListener {
-            navigateToPage(R.id.action_fragmentTracker_to_addHistoryFragment)
+        binding.floatingActionButton.clickWithDebounce(1000L) {
+            navigateToPage(R.id.action_fragmentMain_to_addHistoryFragment)
         }
-        binding.btnHistory.setOnClickListener {
-            navigateToPage(R.id.action_fragmentTracker_to_fragmentHistory)
+        binding.btnHistory.clickWithDebounce {
+            navigateToPage(R.id.action_fragmentMain_to_fragmentHistory)
         }
-        binding.containerAllHistory.setOnClickListener {
-            navigateToPage(R.id.action_fragmentTracker_to_fragmentHistory)
+        binding.containerAllHistory.clickWithDebounce {
+            navigateToPage(R.id.action_fragmentMain_to_fragmentHistory)
         }
     }
 
@@ -328,6 +359,12 @@ class FragmentTracker : Fragment(), ItemHelper {
                     tmpAverageDiastolic.toString()
                 binding.containerInfoSystolic.tvValue.text = tmpAverageSystolic.toString()
             }
+            else -> {
+                binding.containerInfoPulse.tvValue.text = lastestSystolic.toString()
+                binding.containerInfoDiastolic.tvValue.text =
+                    lastestDiaStolic.toString()
+                binding.containerInfoSystolic.tvValue.text = lastestPulse.toString()
+            }
 
         }
     }
@@ -335,7 +372,7 @@ class FragmentTracker : Fragment(), ItemHelper {
     override fun onClickEdit(item: HistoryModel) {
         val bundle = Bundle()
         bundle.putParcelable(Constant.KEY_HISTORY_MODEL, item)
-        findNavController().navigate(R.id.action_fragmentTracker_to_addHistoryFragment, bundle)
+        findNavController().navigate(R.id.action_fragmentMain_to_addHistoryFragment, bundle)
     }
 
     private fun calculateValue(list: List<HistoryModel>) {

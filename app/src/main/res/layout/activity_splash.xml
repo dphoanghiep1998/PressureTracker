@@ -20,6 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent=".6"
+            android:background="#08266C"
             android:src="@drawable/ic_logo_app"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"

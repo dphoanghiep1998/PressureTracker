@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/title_tool"
         android:textColor="@color/neutral_04"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="@dimen/_18sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imv_onboard" />
@@ -29,11 +29,11 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_12sdp"
         android:textColor="@color/neutral_04"
         android:text="@string/content_tool"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

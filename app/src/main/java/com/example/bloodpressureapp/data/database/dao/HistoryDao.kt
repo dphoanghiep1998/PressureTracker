@@ -16,6 +16,13 @@ interface HistoryDao {
     @Query("delete from history")
     fun deleteAllHistory()
 
-    @Query("select * from history order by time desc")
+    @Query("select * from history order by date asc, time asc ")
+    fun getListHistoryAsc(): LiveData<List<HistoryModel>>
+
+    @Query("select * from history order by date desc, time desc")
+    fun getListHistoryDesc(): LiveData<List<HistoryModel>>
+
+
+    @Query("select * from history order by id desc")
     fun getListHistory(): LiveData<List<HistoryModel>>
 }

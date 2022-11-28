@@ -3,6 +3,7 @@ package com.example.bloodpressureapp.ui.main.info.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.databinding.LayoutInfoBinding
 import com.example.bloodpressureapp.ui.main.info.DataInfoModel
 
@@ -30,7 +31,7 @@ class InfoAdapter(
                 binding.imvIcon.setImageResource(this.imgId)
                 binding.tvTitle.text = this.title
                 binding.tvTitle.setTextColor(this.color)
-                binding.root.setOnClickListener {
+                binding.root.clickWithDebounce {
                     listener.onClickItem(adapterPosition)
                 }
             }

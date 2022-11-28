@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getDrawable
 import com.example.bloodpressureapp.data.database.file_provider.DatabaseHelper
 import com.example.bloodpressureapp.databinding.FragmentSettingBinding
@@ -45,7 +46,7 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
     }
 
     private fun observeListHistory() {
-        viewModel.getAllHistory().observe(viewLifecycleOwner) {
+        viewModel.getAllHistoryDesc().observe(viewLifecycleOwner) {
             listHistory.clear()
             listHistory.addAll(it)
         }
@@ -80,26 +81,26 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
     }
 
     private fun initAction() {
-        binding.containerLanguage.root.setOnClickListener {
+        binding.containerLanguage.root.clickWithDebounce {
             val bundle = Bundle()
             bundle.putBoolean(Constant.KEY_FROM_SETTING, true)
-            findNavController().navigate(R.id.action_fragmentSetting_to_fragmentLanguage2, bundle)
+            findNavController().navigate(R.id.action_fragmentMain_to_fragmentLanguage, bundle)
         }
-        binding.containerShare.root.setOnClickListener {
+        binding.containerShare.root.clickWithDebounce {
             shareApp()
         }
-        binding.containerFeedBack.root.setOnClickListener {
+        binding.containerFeedBack.root.clickWithDebounce {
             val dialogFeedBack = DialogFeedBack(this)
             dialogFeedBack.show(childFragmentManager, dialogFeedBack.tag)
         }
-        binding.containerPrivacy.root.setOnClickListener {
+        binding.containerPrivacy.root.clickWithDebounce {
             openLink(Constant.URL_PRIVACY)
         }
-        binding.containerExportFile.root.setOnClickListener {
+        binding.containerExportFile.root.clickWithDebounce {
             val databaseHelper = DatabaseHelper(requireContext())
             databaseHelper.exportDatabaseToCSVFile(listHistory)
         }
-        binding.containerRate.root.setOnClickListener {
+        binding.containerRate.root.clickWithDebounce {
             val dialogRate = DialogRateUs(this)
             dialogRate.show(childFragmentManager, dialogRate.tag)
         }
@@ -172,6 +173,7 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
         if (star == 5) {
             openLink(Constant.URL_APP)
         }
+        Toast.makeText(requireContext(),getString(R.string.rate_success),Toast.LENGTH_SHORT).show()
     }
 
 

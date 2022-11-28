@@ -6,8 +6,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:background="@color/neutral_01"
-        tools:context=".ui.main.tracker.FragmentTracker">
+        android:background="@color/neutral_02">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -17,8 +16,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_12sdp"
-                >
+                android:paddingBottom="@dimen/_12sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/toolbar"
@@ -42,18 +40,30 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+<!--                    <ImageView-->
+<!--                        android:id="@+id/btn_history"-->
+<!--                        android:layout_width="@dimen/_36sdp"-->
+<!--                        android:layout_height="@dimen/_36sdp"-->
+<!--                        android:background="@drawable/fg_ripple_effect"-->
+<!--                        android:clickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:padding="@dimen/_8sdp"-->
+<!--                        android:src="@drawable/ic_history"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+                    <TextView
                         android:id="@+id/btn_history"
-                        android:layout_width="@dimen/_36sdp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:background="@drawable/fg_ripple_effect"
-                        android:clickable="true"
-                        android:focusable="true"
+                        android:foreground="@drawable/fg_ripple_effect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_history"
+                        android:text="@string/history"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:textColor="@color/neutral_01"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

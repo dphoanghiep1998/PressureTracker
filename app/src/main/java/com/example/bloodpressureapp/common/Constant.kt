@@ -13,7 +13,7 @@ object Constant {
     const val KEY_NOTE_LIST = "KEY_NOTE_LIST"
     const val KEY_LANGUAGE = "KEY_LANGUAGE"
     const val MAIL_TO = "nekosoft.hiepdph@gmail.com"
-    const val URL_PRIVACY = "https://google.com"
+    const val URL_PRIVACY = "http://bzkpublisher.mygamesonline.org/"
     const val URL_APP = "https://google.com"
     const val KEY_TIME_IN_MILLI="KEY_TIME_IN_MILLI"
 

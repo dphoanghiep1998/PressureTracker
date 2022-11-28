@@ -9,17 +9,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.databinding.FragmentMainBinding
 import com.example.bloodpressureapp.dialog.rate_us.DialogRateUs
 import com.example.bloodpressureapp.dialog.rate_us.RateCallBack
+import com.example.bloodpressureapp.ui.main.info.FragmentInformation
+import com.example.bloodpressureapp.ui.main.setting.FragmentSetting
+import com.example.bloodpressureapp.ui.main.tracker.FragmentTracker
+import com.example.bloodpressureapp.ui.onboard.adapter.ViewPagerAdapter
 import com.example.bloodpressureapp.viewmodel.AppViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
@@ -45,43 +51,39 @@ class FragmentMain : Fragment(), RateCallBack {
 
     private fun initView() {
         initBottomNav()
-        initControllerNav()
+        initViewPager()
     }
-    private fun setStatusColor(){
+
+    private fun setStatusColor() {
         val window = requireActivity().window
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
-        window.statusBarColor = ContextCompat.getColor(requireActivity(),R.color.primary)
+        window.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.primary)
     }
 
-    private fun initControllerNav() {
-        val navHostFragment =
-            childFragmentManager.findFragmentById(R.id.nav_host_fragment_bottom) as NavHostFragment
-        val navController = navHostFragment.navController
-        binding.navBottom.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.fragmentTracker -> showBottomNav()
-                R.id.fragmentSetting -> showBottomNav()
-                R.id.fragmentInformation -> showBottomNav()
-                else -> hideBottomNav()
-            }
-        }
-    }
 
-    private fun showBottomNav() {
-        binding.navBottom.visibility = View.VISIBLE
-    }
+    private fun initViewPager() {
+        val fragmentList = arrayListOf(
+            FragmentInformation(),
+            FragmentTracker(),
+            FragmentSetting()
+        )
+        val adapter = ViewPagerAdapter(
+            fragmentList, childFragmentManager,
+            lifecycle
+        )
+        binding.viewPager.adapter = adapter
+        binding.viewPager.isUserInputEnabled = false;
+        binding.viewPager.currentItem = 1
 
-    private fun hideBottomNav() {
-        binding.navBottom.visibility = View.GONE
     }
 
     @SuppressLint("RestrictedApi")
     private fun initBottomNav() {
+        binding.navBottom.menu.getItem(1).isChecked = true
         val bottomNavigationMenuView =
             binding.navBottom.getChildAt(0) as BottomNavigationMenuView
 
@@ -105,6 +107,23 @@ class FragmentMain : Fragment(), RateCallBack {
                 )
             }
 
+        }
+        binding.navBottom.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.fragmentInformation -> {
+                    binding.viewPager.currentItem = 0
+                    return@setOnItemSelectedListener true
+                }
+                R.id.fragmentTracker -> {
+                    binding.viewPager.currentItem = 1
+                    return@setOnItemSelectedListener true
+                }
+                R.id.fragmentSetting -> {
+                    binding.viewPager.currentItem = 2
+                    return@setOnItemSelectedListener true
+                }
+            }
+            true
         }
 
     }
@@ -144,6 +163,8 @@ class FragmentMain : Fragment(), RateCallBack {
         if (star == 5) {
             openLink(Constant.URL_APP)
         }
+        Toast.makeText(requireContext(), getString(R.string.rate_success), Toast.LENGTH_SHORT)
+            .show()
         requireActivity().finishAffinity()
     }
 

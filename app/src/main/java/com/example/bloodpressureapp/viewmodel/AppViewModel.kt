@@ -2,6 +2,7 @@ package com.example.bloodpressureapp.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,26 +25,13 @@ class AppViewModel @Inject constructor(
     var userActionRate = false
 
 
-    private val notesList = MutableLiveData<MutableList<String>>()
-    val liveNoteList: LiveData<MutableList<String>>
-        get() = notesList
-
-    fun setLiveNoteList(list: MutableList<String>) {
-        notesList.value = list
+    fun getAllHistoryDesc(): LiveData<List<HistoryModel>> {
+        return appRepo.getAllHistoryDesc()
     }
-
-    fun addNote(note: String) {
-        notesList.value?.add(0, note)
-        notesList.notifyObserver()
+    fun getAllHistoryAcs(): LiveData<List<HistoryModel>> {
+        return appRepo.getAllHistoryAsc()
     }
-
-    fun deleteNote(note: String) {
-        notesList.value?.remove(note)
-        notesList.notifyObserver()
-    }
-
     fun getAllHistory(): LiveData<List<HistoryModel>> {
-
         return appRepo.getAllHistory()
     }
 
@@ -64,20 +52,6 @@ class AppViewModel @Inject constructor(
         viewModelScope.launch {
             appRepo.insertHistoryModel(historyModel)
         }
-    }
-//
-//    fun genCSVFile(){
-//        csvWriter().open("data.csv"){
-//            writeRow(listOf("[id]","[systolic]","[diastolic]","[pulse]","[notes]","[date]","[time]","[status]"))
-//            appRepo.getAllHistory().value?.forEachIndexed {index,item ->
-//                writeRow(listOf(index,item.id,item.systolic,item.diastolic,item.pulse,item.notes,item.date,item.time,item.status))
-//            }
-//        }
-//    }
-
-    init {
-        val listNote = AppSharePreference.INSTANCE.getListNote(mutableListOf())
-        setLiveNoteList(listNote.toMutableList())
     }
 
 

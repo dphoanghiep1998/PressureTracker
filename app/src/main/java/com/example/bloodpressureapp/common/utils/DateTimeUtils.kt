@@ -26,11 +26,21 @@ object DateTimeUtils {
     }
     fun convertTimeStringToCalendar(time:String):Date{
         try {
-            val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.US)
             return simpleDateFormat.parse(time)
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return Date()
+    }
+    fun convertDateStringToCalendar(time:String):Long{
+        try {
+            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy",Locale.US)
+            simpleDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+            return simpleDateFormat.parse(time).time
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return Date().time
     }
 }

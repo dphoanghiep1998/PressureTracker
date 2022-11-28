@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.databinding.ItemHistoryBinding
+import com.example.bloodpressureapp.databinding.ItemHistoryExpandBinding
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
 
 interface ItemHelper {
@@ -14,9 +16,10 @@ interface ItemHelper {
 }
 
 class HistoryAdapter(private val listener: ItemHelper) :
-    RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var mList: MutableList<HistoryModel> = mutableListOf()
     private val diffCallback = DiffCallback(mList, mutableListOf())
+    private var expand = false
 
     fun setData(list: MutableList<HistoryModel>) {
         diffCallback.newList = list
@@ -25,52 +28,109 @@ class HistoryAdapter(private val listener: ItemHelper) :
         mList.addAll(list)
         diffResult.dispatchUpdatesTo(this)
     }
+    fun setExpand(st:Boolean){
+        this.expand = st
+        notifyItemRangeChanged(0,mList.size)
+    }
 
     inner class HistoryViewHolder(val binding: ItemHistoryBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
-        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HistoryViewHolder(binding)
+    inner class HistoryViewHolderExpand(val binding: ItemHistoryExpandBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (!expand) {
+            val binding =
+                ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HistoryViewHolder(binding)
+        } else {
+            val binding =
+                ItemHistoryExpandBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HistoryViewHolderExpand(binding)
+        }
+
     }
 
-    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        with(holder) {
-            with(mList[position]) {
-                binding.line.setBackgroundResource(
-                    getColorFromStatus(
-                        this.systolic,
-                        this.diastolic
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(!expand){
+            with(holder as HistoryViewHolder) {
+                with(mList[position]) {
+                    binding.line.setBackgroundResource(
+                        getColorFromStatus(
+                            this.systolic,
+                            this.diastolic
+                        )
                     )
-                )
-                binding.tvSystolicValue.text = this.systolic.toString()
-                binding.tvDiastolicValue.text = this.diastolic.toString()
-                binding.tvTime.text = "${this.time}, ${this.date}"
-                binding.tvStatus.text = this.status
-                binding.tvPulseValue.text = "Pulse: ${this.pulse} BPM"
-                binding.btnEdit.setOnClickListener {
-                    listener.onClickEdit(this)
-                }
-                if (this.notes.isNotEmpty()) {
-                    var notesString =""
-                    this.notes.forEachIndexed { index, item ->
-                        kotlin.run {
-                            notesString += if (index < this.notes.size - 1) {
-                                "#${item} "
-                            } else {
-                                "#${item}"
-                            }
-                        }
+                    binding.tvSystolicValue.text = this.systolic.toString()
+                    binding.tvDiastolicValue.text = this.diastolic.toString()
+                    binding.tvTime.text = "${this.time}, ${this.date}"
+                    binding.tvStatus.text = this.status
 
+                    binding.tvPulseValue.text = "Pulse: ${this.pulse} BPM"
+                    binding.btnEdit.clickWithDebounce {
+                        listener.onClickEdit(this)
                     }
-                    binding.tvNoteValue.text = notesString
-                    binding.tvNoteValue.visibility = View.VISIBLE
-                } else {
-                    binding.tvNoteValue.visibility = View.GONE
-                }
+                    if (this.notes.isNotEmpty()) {
+                        var notesString = ""
+                        this.notes.forEachIndexed { index, item ->
+                            kotlin.run {
+                                notesString += if (index < this.notes.size - 1) {
+                                    "#${item} "
+                                } else {
+                                    "#${item}"
+                                }
+                            }
 
+                        }
+                        binding.tvNoteValue.text = notesString
+                        binding.tvNoteValue.visibility = View.VISIBLE
+                    } else {
+                        binding.tvNoteValue.visibility = View.GONE
+                    }
+
+                }
+            }
+        }else{
+            with(holder as HistoryViewHolderExpand) {
+                with(mList[position]) {
+                    binding.line.setBackgroundResource(
+                        getColorFromStatus(
+                            this.systolic,
+                            this.diastolic
+                        )
+                    )
+                    binding.tvSystolicValue.text = this.systolic.toString()
+                    binding.tvDiastolicValue.text = this.diastolic.toString()
+                    binding.tvTime.text = "${this.time}, ${this.date}"
+                    binding.tvStatus.text = this.status
+
+                    binding.tvPulseValue.text = "Pulse: ${this.pulse} BPM"
+                    binding.btnEdit.clickWithDebounce {
+                        listener.onClickEdit(this)
+                    }
+                    if (this.notes.isNotEmpty()) {
+                        var notesString = ""
+                        this.notes.forEachIndexed { index, item ->
+                            kotlin.run {
+                                notesString += if (index < this.notes.size - 1) {
+                                    "#${item} "
+                                } else {
+                                    "#${item}"
+                                }
+                            }
+
+                        }
+                        binding.tvNoteValue.text = notesString
+                        binding.tvNoteValue.visibility = View.VISIBLE
+                    } else {
+                        binding.tvNoteValue.visibility = View.GONE
+                    }
+
+                }
             }
         }
+
     }
 
     override fun getItemCount(): Int {

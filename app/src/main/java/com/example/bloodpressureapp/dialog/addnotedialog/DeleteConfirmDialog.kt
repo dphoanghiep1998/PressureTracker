@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.databinding.DialogDeleteConfirmBinding
 import com.example.bloodpressureapp.dialog.BackPressDialogCallBack
@@ -65,14 +66,14 @@ class DeleteConfirmDialog(private val callBack: ConfirmDialogCallBack) : DialogF
     }
 
     private fun initButton() {
-        binding.btnDelete.setOnClickListener {
+        binding.btnDelete.clickWithDebounce {
             callBack.onPositiveClicked()
             dismiss()
         }
-        binding.btnCancel.setOnClickListener {
+        binding.btnCancel.clickWithDebounce {
             dismiss()
         }
-        binding.root.setOnClickListener {
+        binding.root.clickWithDebounce {
             dismiss()
         }
     }

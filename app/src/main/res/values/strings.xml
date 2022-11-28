@@ -91,7 +91,7 @@
     <string name="more_140">140+</string>
     <string name="more_90">90+</string>
     <string name="more_180">180+</string>
-    <string name="condition_normal">SYS &lt; 120 and DIA &gt; 80</string>
+    <string name="condition_normal">SYS &lt; 120 and DIA &lt; 80</string>
     <string name="condition_elevated">SYS 120-129 and DIA &gt; 80</string>
     <string name="condition_high_1">SYS 130+ or DIA 80+</string>
     <string name="condition_high_2">SYS 140+ or DIA 90+</string>
@@ -124,7 +124,7 @@
     <string name="info_1">Some basics about blood pressure</string>
     <string name="info_2">Table to determine the levels of blood pressure</string>
     <string name="info_3">Factors that increase the risk of high blood pressure</string>
-    <string name="info_4">Factors that increase the risk of high blood pressure</string>
+    <string name="info_4">Symptoms and complications of high blood pressure</string>
     <string name="info_5">DASH diet for people with hypertension</string>
     <string name="info_6">High blood pressure in pregnancy causes and ways to prevent it</string>
     <string name="info_7">Lower blood pressure through regular exercise every day</string>
@@ -195,23 +195,23 @@
     <string name="info_5_content_8">Limit salt: Eating a lot of salt makes the body need to replenish water, increasing pressure on blood vessels. Therefore, only light dishes should be processed, not a lot of spices (salt, fish sauce, soup powder, ...).</string>
     <string name="info_5_content_9">Some other notes: drink enough water, give up the habit of using coffee, alcohol, tobacco, should lose weight if the body is obese, ...</string>
     <string name="info_5_content_10">Following the DASH eating plan and maintaining a healthy lifestyle at the same time will help lower your blood pressure.</string>
-    <string name="info_6_content_1">What is gestational hypertension?</string>
+    <string name="info_6_content_1">1. What is gestational hypertension?</string>
     <string name="info_6_content_2">Pregnancy-Induced Hypertension is an increase in blood pressure that occurs after the 20th week of pregnancy and returns to normal 6 weeks after delivery. High blood pressure in pregnancy is mild at about 140-159/90-109 mmHg, severe when ≥160/100 mmHg.</string>
-    <string name="info_6_content_3">Causes of high blood pressure in pregnant women</string>
+    <string name="info_6_content_3">2. Causes of high blood pressure in pregnant women</string>
     <string name="info_6_content_4">The disease can be caused by the following main causes: "</string>
     <string name="info_6_content_5">Nutrition during pregnancy is not scientific, pregnant women eat too salty;</string>
     <string name="info_6_content_6">Pregnant women are not physically active, do not take care of the pregnancy properly;</string>
     <string name="info_6_content_7">Sudden weather changes, too hot or too cold;</string>
     <string name="info_6_content_8">Pregnant women over 35 years old;</string>
     <string name="info_6_content_9">Pregnant women with diabetes or related diseases that lead to high blood pressure complications during pregnancy.</string>
-    <string name="info_6_content_11">Know the symptoms of high blood pressure during pregnancy</string>
+    <string name="info_6_content_11">3. Know the symptoms of high blood pressure during pregnancy</string>
     <string name="info_6_content_12">Common signs of high blood pressure in pregnant women appear in the second half of pregnancy include:</string>
     <string name="info_6_content_13">Swollen feet and hands;</string>
     <string name="info_6_content_14">Sudden weight gain;</string>
     <string name="info_6_content_15">Visual disturbances (blurred vision, double vision, transient loss of vision,...);</string>
     <string name="info_6_content_16">Nausea, vomiting;</string>
     <string name="info_6_content_17">Severe headache, epigastric pain, retrosternal chest pain and shortness of breath.</string>
-    <string name="info_6_content_18">How to prevent high blood pressure in pregnancy?</string>
+    <string name="info_6_content_18">4. How to prevent high blood pressure in pregnancy?</string>
     <string name="info_6_content_19">Doctors said that if gestational hypertension is not detected early and treated promptly, it will lead to many dangerous complications for both mother and baby. To avoid unfortunate incidents, before planning a pregnancy, women should note the following issues:</string>
     <string name="info_6_content_20">Avoid pregnancy and childbirth at an advanced age;</string>
     <string name="info_6_content_21">Overweight women need a weight loss plan before pregnancy;</string>
@@ -226,7 +226,7 @@
     <string name="info_title_7">Lower blood pressure through regular exercise every day</string>
     <string name="info_title_6">High blood pressure in pregnancy causes and ways to prevent it</string>
     <string name="info_title_5">DASH diet for people with hypertension</string>
-    <string name="info_title_4">Symptoms and complications of high blood pressu</string>
+    <string name="info_title_4">Symptoms and complications of high blood pressure</string>
     <string name="title_notification_1">8 dangerous complications of high blood pressure</string>
     <string name="content_notification_1">Know more about your health</string>
     <string name="title_notification_2">5 efective ways to lower your blood pressure</string>
@@ -251,4 +251,8 @@
     <string name="gen_csv_success">Generate success</string>
     <string name="gen_csv_failed">Generate failed</string>
     <string name="no_sender_found">No provider found</string>
+    <string name="must_fill_note">Notes cannot be empty</string>
+    <string name="rate_success">Rate success</string>
+    <string name="title_4_addition">"Common symptoms "</string>
+    <string name="latest">Lastest</string>
 </resources>

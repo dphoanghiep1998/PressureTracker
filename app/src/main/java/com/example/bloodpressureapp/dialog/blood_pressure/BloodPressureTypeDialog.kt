@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.content.ContextCompat
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.databinding.DialogBloodPressureTypeBinding
 
 
@@ -36,7 +37,7 @@ class BloodPressureTypeDialog(
     }
 
     private fun initButton() {
-        binding.btnGotIt.setOnClickListener {
+        binding.btnGotIt.clickWithDebounce {
             dismiss()
         }
     }

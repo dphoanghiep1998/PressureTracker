@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.databinding.LayoutInfo3Binding
 import com.example.bloodpressureapp.databinding.LayoutInfo4Binding
 
@@ -31,7 +32,7 @@ class FragmentInfo4: Fragment() {
     }
 
     private fun initButton() {
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.clickWithDebounce {
             findNavController().popBackStack()
         }
     }

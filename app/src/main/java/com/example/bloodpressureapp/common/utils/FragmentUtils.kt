@@ -1,6 +1,8 @@
 package com.example.bloodpressureapp.common.utils
 
 import android.graphics.drawable.Drawable
+import android.os.SystemClock
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -32,4 +34,16 @@ fun BottomNavigationView.fixBlinking() {
         isAccessible = true
         set(menuView, AutoTransition().apply { duration = 0L })
     }
+}
+fun View.clickWithDebounce(debounceTime: Long = 300L, action: () -> Unit) {
+    this.setOnClickListener(object : View.OnClickListener {
+        private var lastClickTime: Long = 0
+
+        override fun onClick(v: View) {
+            if (SystemClock.elapsedRealtime() - lastClickTime < debounceTime) return
+            else action()
+
+            lastClickTime = SystemClock.elapsedRealtime()
+        }
+    })
 }

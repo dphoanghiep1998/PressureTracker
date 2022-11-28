@@ -17,12 +17,15 @@ import com.example.bloodpressureapp.databinding.FragmentLanguageBinding
 import com.example.bloodpressureapp.ui.language.adapter.LanguageAdapter
 import com.example.bloodpressureapp.ui.language.adapter.TouchLanguageListener
 import java.util.*
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
+
 
 
 class FragmentLanguage : Fragment(), TouchLanguageListener {
     private lateinit var binding: FragmentLanguageBinding
     private lateinit var adapter: LanguageAdapter
     private var selectedLocale: Locale = supportedLanguages()[0]
+    private var fromSetting = false
 
 
     override fun onCreateView(
@@ -38,7 +41,6 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
         super.onViewCreated(view, savedInstanceState)
         getDataFromBundle()
         initView()
-        changeBackPressCallBack()
     }
 
     private fun deliveryFlow() {
@@ -52,17 +54,20 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
         initButton()
         val bundle = this.arguments
         bundle?.let {
+            fromSetting = true
             val isFromSetting = it.getBoolean(Constant.KEY_FROM_SETTING)
             if (isFromSetting) {
-                binding.btnCheck.setOnClickListener {
+                binding.btnCheck.clickWithDebounce {
                     AppSharePreference.INSTANCE.saveLanguage(selectedLocale.language)
                     findNavController().popBackStack()
                 }
             }
         }
-        if(bundle == null){
+        if (bundle == null) {
             deliveryFlow()
         }
+        changeBackPressCallBack(fromSetting)
+
     }
 
     private fun initView() {
@@ -71,7 +76,7 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
 
 
     private fun initButton() {
-        binding.btnCheck.setOnClickListener {
+        binding.btnCheck.clickWithDebounce {
             AppSharePreference.INSTANCE.saveLanguage(selectedLocale.language)
             navigateToPage(R.id.action_fragmentLanguage_to_fragmentOnboard)
         }
@@ -93,11 +98,16 @@ class FragmentLanguage : Fragment(), TouchLanguageListener {
         selectedLocale = locale
     }
 
-    private fun changeBackPressCallBack() {
+    private fun changeBackPressCallBack(fromSetting: Boolean) {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
+                    if (fromSetting) {
+                        findNavController().popBackStack()
+                    } else {
+                        requireActivity().finish()
+                    }
+
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

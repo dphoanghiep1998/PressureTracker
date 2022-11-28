@@ -24,7 +24,38 @@
             android:id="@+id/fragmentMain"
             android:name="com.example.bloodpressureapp.ui.main.FragmentMain"
             android:label="fragment_main"
-            tools:layout="@layout/fragment_main" />
+            tools:layout="@layout/fragment_main" >
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentLanguage"
+                app:destination="@id/fragmentLanguage" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentInfo6"
+                app:destination="@id/fragmentInfo6" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentInfo7"
+                app:destination="@id/fragmentInfo7" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentInfo5"
+                app:destination="@id/fragmentInfo5" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentInfo4"
+                app:destination="@id/fragmentInfo4" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentInfo1"
+                app:destination="@id/fragmentInfo1" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentInfo2"
+                app:destination="@id/fragmentInfo2" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentInfo3"
+                app:destination="@id/fragmentInfo3" />
+            <action
+                android:id="@+id/action_fragmentMain_to_fragmentHistory"
+                app:destination="@id/fragmentHistory" />
+            <action
+                android:id="@+id/action_fragmentMain_to_addHistoryFragment"
+                app:destination="@id/addHistoryFragment" />
+        </fragment>
         <fragment
             android:id="@+id/fragmentOnboard"
             android:name="com.example.bloodpressureapp.ui.onboard.FragmentOnboard"
@@ -37,5 +68,62 @@
                 app:enterAnim="@anim/slide_up"
                 app:popExitAnim="@anim/slide_down" />
         </fragment>
+    <fragment
+        android:id="@+id/fragmentInfo1"
+        android:name="com.example.bloodpressureapp.ui.main.info.sub_frag.FragmentInfo1"
+        android:label="FragmentInfo1" />
+    <fragment
+        android:id="@+id/fragmentInfo2"
+        android:name="com.example.bloodpressureapp.ui.main.info.sub_frag.FragmentInfo2"
+        android:label="FragmentInfo2" />
+    <fragment
+        android:id="@+id/fragmentInfo3"
+        android:name="com.example.bloodpressureapp.ui.main.info.sub_frag.FragmentInfo3"
+        android:label="FragmentInfo3" />
+    <fragment
+        android:id="@+id/fragmentInfo4"
+        android:name="com.example.bloodpressureapp.ui.main.info.sub_frag.FragmentInfo4"
+        android:label="FragmentInfo4" />
+    <fragment
+        android:id="@+id/fragmentInfo5"
+        android:name="com.example.bloodpressureapp.ui.main.info.sub_frag.FragmentInfo5"
+        android:label="FragmentInfo5" />
+    <fragment
+        android:id="@+id/fragmentInfo6"
+        android:name="com.example.bloodpressureapp.ui.main.info.sub_frag.FragmentInfo6"
+        android:label="FragmentInfo6" />
+    <fragment
+        android:id="@+id/fragmentInfo7"
+        android:name="com.example.bloodpressureapp.ui.main.info.sub_frag.FragmentInfo7"
+        android:label="FragmentInfo7" />
+    <fragment
+        android:id="@+id/fragmentHistory"
+        android:name="com.example.bloodpressureapp.ui.main.tracker.add_history.FragmentHistory"
+        android:label="FragmentHistory" >
+        <action
+            android:id="@+id/action_fragmentHistory_to_addHistoryFragment"
+            app:destination="@id/addHistoryFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addNoteDialog"
+        android:name="com.example.bloodpressureapp.dialog.addnotedialog.AddNoteDialog"
+        android:label="AddNoteDialog" >
+        <action
+            android:id="@+id/action_addNoteDialog_to_editNoteFragmentDialog"
+            app:destination="@id/editNoteFragmentDialog" />
+    </dialog>
+    <dialog
+        android:id="@+id/editNoteFragmentDialog"
+        android:name="com.example.bloodpressureapp.dialog.addnotedialog.EditNoteFragmentDialog"
+        android:label="EditNoteFragmentDialog" />
+    <dialog
+        android:id="@+id/addHistoryFragment"
+        android:name="com.example.bloodpressureapp.ui.main.tracker.add_history.AddHistoryFragment"
+        android:label="fragment_add_history"
+        tools:layout="@layout/fragment_add_history" >
+        <action
+            android:id="@+id/action_addHistoryFragment_to_addNoteDialog"
+            app:destination="@id/addNoteDialog" />
+    </dialog>
 
 </navigation>

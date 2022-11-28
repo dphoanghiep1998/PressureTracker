@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.share_preference.AppSharePreference
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.navigateToPage
 import com.example.bloodpressureapp.databinding.FragmentOnboardBinding
 import com.example.bloodpressureapp.ui.onboard.adapter.ViewPagerAdapter
@@ -53,19 +54,19 @@ class FragmentOnboard : Fragment() {
     }
 
     private fun initButton() {
-        binding.btnBack.setOnClickListener{
+        binding.btnBack.clickWithDebounce{
             val currentItem = binding.vpOnboard.currentItem
             binding.vpOnboard.currentItem = currentItem - 1
         }
-        binding.btnNext.setOnClickListener{
+        binding.btnNext.clickWithDebounce{
             val currentItem = binding.vpOnboard.currentItem
             binding.vpOnboard.currentItem = currentItem + 1
         }
-        binding.btnStart.setOnClickListener{
+        binding.btnStart.clickWithDebounce{
             AppSharePreference.INSTANCE.saveInitFirstDone(true)
             navigateToPage(R.id.action_fragmentOnboard_to_fragmentMain)
         }
-        binding.btnSkip.setOnClickListener{
+        binding.btnSkip.clickWithDebounce{
             AppSharePreference.INSTANCE.saveInitFirstDone(true)
             navigateToPage(R.id.action_fragmentOnboard_to_fragmentMain)
         }

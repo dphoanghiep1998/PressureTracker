@@ -10,17 +10,17 @@ import android.view.Window
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.share_preference.AppSharePreference
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.databinding.DialogEditNoteBinding
 import com.example.bloodpressureapp.dialog.addnotedialog.adapter.ItemTouchListener
 import com.example.bloodpressureapp.dialog.addnotedialog.adapter.NoteAdapter
-import com.example.bloodpressureapp.viewmodel.AppViewModel
 import com.google.android.flexbox.*
 import java.util.*
 
@@ -29,8 +29,7 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
     private lateinit var binding: DialogEditNoteBinding
     private lateinit var adapter: NoteAdapter
 
-    private val viewModel: AppViewModel by activityViewModels()
-    private var selectedNotes: HashSet<String> = hashSetOf()
+    private val notes: MutableList<String> = mutableListOf()
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -61,12 +60,13 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        getDataFromBundle()
+
     }
 
     private fun initView() {
         initButton()
         initRecycleView()
-        observeNoteList()
     }
 
     private fun initRecycleView() {
@@ -81,11 +81,8 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
             ): Boolean {
                 val fromPosition = viewHolder.adapterPosition
                 val toPosition = target.adapterPosition
-                val list = viewModel.liveNoteList.value
-                list?.let {
-                    Collections.swap(it, fromPosition, toPosition)
-                    viewModel.setLiveNoteList(it)
-                }
+                Collections.swap(notes, fromPosition, toPosition)
+
                 return false
             }
 
@@ -109,25 +106,39 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
     }
 
     private fun initButton() {
-        binding.btnAddNew.setOnClickListener {
+        binding.btnAddNew.clickWithDebounce {
             val addNoteFinal = AddNoteFinal(this)
             addNoteFinal.show(childFragmentManager, addNoteFinal.tag)
         }
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.clickWithDebounce {
+            findNavController().popBackStack()
+        }
+        binding.btnSave.clickWithDebounce {
+            AppSharePreference.INSTANCE.saveListNote(notes)
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                Constant.KEY_NOTE_LIST,
+                notes
+            )
             findNavController().popBackStack()
         }
     }
 
-    private fun observeNoteList() {
-        viewModel.liveNoteList.observe(viewLifecycleOwner) {
-            adapter.setData(it)
-            AppSharePreference.INSTANCE.saveListNote(it)
+    private fun getDataFromBundle() {
+        val bundle: Bundle? = this.arguments
+        if (bundle != null) {
+            val list: ArrayList<String>? =
+                bundle.getStringArrayList(Constant.KEY_NOTE_LIST)
+            list?.let {
+                notes.clear()
+                notes.addAll(list)
+                adapter.setData(it)
+            }
         }
     }
 
 
     override fun onAddNote(note: String) {
-        if (viewModel.liveNoteList.value!!.contains(note)) {
+        if (notes.contains(note)) {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.dupplicate_note),
@@ -135,7 +146,8 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
             ).show()
             return
         }
-        viewModel.addNote(note)
+        notes.add(0, note)
+        adapter.setData(notes)
     }
 
     override fun onTouchItem(listNote: MutableList<String>) {
@@ -143,6 +155,7 @@ class EditNoteFragmentDialog : DialogFragment(), AddNoteCallBack, ItemTouchListe
     }
 
     override fun onDeleteItem(note: String) {
-        viewModel.deleteNote(note)
+        notes.remove(note)
+        adapter.setData(notes)
     }
 }

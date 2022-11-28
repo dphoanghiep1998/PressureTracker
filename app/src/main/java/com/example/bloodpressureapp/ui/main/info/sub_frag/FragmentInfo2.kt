@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.databinding.LayoutInfo2Binding
 
 class FragmentInfo2: Fragment() {
@@ -100,7 +101,7 @@ class FragmentInfo2: Fragment() {
     }
 
     private fun initButton() {
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.clickWithDebounce {
             findNavController().popBackStack()
         }
     }

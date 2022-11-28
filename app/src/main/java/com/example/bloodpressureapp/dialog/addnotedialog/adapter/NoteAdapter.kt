@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.databinding.ItemNoteBinding
 
 
@@ -23,6 +24,7 @@ class NoteAdapter(private val listener: ItemTouchListener, private val showDelet
     private var selectedNotes: MutableList<String> = mutableListOf()
     private val diffCallback = DiffCallback(noteList, mutableListOf())
     private val diffCallBackSelected = DiffCallback(selectedNotes, mutableListOf())
+
     fun setData(newList: MutableList<String>) {
         diffCallback.newList = newList.toMutableList()
         val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -58,15 +60,15 @@ class NoteAdapter(private val listener: ItemTouchListener, private val showDelet
 
                 if (showDelete) {
                     binding.btnClose.visibility = View.VISIBLE
-                    binding.btnClose.setOnClickListener {
+                    binding.btnClose.clickWithDebounce {
                         listener.onDeleteItem(this)
                     }
-                    binding.root.setOnClickListener {
+                    binding.root.clickWithDebounce {
                     }
 
                 } else {
                     binding.btnClose.visibility = View.GONE
-                    binding.root.setOnClickListener {
+                    binding.root.clickWithDebounce {
                         if (this in selectedNotes) {
                             selectedNotes.remove(this)
                         } else {

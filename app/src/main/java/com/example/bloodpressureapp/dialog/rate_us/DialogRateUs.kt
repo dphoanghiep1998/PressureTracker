@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getColor
 import com.example.bloodpressureapp.common.utils.getDrawable
 import com.example.bloodpressureapp.databinding.DialogRateUsBinding
@@ -65,20 +66,7 @@ class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
     }
 
     private fun initButton() {
-        binding.btnRate.setOnClickListener {
-//            if (star == 0) {
-//                Toast.makeText(
-//                    requireContext(),
-//                    getString(R.string.please_rate),
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            } else if (star < 5) {
-//                viewModel.userActionRate = true
-//                dismiss()
-//            } else if (star == 5) {
-//                callBack.rateOnStore()
-//                dismiss()
-//            }
+        binding.btnRate.clickWithDebounce {
             if(star == 0){
                 Toast.makeText(
                     requireContext(),
@@ -90,8 +78,7 @@ class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
             }
         }
 
-        binding.btnLater.setOnClickListener {
-//            viewModel.userActionRate = true
+        binding.btnLater.clickWithDebounce {
             dismiss()
             callBack.onNegativePressed()
         }
@@ -99,10 +86,10 @@ class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
     }
 
     private fun initFirst() {
-        binding.root.setOnClickListener {
+        binding.root.clickWithDebounce {
             dismiss()
         }
-        binding.containerMain.setOnClickListener(null)
+        binding.containerMain.clickWithDebounce{}
 
         val groupImageStatus = listOf(
             R.drawable.ic_status_1,
@@ -123,7 +110,7 @@ class DialogRateUs(private val callBack: RateCallBack) : DialogFragment() {
         )
         groupStar.forEachIndexed { index, item ->
             kotlin.run {
-                item.setOnClickListener {
+                item.clickWithDebounce {
                     star = index + 1
                     binding.btnLater.visibility = View.GONE
                     binding.tvStatus2.text = getString(textExpressive[index])
