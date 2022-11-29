@@ -54,5 +54,8 @@ class AppViewModel @Inject constructor(
         }
     }
 
+    init {
+        settingLanguageLocale = AppSharePreference.INSTANCE.getSavedLanguage("en")
+    }
 
 }

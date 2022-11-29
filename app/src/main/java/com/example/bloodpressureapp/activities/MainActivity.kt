@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        AppSharePreference.getInstance(this).registerOnSharedPreferenceChangeListener(this)
         setContentView(binding.root)
         initNavController()
         setComponent()
@@ -80,9 +82,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val languageLocaleChanged = AppSharePreference.INSTANCE.getSavedLanguage(
             Locale.getDefault().language
         ) != settingLanguageLocale
-        if (languageLocaleChanged) {
+        Log.d("TAG", "onSharedPreferenceChanged: ")
             finish()
             startActivity(intent)
-        }
+
     }
 }

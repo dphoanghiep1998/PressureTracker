@@ -98,7 +98,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_6_content_1"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +110,7 @@
                         android:text="@string/info_6_content_2"
                         android:textColor="@color/neutral_04"
                         android:textFontWeight="300"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_1" />
 
@@ -133,7 +133,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_6_content_3"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,7 +145,7 @@
                         android:text="@string/info_6_content_4"
                         android:textColor="@color/neutral_04"
                         android:textFontWeight="300"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content_3" />
 
@@ -161,6 +161,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="@color/neutral_04"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -173,7 +174,8 @@
                             android:text="@string/info_6_content_5"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_14sdp"
+                            android:paddingStart="@dimen/_4sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_5"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -190,6 +192,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="@color/neutral_04"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +205,8 @@
                             android:text="@string/info_6_content_6"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_14sdp"
+                            android:paddingStart="@dimen/_4sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_6"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -219,6 +223,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="@color/neutral_04"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -231,7 +236,8 @@
                             android:text="@string/info_6_content_7"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_7"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -249,6 +255,8 @@
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
                             android:textColor="@color/neutral_04"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -260,7 +268,8 @@
                             android:text="@string/info_6_content_8"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_8"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -277,6 +286,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="@color/neutral_04"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -289,7 +299,8 @@
                             android:text="@string/info_6_content_9"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_9"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -315,7 +326,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_6_content_11"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -326,7 +337,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:text="@string/info_6_content_12"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content_11" />
 
@@ -341,6 +352,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="@color/neutral_04"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -352,8 +364,9 @@
                             android:layout_marginStart="@dimen/_2sdp"
                             android:text="@string/info_6_content_13"
                             android:textColor="@color/neutral_04"
+                            android:paddingStart="@dimen/_4sdp"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_13"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -370,6 +383,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="@color/neutral_04"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -382,7 +396,8 @@
                             android:text="@string/info_6_content_14"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_14sdp"
+                            android:paddingStart="@dimen/_4sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_14"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -399,6 +414,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="@color/neutral_04"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -411,7 +427,8 @@
                             android:text="@string/info_6_content_15"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_15"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -428,6 +445,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -439,7 +457,8 @@
                             android:text="@string/info_6_content_16"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_16"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -456,6 +475,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -467,7 +487,8 @@
                             android:text="@string/info_6_content_17"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_17"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -493,7 +514,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_6_content_18"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -504,7 +525,7 @@
                         android:layout_marginTop="@dimen/_12sdp"
                         android:text="@string/info_6_content_19"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content_18" />
 
@@ -519,6 +540,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -530,7 +552,8 @@
                             android:text="@string/info_6_content_20"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_20"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -547,6 +570,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -558,7 +582,8 @@
                             android:text="@string/info_6_content_21"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_21"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -575,6 +600,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -586,7 +612,8 @@
                             android:text="@string/info_6_content_22"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_14sdp"
+                            android:paddingStart="@dimen/_4sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_22"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -603,6 +630,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="\u25CF"
+                            android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -614,7 +642,8 @@
                             android:text="@string/info_6_content_23"
                             android:textColor="@color/neutral_04"
                             android:textFontWeight="300"
-                            android:textSize="@dimen/_12sdp"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/dot_23"
                             app:layout_constraintTop_toTopOf="parent" />

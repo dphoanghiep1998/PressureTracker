@@ -33,15 +33,16 @@ class AppSharePreference(private val context: Context) {
         val initFirstDone = getInitDone(false)
         if (!initFirstDone) {
             val listNotes = mutableListOf(
-                context.getString(R.string.signature),
-                context.getString(R.string.crazy),
                 context.getString(R.string.melt),
-                context.getString(R.string.run),
-                context.getString(R.string.lazy),
-                context.getString(R.string.diet),
-                context.getString(R.string.nightmare),
                 context.getString(R.string.right),
+                context.getString(R.string.melt),
                 context.getString(R.string.left),
+                context.getString(R.string.after_walking),
+                context.getString(R.string.after_medication),
+                context.getString(R.string.after_meal),
+                context.getString(R.string.before_meal),
+                context.getString(R.string.sitting),
+                context.getString(R.string.lying),
             )
             saveListNote(listNotes)
         }
@@ -140,6 +141,11 @@ class AppSharePreference(private val context: Context) {
             defaultValues
         }
     }
+
+    fun registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener): Unit =
+        sharedPreferences().registerOnSharedPreferenceChangeListener(
+            onSharedPreferenceChangeListener
+        )
 
     private fun defaultSharedPreferences(context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)

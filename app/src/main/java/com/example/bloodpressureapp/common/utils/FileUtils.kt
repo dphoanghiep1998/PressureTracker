@@ -22,7 +22,7 @@ object FileUtils {
     fun shareFileIntent(context: Context, file: File): Intent {
         val intent = Intent(Intent.ACTION_SEND)
         val contentUri =
-            FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+            FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
         val mimType = context.contentResolver.getType(contentUri)
         Log.d("TAG", "shareFileIntent: "+contentUri+"     "+ mimType)
         intent.setDataAndType(contentUri, mimType)

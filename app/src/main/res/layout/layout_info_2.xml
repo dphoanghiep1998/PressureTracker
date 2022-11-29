@@ -109,7 +109,7 @@
                         android:text="@string/info_2_content_1"
                         android:textFontWeight="300"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_1" />
 
@@ -178,7 +178,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_2_title_2"
                         android:textColor="@color/cbp_01"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -189,7 +189,7 @@
                         android:text="@string/info_2_content_2"
                         android:textFontWeight="300"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_2" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -210,7 +210,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_2_title_3"
                         android:textColor="@color/cbp_03"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -222,7 +222,7 @@
                         android:textColor="@color/neutral_04"
                         android:text="@string/info_2_content_4"
                         android:textFontWeight="300"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_3" />
 
@@ -245,7 +245,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_2_title_4"
                         android:textColor="@color/cbp_03"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -256,7 +256,7 @@
                         android:layout_marginTop="@dimen/_4sdp"
                         android:text="@string/info_2_content_4"
                         android:textFontWeight="300"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textColor="@color/neutral_04"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_4" />
@@ -279,7 +279,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_2_title_5"
                         android:textColor="@color/cbp_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -290,7 +290,7 @@
                         android:layout_marginTop="@dimen/_4sdp"
                         android:text="@string/info_2_content_5"
                         android:textFontWeight="300"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textColor="@color/neutral_04"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_5" />
@@ -313,7 +313,7 @@
                         android:fontFamily="@font/lexend_deca_semibold_600"
                         android:text="@string/info_2_title_6"
                         android:textColor="@color/cbp_05"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -325,7 +325,7 @@
                         android:text="@string/info_2_content_6"
                         android:textFontWeight="300"
                         android:textColor="@color/neutral_04"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_6" />
 

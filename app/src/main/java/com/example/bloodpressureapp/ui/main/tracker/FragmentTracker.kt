@@ -1,14 +1,18 @@
 package com.example.bloodpressureapp.ui.main.tracker
 
+import android.graphics.RectF
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bloodpressureapp.BuildConfig
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.clickWithDebounce
@@ -18,27 +22,33 @@ import com.example.bloodpressureapp.databinding.FragmentTrackerBinding
 import com.example.bloodpressureapp.ui.main.tracker.adapter.HistoryAdapter
 import com.example.bloodpressureapp.ui.main.tracker.adapter.ItemHelper
 import com.example.bloodpressureapp.ui.main.tracker.chart_helper.BarChartCustomRender
+import com.example.bloodpressureapp.ui.main.tracker.chart_helper.MyMarkerView
 import com.example.bloodpressureapp.ui.main.tracker.chart_helper.ValueBarFormatter
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
 import com.example.bloodpressureapp.viewmodel.AppViewModel
+import com.gianghv.libads.AdaptiveBannerManager
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 
 enum class FilterType {
     MAX, MIN, AVERAGE, LASTEST
 }
 
-class FragmentTracker : Fragment(), ItemHelper {
+class FragmentTracker : Fragment(), ItemHelper, OnChartValueSelectedListener {
     private lateinit var binding: FragmentTrackerBinding
     private lateinit var adapter: HistoryAdapter
-    private var rollvalue = 1073741824
+    private var rollvalue = 0
     private val viewModel: AppViewModel by activityViewModels()
     private var filterType = FilterType.MAX
+    private lateinit var adaptiveBannerManager: AdaptiveBannerManager
 
     //calculator
     private var tmpMaxSystolic = 0
@@ -63,6 +73,7 @@ class FragmentTracker : Fragment(), ItemHelper {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTrackerBinding.inflate(layoutInflater)
+        initAds()
         return binding.root
     }
 
@@ -75,12 +86,19 @@ class FragmentTracker : Fragment(), ItemHelper {
 
     private fun observeListHistoryD() {
         viewModel.getAllHistory().observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 lastestSystolic = it[0].systolic
                 lastestDiaStolic = it[0].diastolic
                 lastestPulse = it[0].pulse
+                if (it.size < 4) {
+                    adapter.setData(it.subList(0, it.size).toMutableList())
+                }else{
+                    adapter.setData(it.subList(0, 3).toMutableList())
+
+                }
+
             }
-            adapter.setData(it.subList(0, 3).toMutableList())
+
         }
 
         viewModel.getAllHistoryAcs().observe(viewLifecycleOwner) {
@@ -104,20 +122,21 @@ class FragmentTracker : Fragment(), ItemHelper {
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.granularity = 1f
         xAxis.isGranularityEnabled = true
-
         binding.barChart.isDragEnabled = true
-//        binding.barChart.setTouchEnabled(false)
-        binding.barChart.isClickable = false
+        binding.barChart.isClickable = true
         binding.barChart.isDoubleTapToZoomEnabled = false
         binding.barChart.xAxis.setDrawGridLines(false)
         binding.barChart.xAxis.setDrawAxisLine(false)
         binding.barChart.description.isEnabled = false
         binding.barChart.axisRight.isEnabled = false
-        binding.barChart.renderer = BarChartCustomRender(
-            binding.barChart,
-            binding.barChart.animator,
-            binding.barChart.viewPortHandler,
-        )
+
+
+        // create a custom MarkerView (extend MarkerView) and specify the layout
+        // to use for it
+        val mv = MyMarkerView(requireContext(), R.layout.custom_marker_view)
+        mv.chartView = binding.barChart // For bounds control
+
+        binding.barChart.marker = mv // Set the marker to the chart
 
 
         val barData = BarData()
@@ -131,7 +150,7 @@ class FragmentTracker : Fragment(), ItemHelper {
 
     private fun getDataValue(list: List<HistoryModel>) {
         val barSpace = 0.05f
-        val groupSpace = 0.3f
+        val groupSpace = 0.2f
         val xLabel = ArrayList<String>()
         val dataSystolic = ArrayList<BarEntry>()
         val dataDiastolic = ArrayList<BarEntry>()
@@ -142,6 +161,7 @@ class FragmentTracker : Fragment(), ItemHelper {
                 dataSystolic.add(BarEntry(index.toFloat(), item.systolic.toFloat()))
                 dataDiastolic.add(BarEntry(index.toFloat(), item.diastolic.toFloat()))
                 xLabel.add(item.date)
+
             }
         }
         val barDataSet1 = BarDataSet(dataSystolic, getString(R.string.systolic))
@@ -169,13 +189,13 @@ class FragmentTracker : Fragment(), ItemHelper {
         xAxis.setCenterAxisLabels(true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.granularity = 1f
+        xAxis.textSize = 12f
         xAxis.isGranularityEnabled = true
         val typeface = ResourcesCompat.getFont(requireContext(), R.font.lexend_daca_regular_400)
-
         binding.barChart.axisLeft.textSize = 12f
         binding.barChart.axisLeft.textColor = getColor(R.color.neutral_04)
         binding.barChart.axisLeft.typeface = typeface
-        binding.barChart.legend.textSize = 12f
+        binding.barChart.legend.textSize = 16f
         binding.barChart.legend.textColor = getColor(R.color.neutral_04)
         binding.barChart.legend.form = Legend.LegendForm.CIRCLE
 
@@ -186,22 +206,19 @@ class FragmentTracker : Fragment(), ItemHelper {
         )
         val barData = BarData()
 
-        barData.barWidth = .325f
+        barData.barWidth = .35f
         barData.addDataSet(barDataSet1)
         barData.addDataSet(barDataSet2)
         binding.barChart.data = barData
-        binding.barChart.setScaleMinima(1f, 1f)
-
         binding.barChart.axisLeft.axisMinimum = 0f
         binding.barChart.axisLeft.axisMaximum = 300f
-
+        binding.barChart.setOnChartValueSelectedListener(this)
         binding.barChart.xAxis.axisMinimum = 0f
         binding.barChart.xAxis.axisMaximum =
             0f + binding.barChart.barData.getGroupWidth(groupSpace, barSpace) * list.size
         binding.barChart.groupBars(0f, groupSpace, barSpace)
         binding.barChart.notifyDataSetChanged()
         binding.barChart.invalidate()
-
         binding.barChart.setVisibleXRangeMaximum(3.5f)
 
 
@@ -227,9 +244,9 @@ class FragmentTracker : Fragment(), ItemHelper {
         binding.tvRollValue.text = getString(R.string.max)
         observeFilterType(filterType)
         binding.btnBack.clickWithDebounce {
-            rollvalue += 1
-            if (rollvalue == Int.MAX_VALUE) {
-                rollvalue = 1073741823
+            rollvalue -= 1
+            if (rollvalue < 0) {
+                rollvalue = 3
             }
             when (rollvalue % 4) {
                 0 -> {
@@ -255,10 +272,8 @@ class FragmentTracker : Fragment(), ItemHelper {
 
         }
         binding.btnNext.clickWithDebounce {
-            rollvalue -= 1
-            if (rollvalue == 0) {
-                rollvalue = 1073741824
-            }
+            rollvalue += 1
+
             when (rollvalue % 4) {
                 0 -> {
                     binding.tvRollValue.text = getString(R.string.max)
@@ -421,5 +436,20 @@ class FragmentTracker : Fragment(), ItemHelper {
 
     }
 
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        Log.i("Activity", "Selected: " + e.toString() + ", dataSet: " + h!!.stackIndex)
+    }
 
+    override fun onNothingSelected() {}
+    private fun initAds(){
+        adaptiveBannerManager = AdaptiveBannerManager(
+            requireActivity(),
+            BuildConfig.banner_home_id1,
+            BuildConfig.banner_home_id2,
+            BuildConfig.banner_home_id3,
+        )
+        adaptiveBannerManager.loadBanner(binding.bannerAds, onAdLoadFail = {
+            Toast.makeText(requireContext(), "Load Banner Failer", Toast.LENGTH_SHORT).show()
+        })
+    }
 }

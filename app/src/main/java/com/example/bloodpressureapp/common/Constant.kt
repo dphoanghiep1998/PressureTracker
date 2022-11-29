@@ -2,6 +2,7 @@ package com.example.bloodpressureapp.common
 
 object Constant {
 
+    const val KEY_NOTIFY_POS = "KEY_NOTIFY_POS"
     const val KEY_FIRST_INIT ="KEY_FIRST_INIT"
     const val CHANNEL_NAME ="CHANNEL_NAME"
     const val CHANNEL_ID = "CHANNEL_ID"
@@ -16,6 +17,9 @@ object Constant {
     const val URL_PRIVACY = "http://bzkpublisher.mygamesonline.org/"
     const val URL_APP = "https://google.com"
     const val KEY_TIME_IN_MILLI="KEY_TIME_IN_MILLI"
+
+    // ID ADS
+
 
 
 }

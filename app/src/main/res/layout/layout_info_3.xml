@@ -98,7 +98,7 @@
                         android:layout_marginTop="@dimen/_4sdp"
                         android:text="@string/info_3_content_1"
                         android:textFontWeight="300"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

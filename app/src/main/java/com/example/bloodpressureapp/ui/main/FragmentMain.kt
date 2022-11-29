@@ -14,9 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import androidx.viewpager2.widget.ViewPager2
+import androidx.navigation.fragment.findNavController
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.databinding.FragmentMainBinding
@@ -47,6 +45,7 @@ class FragmentMain : Fragment(), RateCallBack {
         initView()
         setStatusColor()
         changeBackPressCallBack()
+        handleFlowNotification()
     }
 
     private fun initView() {
@@ -62,6 +61,19 @@ class FragmentMain : Fragment(), RateCallBack {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
         window.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.primary)
+    }
+
+    private fun handleFlowNotification() {
+        val intent = requireActivity().intent
+        when (intent.getIntExtra(Constant.KEY_NOTIFY_POS, 10)) {
+            0 -> findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo1)
+            1 -> findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo2)
+            2 -> findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo3)
+            3 -> findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo4)
+            4 -> findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo5)
+            5 -> findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo6)
+            6 -> findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo7)
+        }
     }
 
 

@@ -9,10 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.bloodpressureapp.BuildConfig
 import com.example.bloodpressureapp.R
+import com.example.bloodpressureapp.activities.MainActivity
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.clickWithDebounce
 import com.example.bloodpressureapp.common.utils.getDrawable
@@ -24,17 +27,22 @@ import com.example.bloodpressureapp.dialog.rate_us.DialogRateUs
 import com.example.bloodpressureapp.dialog.rate_us.RateCallBack
 import com.example.bloodpressureapp.ui.main.tracker.model.HistoryModel
 import com.example.bloodpressureapp.viewmodel.AppViewModel
+import com.gianghv.libads.AdaptiveBannerManager
+import com.gianghv.libads.NativeAdsManager
 
 
 class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
     private lateinit var binding: FragmentSettingBinding
     private val viewModel: AppViewModel by activityViewModels()
     private val listHistory = mutableListOf<HistoryModel>()
+    private lateinit var adaptiveBannerManager: AdaptiveBannerManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSettingBinding.inflate(layoutInflater)
+        initAds()
         return binding.root
     }
 
@@ -174,6 +182,18 @@ class FragmentSetting : Fragment(), FeedBackCallBack, RateCallBack {
             openLink(Constant.URL_APP)
         }
         Toast.makeText(requireContext(),getString(R.string.rate_success),Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initAds(){
+        adaptiveBannerManager = AdaptiveBannerManager(
+            requireActivity(),
+            BuildConfig.banner_home_id1,
+            BuildConfig.banner_home_id2,
+            BuildConfig.banner_home_id3,
+        )
+        adaptiveBannerManager.loadBanner(binding.bannerAds, onAdLoadFail = {
+            Toast.makeText(requireContext(), "Load Banner Failer", Toast.LENGTH_SHORT).show()
+        })
     }
 
 

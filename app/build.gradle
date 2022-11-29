@@ -33,9 +33,94 @@ android {
         dataBinding = true
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField('String', 'inter_splash_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_splash_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_splash_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'open_app_id', '"ca-app-pub-3940256099942544/3419835294"')
+
+            buildConfigField('String', 'inter_intro_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_intro_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_intro_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_history_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_history_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_history_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_adddata_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_adddata_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_adddata_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_read_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_read_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_read_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_export_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_export_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_export_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+
+            buildConfigField('String', 'banner_home_id1', '"ca-app-pub-3940256099942544/6300978111"')
+            buildConfigField('String', 'banner_home_id2', '"ca-app-pub-3940256099942544/6300978111"')
+            buildConfigField('String', 'banner_home_id3', '"ca-app-pub-3940256099942544/6300978111"')
+
+            buildConfigField('String', 'native_info_id1', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_info_id2', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_info_id3', '"ca-app-pub-3940256099942544/2247696110"')
+
+            buildConfigField('String', 'native_history_id1', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_history_id2', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_history_id3', '"ca-app-pub-3940256099942544/2247696110"')
+
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'inter_splash_id1', '"ca-app-pub-3940256099942544~3347511713"')
+
+            buildConfigField('String', 'inter_splash_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_splash_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_splash_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'open_app_id', '"ca-app-pub-3940256099942544/3419835294"')
+
+            buildConfigField('String', 'inter_intro_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_intro_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_intro_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_history_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_history_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_history_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_adddata_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_adddata_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_adddata_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_read_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_read_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_read_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+            buildConfigField('String', 'inter_export_id1', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_export_id2', '"ca-app-pub-3940256099942544/1033173712"')
+            buildConfigField('String', 'inter_export_id3', '"ca-app-pub-3940256099942544/1033173712"')
+
+
+            buildConfigField('String', 'banner_home_id1', '"ca-app-pub-3940256099942544/6300978111"')
+            buildConfigField('String', 'banner_home_id2', '"ca-app-pub-3940256099942544/6300978111"')
+            buildConfigField('String', 'banner_home_id3', '"ca-app-pub-3940256099942544/6300978111"')
+
+            buildConfigField('String', 'native_info_id1', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_info_id2', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_info_id3', '"ca-app-pub-3940256099942544/2247696110"')
+
+            buildConfigField('String', 'native_history_id1', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_history_id2', '"ca-app-pub-3940256099942544/2247696110"')
+            buildConfigField('String', 'native_history_id3', '"ca-app-pub-3940256099942544/2247696110"')
+
         }
     }
     compileOptions {
@@ -52,6 +137,7 @@ kapt {
 }
 
 dependencies {
+    implementation project(path: ':libads')
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'com.android.volley:volley:1.2.0'
     def room_version = "2.4.3"
@@ -117,6 +203,7 @@ dependencies {
     //Ads
     implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.6.0")
 
+    implementation 'com.google.android.gms:play-services-ads:21.3.0'
 
 }
 repositories {

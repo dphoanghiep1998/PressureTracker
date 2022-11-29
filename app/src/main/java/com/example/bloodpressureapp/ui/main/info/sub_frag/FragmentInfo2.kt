@@ -38,9 +38,9 @@ class FragmentInfo2: Fragment() {
                     )
                 )
                 containerContent.setBackgroundResource(R.drawable.bg_cbp01_corner10)
-                tvValueHigher.text = getString(R.string.less_120)
+                tvValueHigher.text = "< 120"
                 tvSymbol.text = getString(R.string.and)
-                tvValueLower.text = getString(R.string.less_80)
+                tvValueLower.text = "< 80"
                 tvStatus.text = getString(R.string.normal_blood_pressure)
             }
             with(containerElevated) {
@@ -51,9 +51,9 @@ class FragmentInfo2: Fragment() {
                     )
                 )
                 containerContent.setBackgroundResource(R.drawable.bg_cbp02_corner10)
-                tvValueHigher.text = getString(R.string.in_120_to_129)
+                tvValueHigher.text = "120-129"
                 tvSymbol.text = getString(R.string.and)
-                tvValueLower.text = getString(R.string.less_80)
+                tvValueLower.text = "< 80"
                 tvStatus.text = getString(R.string.elevated_blood_pressure)
             }
             with(containerHigh1) {
@@ -64,9 +64,9 @@ class FragmentInfo2: Fragment() {
                     )
                 )
                 containerContent.setBackgroundResource(R.drawable.bg_cbp03_corner10)
-                tvValueHigher.text = getString(R.string.more_130)
+                tvValueHigher.text = "130+"
                 tvSymbol.text = getString(R.string.or)
-                tvValueLower.text = getString(R.string.more_80)
+                tvValueLower.text = "80+"
                 tvStatus.text = getString(R.string.high_blood_pressure_stage_1)
             }
             with(containerHigh2) {
@@ -77,9 +77,9 @@ class FragmentInfo2: Fragment() {
                     )
                 )
                 containerContent.setBackgroundResource(R.drawable.bg_cbp04_corner10)
-                tvValueHigher.text = getString(R.string.more_140)
+                tvValueHigher.text = "140+"
                 tvSymbol.text = getString(R.string.or)
-                tvValueLower.text = getString(R.string.more_90)
+                tvValueLower.text = "90+"
                 tvStatus.text = getString(R.string.high_blood_pressure_stage_2)
             }
             with(containerDanger) {
@@ -90,9 +90,9 @@ class FragmentInfo2: Fragment() {
                     )
                 )
                 containerContent.setBackgroundResource(R.drawable.bg_cbp05_corner10)
-                tvValueHigher.text = getString(R.string.more_180)
+                tvValueHigher.text = "180+"
                 tvSymbol.text = getString(R.string.and)
-                tvValueLower.text = getString(R.string.more_90)
+                tvValueLower.text = "90+"
                 tvStatus.text = getString(R.string.dangerous_high_blood_pressure)
             }
         }

@@ -48,7 +48,10 @@ class NotificationReceiver : BroadcastReceiver() {
 
         val remoteViews = RemoteViews(context.packageName, groupLayout[index].first)
         val remoteViewsExpand = RemoteViews(context.packageName, groupLayout[index].second)
+
         val intent = Intent(context,MainActivity::class.java)
+
+        intent.putExtra(Constant.KEY_NOTIFY_POS,index)
         val pendingIntent =PendingIntent.getActivity(
             context,
             200,

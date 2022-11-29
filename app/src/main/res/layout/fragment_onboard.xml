@@ -18,9 +18,9 @@
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/dots_indicator"
-        android:layout_marginTop="@dimen/_24sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
         app:dotsColor="@color/secondary_02"
         app:dotsCornerRadius="@dimen/_4sdp"
         app:dotsSize="@dimen/_8sdp"
@@ -32,70 +32,79 @@
         app:progressMode="true"
         app:selectedDotColor="@color/primary" />
 
-    <LinearLayout
-        android:id="@+id/container_button"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/_24sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dots_indicator">
 
+        <LinearLayout
+            android:id="@+id/container_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="@drawable/fg_ripple_effect"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="@string/back"
+                android:textColor="@color/neutral_03"
+                android:textSize="@dimen/_14sdp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="@drawable/fg_ripple_effect"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="@string/next"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/btn_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@drawable/bg_primary_corner_10"
+                android:foreground="@drawable/fg_ripple_effect"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="@string/let_start"
+                android:textColor="@color/neutral_01"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
         <TextView
-            android:id="@+id/btn_back"
+            android:id="@+id/btn_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/_12sdp"
-            android:paddingHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:foreground="@drawable/fg_ripple_effect"
-            android:text="@string/back"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:text="@string/skip_for_now"
             android:textColor="@color/neutral_03"
-            android:textSize="@dimen/_14sdp" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/_16sdp"
-            android:paddingVertical="@dimen/_12sdp"
-            android:foreground="@drawable/fg_ripple_effect"
-            android:text="@string/next"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_14sdp" />
-        <TextView
-            android:id="@+id/btn_start"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:background="@drawable/bg_primary_corner_10"
-            android:foreground="@drawable/fg_ripple_effect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/_16sdp"
-            android:paddingVertical="@dimen/_12sdp"
-            android:text="@string/let_start"
-            android:textColor="@color/neutral_01"
-            android:textSize="@dimen/_14sdp"/>
-    </LinearLayout>
-
-
-<TextView
-    android:id="@+id/btn_skip"
-    android:layout_marginTop="@dimen/_12sdp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    android:paddingVertical="@dimen/_12sdp"
-    android:paddingHorizontal="@dimen/_12sdp"
-    android:textSize="@dimen/_14sdp"
-    android:textColor="@color/neutral_03"
-    android:foreground="@drawable/fg_ripple_effect"
-    android:text="@string/skip_for_now"
-    app:layout_constraintTop_toBottomOf="@id/container_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

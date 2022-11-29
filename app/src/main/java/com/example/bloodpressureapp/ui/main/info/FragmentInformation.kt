@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.bloodpressureapp.BuildConfig
 import com.example.bloodpressureapp.R
 import com.example.bloodpressureapp.common.Constant
 import com.example.bloodpressureapp.common.utils.getColor
@@ -14,16 +16,20 @@ import com.example.bloodpressureapp.databinding.FragmentInfomationBinding
 import com.example.bloodpressureapp.ui.main.info.adapter.InfoAdapter
 import com.example.bloodpressureapp.ui.main.info.adapter.ItemTouchListener
 import com.example.bloodpressureapp.ui.main.info.adapter.SpacesItemDecoration
+import com.gianghv.libads.AdaptiveBannerManager
 
 
 class FragmentInformation : Fragment(), ItemTouchListener {
     private lateinit var binding: FragmentInfomationBinding
     private lateinit var adapter: InfoAdapter
+    private lateinit var adaptiveBannerManager: AdaptiveBannerManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentInfomationBinding.inflate(layoutInflater)
+        initAds()
         return binding.root
     }
 
@@ -95,8 +101,17 @@ class FragmentInformation : Fragment(), ItemTouchListener {
             6->findNavController().navigate(R.id.action_fragmentMain_to_fragmentInfo7)
         }
 
-
-
+    }
+    private fun initAds(){
+        adaptiveBannerManager = AdaptiveBannerManager(
+            requireActivity(),
+            BuildConfig.banner_home_id1,
+            BuildConfig.banner_home_id2,
+            BuildConfig.banner_home_id3,
+        )
+        adaptiveBannerManager.loadBanner(binding.bannerAds, onAdLoadFail = {
+            Toast.makeText(requireContext(), "Load Banner Failer", Toast.LENGTH_SHORT).show()
+        })
     }
 
 }
