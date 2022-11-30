@@ -9,7 +9,6 @@ import com.gianghv.libads.R
 
 class DialogLoadingAds constructor(private val context: Context) {
     private var dialog: Dialog? = null
-
     init {
         dialog = Dialog(context)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)

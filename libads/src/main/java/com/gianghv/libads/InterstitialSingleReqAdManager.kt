@@ -17,13 +17,15 @@ class InterstitialSingleReqAdManager constructor(
 
     fun showAds(
         activity: Activity,
+        onLoadAdSuccess: (() -> Unit)? = null,
         onAdClose: (() -> Unit)? = null,
         onAdLoadFail: (() -> Unit)? = null
     ) {
         val requestConfiguration = RequestConfiguration.Builder().build()
         MobileAds.setRequestConfiguration(requestConfiguration)
         loadAds(onAdLoader = {
-            showAds(activity, object : OnShowInterstitialCallBack {
+            onLoadAdSuccess?.invoke()
+            show(activity, object : OnShowInterstitialCallBack {
                 override fun onAdsClose() {
                     onAdClose?.invoke()
                 }
@@ -32,7 +34,7 @@ class InterstitialSingleReqAdManager constructor(
     }
 
 
-    fun loadAds(
+    private fun loadAds(
         onAdLoader: (() -> Unit)? = null,
         onAdLoadFail: (() -> Unit)? = null
     ) {
@@ -46,7 +48,9 @@ class InterstitialSingleReqAdManager constructor(
     }
 
     private fun requestAdsPrepare(
-        idAds: String, onAdLoader: (() -> Unit)? = null,
+        idAds: String,
+        onLoadAdSuccess: (() -> Unit)? = null,
+        onAdLoader: (() -> Unit)? = null,
         onAdLoadFail: (() -> Unit)? = null
     ) {
         val adRequest = AdRequest.Builder().build()
@@ -58,12 +62,13 @@ class InterstitialSingleReqAdManager constructor(
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 mInterstitialAd = interstitialAd
+                onLoadAdSuccess?.invoke()
                 onAdLoader?.invoke()
             }
         })
     }
 
-    fun showAds(activity: Activity, listener: OnShowInterstitialCallBack) {
+    private fun show(activity: Activity, listener: OnShowInterstitialCallBack) {
         if (mInterstitialAd != null) {
             mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
